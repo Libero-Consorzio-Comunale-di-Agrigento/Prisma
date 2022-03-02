@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<documentRoot>
+    <descrizione>Provvedimento</descrizione>
+    <connections>
+        <connectionJNDI>jdbc/agspr</connectionJNDI>
+    </connections>
+    <testStaticData>
+        <documentRoot>
+            <provvedimento>
+                <ANNO_PROVVEDIMENTO>2017</ANNO_PROVVEDIMENTO>
+                <NUMERO_PROVVEDIMENTO>100</NUMERO_PROVVEDIMENTO>
+                <DATA_PROVVEDIMENTO>17/05/2017</DATA_PROVVEDIMENTO>
+                <DATAORA_PROVVEDIMENTO>17/05/2017 12:30:08</DATAORA_PROVVEDIMENTO>
+                <OGGETTO_PROVVEDIMENTO>OGGETTO</OGGETTO_PROVVEDIMENTO>
+                <DATA_CREAZIONE>18/05/2017</DATA_CREAZIONE>
+                <UTENTE_CREAZIONE>NOMINATIVO REDATTORE</UTENTE_CREAZIONE>
+                <DIRIGENTE>DIRIGENTE COGNOME NOME</DIRIGENTE>
+                <DATA_FIRMA>19/05/2017</DATA_FIRMA>
+                <COGNOME_REDATTORE>REDATTORE COGNOME</COGNOME_REDATTORE>
+                <NOME_REDATTORE>REDATTORE NOME</NOME_REDATTORE>
+                <CLASS_COD>01.01.02</CLASS_COD>
+                <FASCICOLO_ANNO>2010</FASCICOLO_ANNO>
+                <FASCICOLO_NUMERO>30</FASCICOLO_NUMERO>
+                <DESCRIZIONE_UNITA>PROTOCOLLO</DESCRIZIONE_UNITA>
+                <DESCRIZIONE_RADICE_SUDD>AFFARI GENERALI</DESCRIZIONE_RADICE_SUDD>
+                <FIRMATARIO>NOMINATIVO FIRMATARIO</FIRMATARIO>
+                <FIRMATARIO_COGNOME>FIRMATARIO COGNOME</FIRMATARIO_COGNOME>
+                <FIRMATARIO_NOME>FIRMATARIO NOME</FIRMATARIO_NOME>
+                <DESCRIZIONE_FIRMATARIO>Il funzionario delegato</DESCRIZIONE_FIRMATARIO>
+                <DELEGANTE>(IN SOSTITUZIONE DI QUALCUNO)</DELEGANTE>
+                <SERVIZIO_PROTOCOLLANTE>SERVIZIO AFFARI GENERALI</SERVIZIO_PROTOCOLLANTE>
+                <AREA_PROTOCOLLANTE>AREA AFFARI GENERALI</AREA_PROTOCOLLANTE>
+            </provvedimento>
+            <protocollo_annullato>
+                <ANNO>2016</ANNO>
+                <NUMERO>10</NUMERO>
+                <DATA>17/05/2016</DATA>
+                <DATAORA>17/05/2016 12:30:08</DATAORA>
+                <DESC_REGISTRO>PROTOCOLLO GENERALE 1</DESC_REGISTRO>
+                <OGGETTO>OGGETTO DOCUMENTO ANNULLATO 1</OGGETTO>
+                <DATA_RICHIESTA_ANNULLAMENTO>01/05/2017</DATA_RICHIESTA_ANNULLAMENTO>
+                <COGNOME_RICHIEDENTE_ANN>RICHIEDENTE ANNULLAMENTO COGNOME 1</COGNOME_RICHIEDENTE_ANN>
+                <NOME_RICHIEDENTE_ANN>RICHIEDENTE ANNULLAMENTO NOME 1</NOME_RICHIEDENTE_ANN>
+                <UNITA_RICHIESTA_ANNULLAMENTO>UFFICIO RICHIESTA ANNULLAMENTO 1</UNITA_RICHIESTA_ANNULLAMENTO>
+                <MOTIVO_RICHIESTA_ANNULLAMENTO>MOTIVO RICHIESTA ANNULLAMENTO 1</MOTIVO_RICHIESTA_ANNULLAMENTO>
+            </protocollo_annullato>
+            <protocollo_annullato>
+                <ANNO>2015</ANNO>
+                <NUMERO>103</NUMERO>
+                <DATA>17/05/2015</DATA>
+                <DATAORA>17/05/2015 12:30:08</DATAORA>
+                <DESC_REGISTRO>PROTOCOLLO GENERALE 2</DESC_REGISTRO>
+                <OGGETTO>OGGETTO DOCUMENTO ANNULLATO 2</OGGETTO>
+                <DATA_RICHIESTA_ANNULLAMENTO>01/05/2016</DATA_RICHIESTA_ANNULLAMENTO>
+                <COGNOME_RICHIEDENTE_ANN>RICHIEDENTE ANNULLAMENTO COGNOME 2</COGNOME_RICHIEDENTE_ANN>
+                <NOME_RICHIEDENTE_ANN>RICHIEDENTE ANNULLAMENTO NOME 2</NOME_RICHIEDENTE_ANN>
+                <UNITA_RICHIESTA_ANNULLAMENTO>UFFICIO RICHIESTA ANNULLAMENTO 2</UNITA_RICHIESTA_ANNULLAMENTO>
+                <MOTIVO_RICHIESTA_ANNULLAMENTO>MOTIVO RICHIESTA ANNULLAMENTO 2</MOTIVO_RICHIESTA_ANNULLAMENTO>
+            </protocollo_annullato>
+        </documentRoot>
+    </testStaticData>
+    <definitions>
+        <metaDato tipoParametro="input">
+            <nomeSimbolico>id</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>id del provvedimento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>ANNO_PROVVEDIMENTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Anno del provvedimento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NUMERO_PROVVEDIMENTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Numero del provvedimento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DATA_PROVVEDIMENTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data del provvedimento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DATAORA_PROVVEDIMENTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data e ora del provvedimento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>OGGETTO_PROVVEDIMENTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Oggetto del provvedimento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DATA_CREAZIONE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data di creazione del provvedimento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>UTENTE_CREAZIONE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Nominativo dell'utente di creazione del provvedimento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DIRIGENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome e nome del firmatario del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FIRMATARIO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Firmatario del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FIRMATARIO_COGNOME</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome del firmatario del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FIRMATARIO_NOME</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Nome del firmatario del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>REDATTORE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Redattore del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>INCARICATO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Incaricato del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DESCRIZIONE_FIRMATARIO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Indica se il firmatario e' dirigente</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DELEGANTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Indica se il firmatario e' delegato</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FUNZIONARIO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome e nome del funzionario</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DATA_FIRMA</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data di firma del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>COGNOME_REDATTORE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome del redattore del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NOME_REDATTORE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Nome del redattore del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>OGGI</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data di redazione del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>CLASS_COD</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Classificazione del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FASCICOLO_ANNO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Anno del fascicolo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FASCICOLO_NUMERO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Numero del fascicolo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NOTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Note del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>MOVIMENTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Movimento del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DESCRIZIONE_UNITA</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Descrizione dell'ufficio protocollante</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DESCRIZIONE_RADICE_SUDD</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Descrizione dell'ufficio di primo livello del ramo di appartenenza dell'ufficio protocollante</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>SERVIZIO_PROTOCOLLANTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Descrizione della suddivisione SO4 che individua il servizio (Ufficio di Secondo Livello)</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>AREA_PROTOCOLLANTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Descrizione della suddivisione SO4 che individua l'area (Ufficio di Primo Livello)</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>ANNO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Anno del protocollo annullato</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NUMERO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Numero del protocollo annullato</descrizione>
+            <path/>
+        </metaDato>        
+        <metaDato>
+            <nomeSimbolico>DATA</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data del protocollo annullato</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DATAORA</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data e ora del protocollo annullato</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DESC_REGISTRO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Descrizione registro del protocollo annullato</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>OGGETTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Oggetto del protocollo annullato</descrizione>
+            <path/>
+        </metaDato>    
+        <metaDato>
+            <nomeSimbolico>DATA_RICHIESTA_ANNULLAMENTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data di richiesta di annullamento del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>COGNOME_RICHIEDENTE_ANN</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome dell'utente che ha effettuato la richiesta di annullamento del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NOME_RICHIEDENTE_ANN</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Nome dell'utente che ha effettuato la richiesta di annullamento del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>UNITA_RICHIESTA_ANNULLAMENTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Ufficio di appartenenza dell'utente che ha effettuato la richiesta di annullamento del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>MOTIVO_RICHIESTA_ANNULLAMENTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Motivo della richiesta di annullamento del protocollo</descrizione>
+            <path/>
+        </metaDato>
+    </definitions>
+    <queryes>
+        <query id="provvedimento"
+               help_descrizione="Ritorna i dati di un provvedimento."
+               help_query_alias="p"
+               help_field_aliases="ANNO_PROVVEDIMENTO, NUMERO_PROVVEDIMENTO, DATA_PROVVEDIMENTO, DATAORA_PROVVEDIMENTO, OGGETTO_PROVVEDIMENTO, DATA_CREAZIONE, UTENTE_CREAZIONE, DIRIGENTE, DATA_FIRMA, COGNOME_REDATTORE, NOME_REDATTORE, CLASS_COD, FASCICOLO_ANNO, FASCICOLO_NUMERO, DESCRIZIONE_UNITA, DESCRIZIONE_RADICE_SUDD, FIRMATARIO, FIRMATARIO_COGNOME, FIRMATARIO_NOME, DESCRIZIONE_FIRMATARIO, DELEGANTE, SERVIZIO_PROTOCOLLANTE, AREA_PROTOCOLLANTE">
+            select p.oggetto OGGETTO_PROVVEDIMENTO
+            , to_char(data_redazione,'dd/mm/yyyy') DATA_CREAZIONE
+            , clas.classificazione CLASS_COD
+            , ured.cognome_soggetto COGNOME_REDATTORE
+            , ured.nome_soggetto NOME_REDATTORE
+            , to_char(p.anno) ANNO_PROVVEDIMENTO
+            , to_char(p.numero) NUMERO_PROVVEDIMENTO
+            , to_char(p.data, 'DD/MM/YYYY') DATA_PROVVEDIMENTO
+            , to_char(p.data, 'DD/MM/YYYY HH24:MI:SS') DATAORA_PROVVEDIMENTO
+            , TO_CHAR (agp_utility_pkg.get_anno_fasc_protocollo (p.id_documento, s.utente, 1)) FASCICOLO_ANNO
+            , TO_CHAR (agp_utility_pkg.get_numero_fasc_protocollo (p.id_documento, s.utente, 1)) FASCICOLO_NUMERO
+            , agp_utility_pkg.get_firmatario_documento(p.id_documento, s.utente, 'N') DIRIGENTE
+            , agp_utility_pkg.get_funzionario_documento(p.id_documento, s.utente, 1) FUNZIONARIO
+            , agp_utility_pkg.get_data_firma_documento(p.id_documento, s.utente) DATA_FIRMA
+            , unita.descrizione DESCRIZIONE_UNITA
+            , substr(so4_ags_pkg.unita_get_radice(sunita.unita_progr, sunita.unita_ottica, sysdate), instr (so4_ags_pkg.unita_get_radice(sunita.unita_progr, sunita.unita_ottica, sysdate),'#', -1)+1) DESCRIZIONE_RADICE_SUDD
+            , agp_utility_pkg.get_suddivisione_protocollo (p.id_documento, 'SO4_SUDDIVISIONE_AREA') AREA_PROTOCOLLANTE
+            , agp_utility_pkg.get_suddivisione_protocollo (p.id_documento, 'SO4_SUDDIVISIONE_SERVIZIO') SERVIZIO_PROTOCOLLANTE
+            , agp_utility_pkg.get_descrizione_firmatario(p.id_documento, s.utente, d.id_ente) DESCRIZIONE_FIRMATARIO
+            , agp_utility_pkg.get_delegante(p.id_documento, s.utente, d.id_ente) DELEGANTE
+            , agp_utility_pkg.get_firmatario_effettivo(p.id_documento, s.utente) FIRMATARIO
+            , agp_utility_pkg.get_firmatario_eff_cognome(p.id_documento, s.utente) FIRMATARIO_COGNOME
+            , agp_utility_pkg.get_firmatario_eff_nome(p.id_documento, s.utente) FIRMATARIO_NOME
+            from agp_protocolli p, gdo_documenti_soggetti s, gdo_documenti_soggetti sred, AD4_V_UTENTI ured,
+            gdo_documenti_soggetti sunita, SO4_V_UNITA_ORGANIZZATIVE_PUBB unita, ags_classificazioni clas, gdo_documenti d
+            where p.id_documento = #id
+            and s.id_documento(+) = p.id_documento
+            and p.id_documento = d.id_documento
+            and s.tipo_soggetto(+) = 'FIRMATARIO'
+            and sred.id_documento(+) = p.id_documento
+            and sred.tipo_soggetto(+) = 'REDATTORE'
+            and ured.utente(+) = sred.utente
+            and sunita.id_documento(+) = p.id_documento
+            and sunita.tipo_soggetto(+) = 'UO_PROTOCOLLANTE'
+            and unita.progr(+) = sunita.unita_progr
+            and unita.dal(+) = sunita.unita_dal
+            and unita.ottica(+) = sunita.unita_ottica
+            and clas.id_classificazione(+) = p.id_classificazione
+        </query>        
+        <query id="protocollo_annullato"
+               help_descrizione="Ritorna i dati di un protocollo annullato"
+               help_query_alias="pa" 
+               help_field_aliases="ANNO, NUMERO, DATA, DATAORA, DESC_REGISTRO, OGGETTO, DATA_RICHIESTA_ANNULLAMENTO, COGNOME_RICHIEDENTE_ANN, NOME_RICHIEDENTE_ANN, UNITA_RICHIESTA_ANNULLAMENTO, MOTIVO_RICHIESTA_ANNULLAMENTO">
+           SELECT TO_CHAR (p.anno) ANNO,
+                 TO_CHAR (p.numero) NUMERO,
+                 TO_CHAR (p.data, 'DD/MM/YYYY') DATA,
+                 TO_CHAR (p.data, 'DD/MM/YYYY HH24:MI:SS') DATAORA,
+                 tr.commento DESC_REGISTRO,
+                 p.oggetto OGGETTO,
+                 pa.data_ins DATA_RICHIESTA_ANNULLAMENTO,
+                 urich.cognome_soggetto COGNOME_RICHIEDENTE_ANN,
+                 urich.nome_soggetto NOME_RICHIEDENTE_ANN,
+                 UNITA.DESCRIZIONE UNITA_RICHIESTA_ANNULLAMENTO,
+                 pa.motivo MOTIVO_RICHIESTA_ANNULLAMENTO
+            FROM agp_protocolli provv,
+                 gdo_documenti_collegati dc,
+                 agp_protocolli p,
+                 AD4_V_UTENTI urich,
+                 agp_protocolli_annullamenti pa,
+                 SO4_V_UNITA_ORGANIZZATIVE_PUBB unita,
+                 gdo_tipi_registro tr
+           WHERE     provv.id_documento = #id
+                 AND dc.id_documento = provv.id_documento
+                 AND p.id_documento = dc.id_collegato
+                 AND pa.id_documento = p.id_documento
+                 AND pa.stato = 'ACCETTATO'
+                 AND urich.utente = pa.utente_ins
+                 AND UNITA.PROGR = PA.UNITA_PROGR
+                 AND UNITA.OTTICA = PA.UNITA_OTTICA
+                 AND UNITA.DAL = pa.unita_dal
+                 AND tr.tipo_registro = p.tipo_registro
+        ORDER BY tr.commento, p.anno, p.numero
+        </query>
+    </queryes>
+    <staticData/>
+</documentRoot>

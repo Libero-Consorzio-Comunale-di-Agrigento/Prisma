@@ -1,0 +1,399 @@
+<cfgIter versioneImport='1.2' id='20854' progressivo='9' revisione='0' tipoOggetto='PROTOCOLLO'>
+    <nome>STANDARD - PROVVEDIMENTO - Protocolla e firma</nome>
+    <descrizione/>
+    <cfgStep id='20855' condizione='' condizioneSblocco='' cfgStepSuccessivoSi='' cfgStepSuccessivoNo='' cfgStepSuccessivoSblocco='' gruppoStep='' attore='84'>
+        <nome>REDAZIONE</nome>
+        <descrizione>Redazione</descrizione>
+        <cfgPulsante id='20858' pulsante='1217' cfgStepSuccessivo=''>
+            <attore id='84'/>
+        </cfgPulsante>
+        <cfgPulsante id='20859' pulsante='5984' cfgStepSuccessivo='20860'>
+            <attore id='84'/>
+        </cfgPulsante>
+        <cfgCompetenza id='20856' attore='84' creazione='false' lettura='true' modifica='false' cancellazione='false' assegnazione='OUT' tipoOggetto='PROTOCOLLO'/>
+        <cfgCompetenza id='20857' attore='84' creazione='false' lettura='true' modifica='true' cancellazione='false' assegnazione='IN' tipoOggetto='PROTOCOLLO'/>
+    </cfgStep>
+    <cfgStep id='20860' condizione='66' condizioneSblocco='' cfgStepSuccessivoSi='' cfgStepSuccessivoNo='' cfgStepSuccessivoSblocco='' gruppoStep='' attore=''>
+        <nome>PASSAGGIO FUNZIONARIO?</nome>
+        <descrizione>PASSAGGIO FUNZIONARIO?</descrizione>
+    </cfgStep>
+    <cfgStep id='20861' condizione='' condizioneSblocco='' cfgStepSuccessivoSi='' cfgStepSuccessivoNo='' cfgStepSuccessivoSblocco='' gruppoStep='' attore='84'>
+        <nome>REVISORE</nome>
+        <descrizione>Revisione Provvedimento</descrizione>
+        <cfgPulsante id='20864' pulsante='1217' cfgStepSuccessivo=''>
+            <attore id='84'/>
+        </cfgPulsante>
+        <cfgPulsante id='20865' pulsante='5984' cfgStepSuccessivo='20860'>
+            <attore id='84'/>
+        </cfgPulsante>
+        <cfgCompetenza id='20863' attore='84' creazione='false' lettura='true' modifica='false' cancellazione='false' assegnazione='OUT' tipoOggetto='PROTOCOLLO'/>
+        <cfgCompetenza id='20862' attore='84' creazione='false' lettura='true' modifica='true' cancellazione='false' assegnazione='IN' tipoOggetto='PROTOCOLLO'/>
+    </cfgStep>
+    <cfgStep id='20866' condizione='' condizioneSblocco='' cfgStepSuccessivoSi='' cfgStepSuccessivoNo='' cfgStepSuccessivoSblocco='' gruppoStep='' attore='86'>
+        <nome>FUNZIONARIO</nome>
+        <descrizione>Controllo Funzionario</descrizione>
+        <cfgPulsante id='20869' pulsante='1217' cfgStepSuccessivo=''>
+            <attore id='86'/>
+        </cfgPulsante>
+        <cfgPulsante id='20870' pulsante='5984' cfgStepSuccessivo='20872'>
+            <attore id='86'/>
+        </cfgPulsante>
+        <cfgPulsante id='20871' pulsante='1260' cfgStepSuccessivo='20861'>
+            <attore id='86'/>
+        </cfgPulsante>
+        <cfgCompetenza id='20867' attore='86' creazione='false' lettura='true' modifica='true' cancellazione='false' assegnazione='IN' tipoOggetto='PROTOCOLLO'/>
+        <cfgCompetenza id='20868' attore='86' creazione='false' lettura='true' modifica='false' cancellazione='false' assegnazione='OUT' tipoOggetto='PROTOCOLLO'/>
+    </cfgStep>
+    <cfgStep id='20872' condizione='' condizioneSblocco='67' cfgStepSuccessivoSi='' cfgStepSuccessivoNo='' cfgStepSuccessivoSblocco='' gruppoStep='' attore='87'>
+        <nome>PROTOCOLLO</nome>
+        <descrizione>FIRMATARIO</descrizione>
+        <cfgPulsante id='20875' pulsante='1217' cfgStepSuccessivo=''>
+            <attore id='87'/>
+        </cfgPulsante>
+        <cfgPulsante id='20876' pulsante='1260' cfgStepSuccessivo='20861'>
+            <attore id='87'/>
+        </cfgPulsante>
+        <cfgPulsante id='20877' pulsante='92' cfgStepSuccessivo='20878'>
+            <attore id='87'/>
+        </cfgPulsante>
+        <cfgCompetenza id='20873' attore='87' creazione='false' lettura='true' modifica='true' cancellazione='false' assegnazione='IN' tipoOggetto='PROTOCOLLO'/>
+        <cfgCompetenza id='20874' attore='87' creazione='false' lettura='true' modifica='false' cancellazione='false' assegnazione='OUT' tipoOggetto='PROTOCOLLO'/>
+    </cfgStep>
+    <cfgStep id='20878' condizione='67' condizioneSblocco='' cfgStepSuccessivoSi='' cfgStepSuccessivoNo='' cfgStepSuccessivoSblocco='' gruppoStep='' attore=''>
+        <nome>FINE</nome>
+        <descrizione>FINE</descrizione>
+        <azioneIngresso id='5983'/>
+        <cfgCompetenza id='20880' attore='87' creazione='false' lettura='true' modifica='true' cancellazione='false' assegnazione='IN' tipoOggetto='PROTOCOLLO'/>
+        <cfgCompetenza id='20879' attore='87' creazione='false' lettura='true' modifica='false' cancellazione='false' assegnazione='OUT' tipoOggetto='PROTOCOLLO'/>
+    </cfgStep>
+    <pulsante id='6014' tipoOggetto='PROTOCOLLO' condizioneVisibilita='6012' competenzaInModifica='true'>
+        <etichetta>Predisponi Protocollo</etichetta>
+        <descrizione>Predisponi Protocollo</descrizione>
+        <icona>/images/icon/action/16x16/detail.png</icona>
+        <tooltip>Predisponi Protocollo</tooltip>
+        <messaggioConferma/>
+        <azione id='136'/>
+        <azione id='6013'/>
+    </pulsante>
+    <pulsante id='6015' tipoOggetto='PROTOCOLLO' condizioneVisibilita='' competenzaInModifica='true'>
+        <etichetta>Salva</etichetta>
+        <descrizione>Salva Documenti Da Fascicolare</descrizione>
+        <icona>/images/icon/action/16x16/save.png</icona>
+        <tooltip>Salva</tooltip>
+        <messaggioConferma/>
+        <azione id='136'/>
+    </pulsante>
+    <pulsante id='1217' tipoOggetto='PROTOCOLLO' condizioneVisibilita='' competenzaInModifica='true'>
+        <etichetta>Salva</etichetta>
+        <descrizione>Salva in redazione</descrizione>
+        <icona>/images/icon/action/16x16/save.png</icona>
+        <tooltip/>
+        <messaggioConferma/>
+    </pulsante>
+    <pulsante id='89' tipoOggetto='PROTOCOLLO' condizioneVisibilita='72' competenzaInModifica='true'>
+        <etichetta>Inoltra</etichetta>
+        <descrizione>Inoltra dopo la Redazione</descrizione>
+        <icona>/images/icon/action/16x16/forward.png</icona>
+        <tooltip>Inoltra</tooltip>
+        <messaggioConferma/>
+        <azione id='1216'/>
+        <azione id='73'/>
+    </pulsante>
+    <pulsante id='1259' tipoOggetto='PROTOCOLLO' condizioneVisibilita='72' competenzaInModifica='true'>
+        <etichetta>Converti in pdf</etichetta>
+        <descrizione>Converti</descrizione>
+        <icona>/images/icon/action/16x16/detail.png</icona>
+        <tooltip/>
+        <messaggioConferma/>
+        <azione id='1246'/>
+    </pulsante>
+    <pulsante id='1260' tipoOggetto='PROTOCOLLO' condizioneVisibilita='' competenzaInModifica='true'>
+        <etichetta>Rimanda al Redattore</etichetta>
+        <descrizione>Il dirigente rimanda il documento al redattore</descrizione>
+        <icona>/images/icon/action/16x16/back.png</icona>
+        <tooltip/>
+        <messaggioConferma/>
+        <azione id='74'/>
+    </pulsante>
+    <pulsante id='1261' tipoOggetto='PROTOCOLLO' condizioneVisibilita='66' competenzaInModifica='true'>
+        <etichetta>Rimanda al Funzionario</etichetta>
+        <descrizione>Il dirigente rimanda il documento al funzionario</descrizione>
+        <icona>/images/icon/action/16x16/back.png</icona>
+        <tooltip>Rifiuta</tooltip>
+        <messaggioConferma/>
+        <azione id='74'/>
+    </pulsante>
+    <pulsante id='1262' tipoOggetto='PROTOCOLLO' condizioneVisibilita='' competenzaInModifica='true'>
+        <etichetta>Firma e Protocolla (con controllo file)</etichetta>
+        <descrizione/>
+        <icona>/images/icon/action/16x16/pen.png</icona>
+        <tooltip/>
+        <messaggioConferma/>
+        <azione id='1248'/>
+        <azione id='73'/>
+        <azione id='76'/>
+        <azione id='77'/>
+        <azione id='78'/>
+        <azione id='79'/>
+    </pulsante>
+    <pulsante id='1263' tipoOggetto='PROTOCOLLO' condizioneVisibilita='' competenzaInModifica='true'>
+        <etichetta>Firma e protocolla</etichetta>
+        <descrizione>Firma il documento con i suoi allegati</descrizione>
+        <icona>/images/icon/action/16x16/pen.png</icona>
+        <tooltip/>
+        <messaggioConferma/>
+        <azione id='73'/>
+        <azione id='76'/>
+        <azione id='77'/>
+        <azione id='78'/>
+        <azione id='79'/>
+    </pulsante>
+    <pulsante id='1264' tipoOggetto='PROTOCOLLO' condizioneVisibilita='6024' competenzaInModifica='false'>
+        <etichetta>Pubblica all'Albo</etichetta>
+        <descrizione>pubblica il documento all'albo</descrizione>
+        <icona>/images/icon/action/16x16/detail.png</icona>
+        <tooltip/>
+        <messaggioConferma/>
+        <azione id='1250'/>
+    </pulsante>
+    <pulsante id='93' tipoOggetto='PROTOCOLLO' condizioneVisibilita='72' competenzaInModifica='true'>
+        <etichetta>Concludi</etichetta>
+        <descrizione>Concludi</descrizione>
+        <icona>/images/icon/action/16x16/forward.png</icona>
+        <tooltip>Concludi</tooltip>
+        <messaggioConferma/>
+    </pulsante>
+    <pulsante id='92' tipoOggetto='PROTOCOLLO' condizioneVisibilita='' competenzaInModifica='true'>
+        <etichetta>Protocolla e Firma</etichetta>
+        <descrizione>Protocolla e Firma</descrizione>
+        <icona>/images/icon/action/16x16/pen.png</icona>
+        <tooltip>Protocolla e Firma</tooltip>
+        <messaggioConferma/>
+        <azione id='1216'/>
+        <azione id='73'/>
+        <azione id='75'/>
+        <azione id='76'/>
+        <azione id='77'/>
+        <azione id='78'/>
+        <azione id='79'/>
+    </pulsante>
+    <pulsante id='1265' tipoOggetto='PROTOCOLLO' condizioneVisibilita='1255' competenzaInModifica='true'>
+        <etichetta>Protocolla</etichetta>
+        <descrizione>Protocolla</descrizione>
+        <icona>/images/icon/action/16x16/number.png</icona>
+        <tooltip>Protocolla</tooltip>
+        <messaggioConferma/>
+        <azione id='73'/>
+        <azione id='135'/>
+        <azione id='6025'/>
+    </pulsante>
+    <pulsante id='1276' tipoOggetto='PROTOCOLLO' condizioneVisibilita='6027' competenzaInModifica='true'>
+        <etichetta>Firma</etichetta>
+        <descrizione>Firma</descrizione>
+        <icona>/images/icon/action/16x16/pen.png</icona>
+        <tooltip>Firma</tooltip>
+        <messaggioConferma/>
+        <azione id='76'/>
+        <azione id='151'/>
+        <azione id='1274'/>
+        <azione id='78'/>
+        <azione id='79'/>
+    </pulsante>
+    <pulsante id='5984' tipoOggetto='PROTOCOLLO' condizioneVisibilita='72' competenzaInModifica='true'>
+        <etichetta>Inoltra</etichetta>
+        <descrizione>Inoltra dopo la Redazione</descrizione>
+        <icona>/images/icon/action/16x16/forward.png</icona>
+        <tooltip>Inoltra</tooltip>
+        <messaggioConferma/>
+        <azione id='1216'/>
+    </pulsante>
+    <attore id='84' utenteAd4='' ruoloAd4='' unitaSo4Dal='' unitaSo4Ottica='' unitaSo4Prog='' metodoDiCalcolo='80' tipoOggetto='PROTOCOLLO'>
+        <nome>Redattore</nome>
+        <descrizione>redattore</descrizione>
+    </attore>
+    <attore id='85' utenteAd4='' ruoloAd4='AGPRED' unitaSo4Dal='' unitaSo4Ottica='' unitaSo4Prog='' metodoDiCalcolo='81' tipoOggetto='PROTOCOLLO'>
+        <nome>UO Protocollante</nome>
+        <descrizione>Uo Protocollante</descrizione>
+    </attore>
+    <attore id='86' utenteAd4='' ruoloAd4='' unitaSo4Dal='' unitaSo4Ottica='' unitaSo4Prog='' metodoDiCalcolo='82' tipoOggetto='PROTOCOLLO'>
+        <nome>Funzionario</nome>
+        <descrizione>Funzionario</descrizione>
+    </attore>
+    <attore id='87' utenteAd4='' ruoloAd4='' unitaSo4Dal='' unitaSo4Ottica='' unitaSo4Prog='' metodoDiCalcolo='83' tipoOggetto='PROTOCOLLO'>
+        <nome>Firmatario</nome>
+        <descrizione>Firmatario della Lettera</descrizione>
+    </attore>
+    <attore id='1256' utenteAd4='' ruoloAd4='' unitaSo4Dal='' unitaSo4Ottica='' unitaSo4Prog='' metodoDiCalcolo='1251' tipoOggetto='PROTOCOLLO'>
+        <nome>Ritorna l'Unit&#xe0; Protocollante e l'Ufficio Esibente</nome>
+        <descrizione>Ritorna l'Unit&#xe0; Protocollante e l'Ufficio Esibente</descrizione>
+    </attore>
+    <attore id='1257' utenteAd4='' ruoloAd4='' unitaSo4Dal='' unitaSo4Ottica='' unitaSo4Prog='' metodoDiCalcolo='1252' tipoOggetto='PROTOCOLLO'>
+        <nome>Utente Competenze Funzionali</nome>
+        <descrizione>Questo attore serve per poter dare in lettura / modifica un documento usando le competenze funzionali.
+            Nel nodo richiesto, va aggiunta una riga di competenza con tutti i flag non spuntati.</descrizione>
+    </attore>
+    <attore id='5013' utenteAd4='' ruoloAd4='AGPPUBBL' unitaSo4Dal='' unitaSo4Ottica='' unitaSo4Prog='' metodoDiCalcolo='' tipoOggetto='PROTOCOLLO'>
+        <nome>Utenti con ruolo AGPPUBBL</nome>
+        <descrizione>Utenti che possono pubblicare all'albo.</descrizione>
+    </attore>
+    <attore id='1258' utenteAd4='' ruoloAd4='' unitaSo4Dal='' unitaSo4Ottica='' unitaSo4Prog='' metodoDiCalcolo='1253' tipoOggetto='PROTOCOLLO'>
+        <nome>UO esibente </nome>
+        <descrizione>Ritorna l'Ufficio Esibente (se non &#xe8; presente viene restituita l'Uo Protocollante)</descrizione>
+    </attore>
+    <azione id='6012' tipo='CONDIZIONE' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='utentePuoPredisporre' categoria=''>
+        <nome>L'utente pu&#xf2; predisporre il protocollo?</nome>
+        <descrizione>Indica se l'utente ha la possibilit&#xe0; di predisporre il protocollo</descrizione>
+    </azione>
+    <azione id='136' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='validaFascicoloECLassifica' categoria=''>
+        <nome>Controlla Fascicolo, Classifica in base ai parametri</nome>
+        <descrizione>Controlla la presenza di Fascicolo, Classifica considerando i parametri FASC_OB e CLASS_OB.</descrizione>
+    </azione>
+    <azione id='6013' tipo='PULSANTE' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='apriProtocollo' categoria=''>
+        <nome>Apre protocollo.</nome>
+        <descrizione>Apre la pagina di protocollo.</descrizione>
+    </azione>
+    <azione id='80' tipo='CALCOLO_ATTORE' tipoOggetto='PROTOCOLLO' nomeBean='documentoSoggettoAction' nomeMetodo='getUtenteREDATTORE' categoria=''>
+        <nome>Ritorna l'utente REDATTORE</nome>
+        <descrizione>Ritorna l'utente REDATTORE del documento PROTOCOLLO</descrizione>
+    </azione>
+    <azione id='1246' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='convertiAllegatiPdf' categoria=''>
+        <nome>Converti in pdf tutti gli allegati</nome>
+        <descrizione>Converti in pdf tutti gli allegati</descrizione>
+    </azione>
+    <azione id='66' tipo='CONDIZIONE' tipoOggetto='PROTOCOLLO' nomeBean='documentoSoggettoAction' nomeMetodo='haUtenteFUNZIONARIO' categoria=''>
+        <nome>Ritorna TRUE se &#xe8; presente il soggetto FUNZIONARIO</nome>
+        <descrizione>Ritorna TRUE se &#xe8; presente il soggetto FUNZIONARIO del documento PROTOCOLLO</descrizione>
+    </azione>
+    <azione id='67' tipo='CONDIZIONE' tipoOggetto='PROTOCOLLO' nomeBean='firmaAction' nomeMetodo='isStatoFirmaFirmato' categoria=''>
+        <nome>Il documento &#xe8; in stato firmato?</nome>
+        <descrizione>Ritorna TRUE se il documento ha stato_firma = FIRMATO, false altrimenti</descrizione>
+    </azione>
+    <azione id='68' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='firmaAction' nomeMetodo='setStatoFirmaDaFirmare' categoria=''>
+        <nome>Imposta il documento come DA FIRMARE</nome>
+        <descrizione>Imposta il campo stato_firma = DA_FIRMARE</descrizione>
+    </azione>
+    <azione id='72' tipo='CONDIZIONE' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='esisteDocumento' categoria=''>
+        <nome>Il documento esiste?</nome>
+        <descrizione>Controlla documento esiste</descrizione>
+    </azione>
+    <azione id='73' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='validaProtocollazione' categoria=''>
+        <nome>Valida la Protocollazione</nome>
+        <descrizione>Controlla Fascicolo, Classifica, Destinatari e Smistamenti prima della protocollazione.</descrizione>
+    </azione>
+    <azione id='135' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='protocolla' categoria=''>
+        <nome>Protocolla il documento</nome>
+        <descrizione>Protocollo il documento. Protocolla solo se sono soddisfatti i criteri (cio&#xe8; se il documento no &#xe8; gi&#xe0; protocollato e se sono presenti classifica e fascicolo quando richiesti)</descrizione>
+    </azione>
+    <azione id='69' tipo='CONDIZIONE' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='sbloccaFlussoInvioPec' categoria=''>
+        <nome>Ritorna TRUE se la conclusione del flusso &#xe8; automatica dopo l'INVIO della PEC</nome>
+        <descrizione>Ritorna TRUE se la conclusione del flusso &#xe8; automatica dopo l'INVIO della PEC</descrizione>
+    </azione>
+    <azione id='6025' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='invioSmistamenti' categoria=''>
+        <nome>Invio Smistamenti</nome>
+        <descrizione>Invio degli smistamenti di un protocollo</descrizione>
+    </azione>
+    <azione id='134' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='notificheAction' nomeMetodo='notificaCambioNodo' categoria=''>
+        <nome>Notifica del Cambio Nodo</nome>
+        <descrizione>Notifica del Cambio Nodo</descrizione>
+    </azione>
+    <azione id='71' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='eliminazioneNotificaInvioPec' categoria=''>
+        <nome>Eliminazione notifiche dopo Invio Pec</nome>
+        <descrizione>Eliminazione notifiche dopo Invio Pec e cambio di nodo</descrizione>
+    </azione>
+    <azione id='1216' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='controllaEditorApertoETestoLockato' categoria=''>
+        <nome>Controlla che l'Editor di testo sia aperto e che il testo sia lokato</nome>
+        <descrizione>Controlla che l'Editor di testo sia aperto e che il testo sia lokato (utile come controllo nell'azione protocolla e firma</descrizione>
+    </azione>
+    <azione id='74' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='firmaAction' nomeMetodo='resetStatoFirma' categoria=''>
+        <nome>Reset del campo stato firma</nome>
+        <descrizione>Reset del campo stato firma</descrizione>
+    </azione>
+    <azione id='1248' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='controllaAllegatiNonPdfPresenti' categoria=''>
+        <nome>Controlla che non esistano allegati da firmare di formati consentiti ma di cui non &#xe8; prevista la conversione in PDF</nome>
+        <descrizione>Controlla che non esistano allegati da firmare di formati consentiti ma di cui non &#xe8; prevista la conversione in PDF</descrizione>
+    </azione>
+    <azione id='76' tipo='AUTOMATICA_CALCOLO_ATTORE' tipoOggetto='PROTOCOLLO' nomeBean='firmaAction' nomeMetodo='addFirmatarioDefault' categoria=''>
+        <nome>Aggiunge il Firmatario di default per la firma.</nome>
+        <descrizione>Aggiunge il Firmatario di default alla coda dei firmatari per la firma, se il firmatario non &#xe8; valorizzato, utilizza l'utente corrente che viene anche impostato sul documento.</descrizione>
+    </azione>
+    <azione id='77' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='firmaAction' nomeMetodo='predisponiDocumento' categoria=''>
+        <nome>Prepara il documento per la firma con allegati.</nome>
+        <descrizione>Prepara il firmatario, aggiunge il testo del documento alla firma, aggiunge gli allegati del documento in stato DA_FIRMARE alla firma.</descrizione>
+    </azione>
+    <azione id='78' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='firmaAction' nomeMetodo='finalizzaTransazioneFirma' categoria=''>
+        <nome>Predispone la Firma</nome>
+        <descrizione>Conclude la transazione di firma e costruisce l'url della popup di firma.</descrizione>
+    </azione>
+    <azione id='79' tipo='CLIENT' tipoOggetto='PROTOCOLLO' nomeBean='clientAction' nomeMetodo='apriPopupFirma' categoria=''>
+        <nome>Apre popup Firma</nome>
+        <descrizione>Apre la popup di firma</descrizione>
+    </azione>
+    <azione id='6024' tipo='CONDIZIONE' tipoOggetto='PROTOCOLLO' nomeBean='controlloPubblicaAction' nomeMetodo='controllaVisibilita' categoria=''>
+        <nome>L'utente pu&#xf2; pubblicare all'albo?</nome>
+        <descrizione>Verifica se l'utente ha il privilegio di pubblicare all'albo</descrizione>
+    </azione>
+    <azione id='1250' tipo='CLIENT' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='pubblicaAlbo' categoria=''>
+        <nome>Apre la pubblicazione dell'albo jmessi</nome>
+        <descrizione>Apre una popup con la pubblicazione all'albo jmessi.</descrizione>
+    </azione>
+    <azione id='81' tipo='CALCOLO_ATTORE' tipoOggetto='PROTOCOLLO' nomeBean='protocolloSoggettiAction' nomeMetodo='getUnitaProtocollante' categoria=''>
+        <nome>Ritorna l'Unit&#xe0; Protocollante</nome>
+        <descrizione>Ritorna l'Unit&#xe0; Protocollante (se presente)</descrizione>
+    </azione>
+    <azione id='82' tipo='CALCOLO_ATTORE' tipoOggetto='PROTOCOLLO' nomeBean='documentoSoggettoAction' nomeMetodo='getUtenteFUNZIONARIO' categoria=''>
+        <nome>Ritorna l'utente FUNZIONARIO</nome>
+        <descrizione>Ritorna l'utente FUNZIONARIO del documento PROTOCOLLO</descrizione>
+    </azione>
+    <azione id='83' tipo='CALCOLO_ATTORE' tipoOggetto='PROTOCOLLO' nomeBean='documentoSoggettoAction' nomeMetodo='getUtenteFIRMATARIO' categoria=''>
+        <nome>Ritorna l'utente FIRMATARIO</nome>
+        <descrizione>Ritorna l'utente FIRMATARIO del documento PROTOCOLLO</descrizione>
+    </azione>
+    <azione id='1251' tipo='CALCOLO_ATTORE' tipoOggetto='PROTOCOLLO' nomeBean='protocolloSoggettiAction' nomeMetodo='getUnitaProtocollanteEUfficioEsibente' categoria=''>
+        <nome>Ritorna l'Unit&#xe0; Protocollante e l'Ufficio Esibente</nome>
+        <descrizione>Ritorna l'Unit&#xe0; Protocollante e l'Ufficio Esibente</descrizione>
+    </azione>
+    <azione id='1252' tipo='CALCOLO_ATTORE' tipoOggetto='PROTOCOLLO' nomeBean='protocolloSoggettiAction' nomeMetodo='getUtenteCorrente' categoria=''>
+        <nome>Ritorna l'Utente Corrente</nome>
+        <descrizione>Ritorna l'Utente Corrente</descrizione>
+    </azione>
+    <azione id='70' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='notificheAction' nomeMetodo='notificaFirmatario' categoria=''>
+        <nome>Notifica dello Step DA INVIARE al Firmatario</nome>
+        <descrizione>Notifica di Cambio Step, usata nello step DA INVIARE, per inviare la stessa notifica al Firmatario</descrizione>
+    </azione>
+    <azione id='75' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='protocollaPreFirma' categoria=''>
+        <nome>Protocolla il documento prima della firma</nome>
+        <descrizione>Protocollo il documento sul protocollo definito dalle impostazioni. Protocolla solo se sono soddisfatti i criteri (cio&#xe8; se il documento no &#xe8; gi&#xe0; protocollato e se sono presenti classifica e fascicolo quando richiesti)</descrizione>
+    </azione>
+    <azione id='1253' tipo='CALCOLO_ATTORE' tipoOggetto='PROTOCOLLO' nomeBean='protocolloSoggettiAction' nomeMetodo='getUnitaUfficioEsibente' categoria=''>
+        <nome>Ritorna l'Ufficio Esibente (se presente)</nome>
+        <descrizione>Ritorna l'Ufficio Esibente (se non &#xe8; presente viene restituita l'Uo Protocollante)</descrizione>
+    </azione>
+    <azione id='1254' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='validaDimensioneAllegati' categoria=''>
+        <nome>Controlla la dimensione degli allegati</nome>
+        <descrizione>Controlla la dimensione degli allegati.</descrizione>
+    </azione>
+    <azione id='1255' tipo='CONDIZIONE' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='isNonProtocollato' categoria=''>
+        <nome>Ritorna TRUE se il documento non &#xe8; protocollato</nome>
+        <descrizione>Ritorna TRUE se il documento non &#xe8; protocollato</descrizione>
+    </azione>
+    <azione id='6027' tipo='CONDIZIONE' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='verificaPulsanteFirma' categoria=''>
+        <nome>Il documento &#xe8; da firmare?</nome>
+        <descrizione>Verifica se il documento &#xe8; non finalizzato e se l'utente ha i privilegi per firmarlo</descrizione>
+    </azione>
+    <azione id='151' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='firmaAction' nomeMetodo='predisponiAllegati' categoria=''>
+        <nome>Prepara gli allegati per la firma.</nome>
+        <descrizione>Aggiunge gli allegati del documento contrassegnati come DA_FIRMARE alla firma.</descrizione>
+    </azione>
+    <azione id='1274' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='firmaAction' nomeMetodo='predisponiFilePrincipaleSenzaTrasformareInPDF' categoria=''>
+        <nome>Prepara il testo principale per la firma senza trasformare in pdf (non &#xe8; necessario il modello testo associato)</nome>
+        <descrizione>Prepara il firmatario, aggiunge il testo del documento alla firma, non trasforma in pdf, non aggiunge gli allegati.</descrizione>
+    </azione>
+    <azione id='5983' tipo='AUTOMATICA' tipoOggetto='PROTOCOLLO' nomeBean='protocolloAction' nomeMetodo='annullaProtocolli' categoria=''>
+        <nome>Annulla protocolli provvedimento</nome>
+        <descrizione>Annulla protocolli: alla protocollazione (se il documento &#xe8; gi&#xe0; firmato) oppure alla firma (se il documento &#xe8; gi&#xe0; protocollato)</descrizione>
+    </azione>
+    <tipoOggetto codice='PROTOCOLLO' oggettiFigli=''>
+        <nome>PROTOCOLLO</nome>
+        <descrizione>Protocollo</descrizione>
+    </tipoOggetto>
+</cfgIter>

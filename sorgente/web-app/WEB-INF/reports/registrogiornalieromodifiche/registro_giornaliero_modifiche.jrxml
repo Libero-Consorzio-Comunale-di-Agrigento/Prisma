@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final utlizzo versione della libreria JasperReports6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registro_giornaliero_modifiche" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="30" rightMargin="30" topMargin="20" bottomMargin="20" uuid="af3a70d7-a22d-4d68-9528-4d6bf4d4105d">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="113"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="svi-agsflex.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="Arial" fontSize="10"/>
+	<parameter name="REPORT_PATH" class="java.lang.String">
+		<defaultValueExpression><![CDATA["./"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_DA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["22/08/2019"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DATA_A" class="java.lang.String">
+		<defaultValueExpression><![CDATA["22/08/2019"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.ANNO, p.NUMERO, p.DATA, spr_p.IDRIF, p.ID_DOCUMENTO, p.OGGETTO
+     , 'N. '||p.numero||' del '||to_char(p.data, 'dd/mm/yyyy')||' '||initcap(lower(p.movimento)) DESC_DOC
+     , TR.COMMENTO DESCRIZIONE_TIPO_REGISTRO, P.movimento MODALITA, i.HASHCODE
+  from agp_protocolli p
+     , gdo_documenti d
+     , gdo_file_documento fd
+     , GDM_SPR_PROTOCOLLI spr_p
+     , GDO_TIPI_REGISTRO tr
+     , gdm_oggetti_file o
+     , GDM_IMPRONTE_FILE i
+ where p.id_documento = d.id_documento
+   and spr_p.id_documento = d.id_documento_esterno
+   and TR.TIPO_REGISTRO = p.tipo_registro
+   and FD.CODICE(+) = 'FILE_PRINCIPALE'
+   and fd.id_documento(+) = d.id_documento
+   and o.id_oggetto_file(+) = fd.id_file_esterno
+   and i.filename(+) = o.filename
+   and i.id_documento(+) = o.id_documento
+   and p.numero > 0
+   and exists (select 1 
+   	from agp_protocolli_log pl, revinfo r 
+   	where pl.id_documento = p.id_documento 
+   	and pl.rev = r.rev 
+ 	and trunc(r.revtstmp) >= to_date($P{DATA_DA}, 'dd/mm/yyyy')
+   	and trunc(r.revtstmp) <= to_date($P{DATA_A}, 'dd/mm/yyyy')
+   )
+ order by p.anno asc, p.numero asc]]>
+	</queryString>
+	<field name="ANNO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ANNO"/>
+	</field>
+	<field name="NUMERO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="NUMERO"/>
+	</field>
+	<field name="DATA" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="DATA"/>
+	</field>
+	<field name="IDRIF" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="IDRIF"/>
+	</field>
+	<field name="ID_DOCUMENTO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ID_DOCUMENTO"/>
+	</field>
+	<field name="OGGETTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="OGGETTO"/>
+	</field>
+	<field name="DESC_DOC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESC_DOC"/>
+	</field>
+	<field name="DESCRIZIONE_TIPO_REGISTRO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DESCRIZIONE_TIPO_REGISTRO"/>
+	</field>
+	<field name="MODALITA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="MODALITA"/>
+	</field>
+	<field name="HASHCODE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="HASHCODE"/>
+	</field>
+	<variable name="PAGINA" class="java.lang.Integer" resetType="Page">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+		<initialValueExpression><![CDATA[new Integer(0)]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL_PAGE_NUMBER" class="java.lang.Integer">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+	</variable>
+	<group name="NUMERO">
+		<groupExpression><![CDATA[$F{NUMERO}]]></groupExpression>
+		<groupFooter>
+			<band height="7">
+				<line>
+					<reportElement x="0" y="3" width="534" height="1" uuid="26e273a1-60be-45f4-b650-dddbacda5ee9"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<image hyperlinkType="null">
+				<reportElement key="image-1" mode="Opaque" x="118" y="5" width="405" height="85" uuid="2f1e770d-6b9a-4b68-b96c-f572add230fb"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<imageExpression><![CDATA[$P{REPORT_PATH}+"logo.gif"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="false">
+				<reportElement key="" x="1" y="97" width="534" height="25" isRemoveLineWhenBlank="true" uuid="d8081d03-fb42-4840-87d0-c2bf1b5a8101"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Documenti modificati "+(($P{DATA_A}.substring(0,10).equals($P{DATA_DA}.substring(0,10)))? "il " : "dal "+$P{DATA_DA}+" al ")+$P{DATA_A}.substring(0,10)]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="80">
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-5" positionType="Float" mode="Opaque" x="1" y="62" width="516" height="18" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" forecolor="#000000" backcolor="#FFFFFF" uuid="3150be1a-6c6d-4740-b1bf-4b9e6b6c17dc"/>
+				<subreportParameter name="ID_DOCUMENTO">
+					<subreportParameterExpression><![CDATA[$F{ID_DOCUMENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{REPORT_PATH} + "registro_giornaliero_modifiche_per_documento.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-6" positionType="Float" mode="Opaque" x="1" y="34" width="522" height="16" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" forecolor="#000000" backcolor="#FFFFFF" uuid="3150be1a-6c6d-4740-b1bf-4b9e6b6c17dc"/>
+				<subreportParameter name="ID_DOCUMENTO">
+					<subreportParameterExpression><![CDATA[$F{ID_DOCUMENTO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{REPORT_PATH} + "registro_giornaliero_modifiche_corrispondenti.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="1" y="3" width="533" height="13" uuid="e0df227c-32bd-4736-8961-1da5f831cc4d"/>
+				<textElement markup="styled">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESC_DOC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="21" width="78" height="13" uuid="f877dc43-b4f6-4746-b096-d824ca1649cf"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Oggetto:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="87" y="21" width="436" height="13" isRemoveLineWhenBlank="true" uuid="b0e3e157-779a-43f0-8af9-7917b971764e"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OGGETTO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="1" y="50" width="522" height="12" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" backcolor="#FFFFFF" uuid="8c433f96-7ea4-4ff4-aa67-f65b5e42da23">
+					<printWhenExpression><![CDATA[$F{HASHCODE} != null && !$F{HASHCODE}.equals("")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Impronta File: "+$F{HASHCODE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<printWhenExpression><![CDATA[true]]></printWhenExpression>
+			<textField evaluationTime="Page" isBlankWhenNull="false">
+				<reportElement key="" x="402" y="0" width="95" height="13" uuid="9bffb404-c6ed-4d8d-aa6d-f827baa50872"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" di "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="" x="499" y="0" width="35" height="13" uuid="6e468abd-6514-47ca-aef0-e9aaae9628c6"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<documentRoot>
+	<descrizione>Registro Protocolli Modificati</descrizione>
+	<connections>
+		<connectionJNDI>jdbc/agspr</connectionJNDI>
+	</connections>
+	<testStaticData>
+		<documentRoot>
+			<registro_modifiche>
+				<AMMINISTRAZIONE>AMMINISTRAZIONE</AMMINISTRAZIONE>
+				<CODICE_AMMINISTRAZIONE>C_AMMINISTRAZIONE</CODICE_AMMINISTRAZIONE>
+				<AOO>DENOMINAZIONE_AOO</AOO>
+				<CODICE_AOO>C_AOO</CODICE_AOO>
+				<DATA_ESTRAZIONE>22/10/2019</DATA_ESTRAZIONE>
+				<DATA_INIZIO_INTERVALLO>22/10/2019</DATA_INIZIO_INTERVALLO>
+				<DATA_FINE_INTERVALLO>22/10/2019</DATA_FINE_INTERVALLO>
+			</registro_modifiche>
+			<elenco_protocolli>
+				<NUMERO>0000100</NUMERO>
+				<DATA>12/10/2019</DATA>
+				<OGGETTO>PROTOCOLLO 1</OGGETTO>
+				<MOVIMENTO>ARRIVO</MOVIMENTO>
+				<CORRISPONDENTI>CORRISPONDENTE 1</CORRISPONDENTI>
+				<FILE_HASH>IMPRONTA FILE 1</FILE_HASH>
+			</elenco_protocolli>
+			<protocollo_modifiche>
+				<UTENTE_AGGIORNAMENTO>ROSSI MARIO</UTENTE_AGGIORNAMENTO>
+				<DATA_AGGIORNAMENTO>22/10/2019 10:51</DATA_AGGIORNAMENTO>
+			</protocollo_modifiche>
+			<protocollo_dettaglio_modifica>
+				<OPERAZIONE>Modificato movimento</OPERAZIONE>
+				<VALORE_NUOVO>PARTENZA</VALORE_NUOVO>
+				<VALORE_PRECEDENTE>INTERNO</VALORE_PRECEDENTE>
+			</protocollo_dettaglio_modifica>
+		</documentRoot>
+	</testStaticData>
+	<definitions>
+		<!-- DEFINIZIONE PARAMETRI DI INPUT -->
+		<metaDato tipoParametro="input">
+			<nomeSimbolico>id</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>id del registro giornaliero di protocollo</descrizione>
+			<path/>
+		</metaDato>
+		<!-- DEFINIZIONE CAMPI DELLA QUERY -->
+		<metaDato tipoParametro="input">
+			<nomeSimbolico>ID_ENTE</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>id dell'amministrazione</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>AMMINISTRAZIONE</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Codice dell'amministrazione</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>CODICE_AMMINISTRAZIONE</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Codice dell'amministrazione</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>AOO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Denominazione dell'aoo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>CODICE_AOO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Codice dell'aoo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>PRIMO_NUMERO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Primo numero di protocollo presente nel registro</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>DATA_ESTRAZIONE</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Data di ricerca dei protocolli modificati</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>ULTIMO_NUMERO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Ultimo numero di protocollo presente nel registro</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>DATA_INIZIO_INTERVALLO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Data e ora di ricerca dei protocolli modificati</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>DATA_FINE_INTERVALLO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Data e ora di ricerca dei protocolli modificati</descrizione>
+			<path/>
+		</metaDato>		
+		<metaDato>
+			<nomeSimbolico>ID_DOCUMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Id del protocollo modificato</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>NUMERO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Numero del protocollo modificato</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>DATA</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Data di protocollazione del protocollo modificato</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>OGGETTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Oggetto del protocollo modificato</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>MOVIMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Movimento del protocollo modificato</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>CORRISPONDENTI</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Corrispondenti del protocollo modificato</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>FILE_HASH</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Impronta del file principale</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>UTENTE</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Codice utente Ad4 che ha effettuato la modifica</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>UTENTE_AGGIORNAMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Utente che ha effettuato la modifica</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>DATA_AGGIORNAMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Data in cui il protocollo è stato modificato</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>ORA_AGGIORNAMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Ora e minuti in cui è stata effettuata la modifica</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>OPERAZIONE</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Operazione effettuata</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>VALORE_NUOVO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Nuovo valore inserito</descrizione>
+			<path/>
+		</metaDato>	
+		<metaDato>
+			<nomeSimbolico>VALORE_PRECEDENTE</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Valore precedente</descrizione>
+			<path/>
+		</metaDato>	
+	</definitions>
+	<queryes>
+		<query id="registro_modifiche"
+			   child="elenco_protocolli"
+               help_descrizione="Ritorna i dati del registro delle modifiche di protocollo."
+               help_query_alias="rm"
+               help_field_aliases="AMMINISTRAZIONE, CODICE_AMMINISTRAZIONE, CODICE_AOO, AOO, DATA_ESTRAZIONE">
+			   select  sogg_amm.denominazione AMMINISTRAZIONE
+					 , ge.amministrazione CODICE_AMMINISTRAZIONE
+					 , aoo.descrizione AOO
+					 , aoo.codice CODICE_AOO
+					 , reg_giorn.primo_numero PRIMO_NUMERO
+					 , reg_giorn.ultimo_numero ULTIMO_NUMERO
+					 , to_char(reg_giorn.ricerca_data_dal,'dd/mm/yyyy') DATA_ESTRAZIONE
+					 , to_char(reg_giorn.ricerca_data_al,'dd/mm/yyyy')||' 00:00:00' DATA_INIZIO_INTERVALLO
+					 , to_char(reg_giorn.ricerca_data_al,'dd/mm/yyyy')||' 23:59:59' DATA_FINE_INTERVALLO
+					 , ge.id_ente ID_ENTE
+				  from agp_protocolli_dati_reg_giorn reg_giorn
+					 , agp_protocolli prot
+					 , gdo_documenti gd
+					 , gdo_enti ge
+					 , so4_v_amministrazioni amm
+					 , as4_v_soggetti_correnti sogg_amm
+					 , so4_v_aoo aoo
+				 where reg_giorn.id_protocollo_dati_reg_giorn = #id
+				   and prot.id_protocollo_dati_reg_giorn = reg_giorn.id_protocollo_dati_reg_giorn
+				   and prot.id_documento = gd.id_documento
+				   and gd.id_ente = ge.id_ente
+				   and ge.amministrazione = amm.codice
+				   and sogg_amm.ni = amm.id_soggetto
+				   and aoo.amministrazione = ge.amministrazione
+				   and aoo.codice = ge.aoo
+		</query>
+		<query id="elenco_protocolli"
+			   child="protocollo_modifiche"
+               help_descrizione="Ritorna l'elenco dei protocolli modificati e i loro dati attuali"
+               help_query_alias="ep"
+               help_field_aliases="NUMERO, DATA, OGGETTO, MOVIMENTO, CORRISPONDENTI, FILE_HASH">
+				select id_documento id_documento
+					 , numero numero
+					 , to_char (data, 'dd/mm/yyyy hh24:mi:ss') data
+					 , oggetto oggetto
+					 , initcap (movimento) movimento
+					 , agp_utility_pkg.get_corrispondenti_protocollo (id_documento, decode (movimento, 'PARTENZA', 'DEST', 'MITT')) corrispondenti
+					 , (select gif.hashcode
+						  from (select f.id_file_esterno id_file, d.id_documento id_documento
+								  from gdo_documenti d, gdo_file_documento f
+								 where d.valido = 'Y'
+								   and f.id_documento = d.id_documento
+								   and f.codice in ('FILE_PRINCIPALE')) file_doc
+							 , gdm_impronte_file gif
+							 , gdm_oggetti_file gof
+						 where gof.id_oggetto_file = file_doc.id_file
+						   and gif.id_documento = gof.id_documento
+						   and gif.filename = gof.filename
+						   and file_doc.id_documento = prot.id_documento)
+						  file_hash
+					 , @data_inizio_intervallo data_inizio_intervallo
+					 , @data_fine_intervallo data_fine_intervallo
+				  from agp_protocolli prot
+				 where prot.data is not null
+				   and prot.numero is not null
+				   and prot.id_documento in (select id_documento
+											   from agp_registro_modifiche
+											  where id_ente = @id_ente
+												and data_upd between to_date ( @data_inizio_intervallo, 'dd/mm/yyyy hh24:mi:ss') and to_date ( @data_fine_intervallo, 'dd/mm/yyyy hh24:mi:ss')) 
+</query>
+<query id="protocollo_modifiche"
+	   child="protocollo_dettaglio_modifica"
+	   help_descrizione="Restituisce le modifiche effettuate sul singolo protocollo raggruppate per utente, ora e minuto"
+	   help_query_alias="pm"
+	   help_field_aliases="UTENTE_AGGIORNAMENTO, DATA_AGGIORNAMENTO">
+		select p.id_documento ID_DOCUMENTO
+			 , gdl.utente_upd UTENTE
+			 , agp_utility_pkg.get_cognome_nome (gdl.utente_upd) UTENTE_AGGIORNAMENTO
+			 , to_char (gdl.data_upd, 'dd/mm/yyyy hh24:mi') DATA_AGGIORNAMENTO
+		  from agp_protocolli_log pl
+			 , agp_protocolli p
+			 , gdo_documenti_log gdl
+			 , agp_protocolli_log log_protocollazione
+		 where p.id_documento = @ID_DOCUMENTO
+		   and p.id_documento = pl.id_documento
+		   and pl.anno_mod = 0
+		   and pl.oggetto_mod = 1
+		   and log_protocollazione.id_documento = pl.id_documento
+		   and log_protocollazione.data_mod = 1
+		   and pl.rev > log_protocollazione.rev
+		   and gdl.data_log = trunc (to_date (@DATA_INIZIO_INTERVALLO, 'dd/mm/yyyy hh24:mi:ss'))
+		   and gdl.rev = pl.rev
+		union
+		select p.id_documento
+			 , gdl.utente_upd
+			 , agp_utility_pkg.get_cognome_nome (gdl.utente_upd) utente_aggiornamento
+			 , to_char (gdl.data_upd, 'dd/mm/yyyy hh24:mi') data_aggiornamento
+		  from agp_protocolli_log pl
+			 , agp_protocolli p
+			 , gdo_documenti_log gdl
+			 , agp_protocolli_log log_protocollazione
+		 where p.id_documento = @ID_DOCUMENTO
+		   and p.id_documento = pl.id_documento
+		   and pl.anno_mod = 0
+		   and pl.movimento_mod = 1
+		   and log_protocollazione.id_documento = pl.id_documento
+		   and log_protocollazione.data_mod = 1
+		   and pl.rev > log_protocollazione.rev
+		   and gdl.data_log = trunc (to_date (@DATA_INIZIO_INTERVALLO, 'dd/mm/yyyy hh24:mi:ss'))
+		   and gdl.rev = pl.rev
+		union
+		select p.id_documento
+			 , pl.utente_upd
+			 , agp_utility_pkg.get_cognome_nome (pl.utente_upd) utente_aggiornamento
+			 , to_char (pl.data_upd, 'dd/mm/yyyy hh24:mi') data_aggiornamento
+		  from agp_protocolli_corr_log pl, agp_protocolli p, agp_protocolli_log log_protocollazione
+		 where p.id_documento = @ID_DOCUMENTO
+		   and p.id_documento = pl.id_documento
+		   and ( (pl.revtype = 1
+			  and (pl.denominazione_mod = 1
+				or pl.codice_fiscale_mod = 1
+				or pl.partita_iva_mod = 1
+				or pl.indirizzo_mod = 1
+				or pl.comune_mod = 1
+				or pl.provincia_sigla_mod = 1
+				or pl.cap_mod = 1
+				or pl.email_mod = 1))
+			 or (pl.revtype in (0, 2)))
+		   and pl.data_log = trunc (to_date (@DATA_INIZIO_INTERVALLO, 'dd/mm/yyyy hh24:mi:ss'))
+		   and log_protocollazione.id_documento = pl.id_documento
+		   and log_protocollazione.data_mod = 1
+		   and pl.rev > log_protocollazione.rev
+		union
+		select p.id_documento
+			 , pl.utente_upd
+			 , agp_utility_pkg.get_cognome_nome (pl.utente_upd) utente_aggiornamento
+			 , to_char (pl.data_upd, 'dd/mm/yyyy hh24:mi') data_aggiornamento
+		  from gdo_file_documento_log pl, agp_protocolli p, agp_protocolli_log log_protocollazione
+		 where p.id_documento = @ID_DOCUMENTO
+		   and p.id_documento = pl.id_documento
+		   and log_protocollazione.id_documento = pl.id_documento
+		   and log_protocollazione.data_mod = 1
+		   and pl.rev > log_protocollazione.rev
+		   and pl.data_log = trunc (to_date (@DATA_INIZIO_INTERVALLO, 'dd/mm/yyyy hh24:mi:ss'))
+		union
+		select p.id_documento
+			 , pl.utente_upd
+			 , agp_utility_pkg.get_cognome_nome (pl.utente_upd) utente_aggiornamento
+			 , to_char (pl.data_upd, 'dd/mm/yyyy hh24:mi') data_aggiornamento
+		  from gdo_file_documento_log pl
+			 , gdo_documenti_collegati gdc
+			 , agp_protocolli_log log_protocollazione
+			 , agp_protocolli p
+		 where p.id_documento = @ID_DOCUMENTO
+		   and pl.data_log = trunc (to_date (@DATA_INIZIO_INTERVALLO, 'dd/mm/yyyy hh24:mi:ss'))
+		   and p.id_documento = gdc.id_documento
+		   and pl.id_documento = gdc.id_collegato
+		   and p.data is not null
+		   and pl.codice = 'FILE_ALLEGATO'
+		   and p.id_documento = log_protocollazione.id_documento
+		   and log_protocollazione.data_mod = 1
+		   and pl.rev > log_protocollazione.rev
+		order by data_aggiornamento, utente_aggiornamento 
+</query>                
+<query id="protocollo_dettaglio_modifica"
+	   help_descrizione="Restituisce la singola modifica effettuate sul protocollo"
+	   help_query_alias="pdm"
+	   help_field_aliases="OPERAZIONE, VALORE_NUOVO, VALORE_PRECEDENTE">
+        select 'Modificato oggetto' OPERAZIONE
+		     , pl.oggetto VALORE_NUOVO
+			 , pl_prec.oggetto VALORE_PRECEDENTE
+          from agp_protocolli_log pl
+             , agp_protocolli p
+             , (select oggetto, id_documento, rev from agp_protocolli_log) pl_prec
+             , gdo_documenti_log gdl
+             , agp_protocolli_log log_protocollazione
+         where p.id_documento = @ID_DOCUMENTO
+           and gdl.utente_upd = @UTENTE
+           and to_char (gdl.data_upd, 'dd/mm/yyyy hh24:mi') = @DATA_AGGIORNAMENTO
+           and p.id_documento = pl.id_documento
+           and pl.anno_mod = 0
+           and pl.oggetto_mod = 1
+           and log_protocollazione.id_documento = pl.id_documento
+           and log_protocollazione.data_mod = 1
+           and pl.rev > log_protocollazione.rev
+           and pl_prec.id_documento = p.id_documento
+           and gdl.rev = pl.rev
+           and pl_prec.rev = (select max (rev)
+                                from agp_protocolli_log
+                               where id_documento = p.id_documento
+                                 and pl.rev > rev)
+        union
+        select 'Modificato movimento' operazione, pl.movimento valore_nuovo, pl_prec.movimento valore_precedente
+          from agp_protocolli_log pl
+             , agp_protocolli p
+             , (select movimento, id_documento, rev from agp_protocolli_log) pl_prec
+             , gdo_documenti_log gdl
+             , agp_protocolli_log log_protocollazione
+         where p.id_documento = @ID_DOCUMENTO
+           and gdl.utente_upd = @UTENTE
+           and to_char (gdl.data_upd, 'dd/mm/yyyy hh24:mi') = @DATA_AGGIORNAMENTO
+           and p.id_documento = pl.id_documento
+           and pl.anno_mod = 0
+           and pl.movimento_mod = 1
+           and log_protocollazione.id_documento = pl.id_documento
+           and log_protocollazione.data_mod = 1
+           and pl.rev > log_protocollazione.rev
+           and pl_prec.id_documento = p.id_documento
+           and gdl.rev = pl.rev
+           and pl_prec.rev = (select max (rev)
+                                from agp_protocolli_log
+                               where id_documento = p.id_documento
+                                 and pl.rev > rev)
+        union
+        select decode (pl.revtype,  2, 'Eliminato corrispondente',  1, 'Modificato corrispondente',  0, 'Aggiunto corrispondente') operazione
+             ,    pl.denominazione
+               || decode (pl.codice_fiscale, null, null, ' - C.F.: ' || pl.codice_fiscale)
+               || decode (pl.partita_iva, null, null, ' P.I.: ' || pl.partita_iva)
+               || decode (pl.indirizzo, null, null, ' - ' || pl.indirizzo)
+               || decode (pl.comune, null, null, ' ' || pl.comune)
+               || decode (pl.provincia_sigla, null, null, ' (' || pl.provincia_sigla || ')')
+               || decode (pl.cap, null, null, ' C.A.P. ' || pl.cap)
+               || decode (pl.email, null, null, ' - ' || pl.email)
+                  valore_nuovo
+             , decode(pl.revtype, 1, pl.denominazione
+								   || decode (pl_prec.codice_fiscale, null, null, ' - C.F.: ' || pl_prec.codice_fiscale)
+								   || decode (pl_prec.partita_iva, null, null, ' P.I.: ' || pl_prec.partita_iva)
+								   || decode (pl_prec.indirizzo, null, null, ' - ' || pl_prec.indirizzo)
+								   || decode (pl_prec.comune, null, null, ' ' || pl_prec.comune)
+								   || decode (pl_prec.provincia_sigla, null, null, ' (' || pl_prec.provincia_sigla || ')')
+								   || decode (pl_prec.cap, null, null, ' C.A.P. ' || pl_prec.cap)
+								   || decode (pl_prec.email, null, null, ' - ' || pl_prec.email), '')
+                  valore_precedente
+          from agp_protocolli_corr_log pl
+             , agp_protocolli p
+             , (select denominazione
+                     , codice_fiscale
+                     , partita_iva
+                     , indirizzo
+                     , comune
+                     , provincia_sigla
+                     , cap
+                     , email
+                     , id_documento
+                     , rev
+                  from agp_protocolli_corr_log) pl_prec
+             , agp_protocolli_log log_protocollazione
+         where p.id_documento = @ID_DOCUMENTO
+           and pl.utente_upd = @UTENTE
+           and to_char (pl.data_upd, 'dd/mm/yyyy hh24:mi') = @DATA_AGGIORNAMENTO
+           and p.id_documento = pl.id_documento
+           and ( (pl.revtype = 1
+              and (pl.denominazione_mod = 1
+                or pl.codice_fiscale_mod = 1
+                or pl.partita_iva_mod = 1
+                or pl.indirizzo_mod = 1
+                or pl.comune_mod = 1
+                or pl.provincia_sigla_mod = 1
+                or pl.cap_mod = 1
+                or pl.email_mod = 1))
+             or (pl.revtype in (0, 2)))
+           and log_protocollazione.id_documento = pl.id_documento
+           and log_protocollazione.data_mod = 1
+           and pl.rev > log_protocollazione.rev
+           and pl_prec.id_documento = p.id_documento
+           and pl_prec.rev = nvl((select max (rev)
+                                from agp_protocolli_corr_log
+                               where id_documento = p.id_documento
+                                 and pl.rev > rev), pl.rev)
+        union
+        select decode (pl.revtype,  2, 'Eliminato file principale',  1, 'Modificato file principale',  0, 'Aggiunto file principale') operazione
+			 ,  (select gof.impronta
+   				   from gdm.oggetti_file_log gof
+   				  where gof.id_oggetto_file = pl.id_file_esterno
+   				    and gof.filename = pl.nome
+   				 union
+   				 select gif.hashcode
+   				   from gdm_impronte_file gif, gdm_oggetti_file gof
+   				  where gof.id_oggetto_file = pl.id_file_esterno
+   				    and gif.id_documento = gof.id_documento
+   				    and gif.filename = gof.filename
+   				    and not exists
+   						   (select 1
+   							  from gdm.oggetti_file_log gof
+   							 where gof.id_oggetto_file = pl.id_file_esterno
+   							   and gof.filename = pl.nome)) valore_nuovo
+			 , (select gof.impronta
+				  from gdm.oggetti_file_log gof
+				 where gof.id_oggetto_file = pl_prec.id_file_esterno
+				   and gof.filename = pl_prec.nome
+				   and pl.revtype = 1) valore_precedente
+          from gdo_file_documento_log pl
+             , agp_protocolli p
+             , (select nome, id_documento, id_file_esterno, rev from gdo_file_documento_log) pl_prec
+             , agp_protocolli_log log_protocollazione
+         where p.id_documento = @ID_DOCUMENTO
+           and pl.utente_upd = @UTENTE
+           and to_char (pl.data_upd, 'dd/mm/yyyy hh24:mi') = @DATA_AGGIORNAMENTO
+           and p.id_documento = pl.id_documento
+           and log_protocollazione.id_documento = pl.id_documento
+           and log_protocollazione.data_mod = 1
+           and pl.rev > log_protocollazione.rev
+           and pl_prec.id_documento = p.id_documento
+           and pl_prec.rev = nvl((select max (rev)
+                                from gdo_file_documento_log
+                               where id_documento = p.id_documento
+                                 and pl.rev > rev), pl.rev)
+        union
+        select decode (pl.revtype, 0, 'Aggiunto allegato', 'Eliminato allegato') operazione
+			 , (select gof.impronta
+				 from gdm.oggetti_file_log gof
+				where gof.id_oggetto_file = pl.id_file_esterno
+				union
+			   select gif.hashcode
+				 from gdm_impronte_file gif, gdm_oggetti_file gof
+				where gof.id_oggetto_file = pl.id_file_esterno
+					  and gif.id_documento = gof.id_documento
+					  and gif.filename = gof.filename) valore_nuovo
+			 , '' valore_precedente
+          from gdo_file_documento_log pl
+             , gdo_documenti_collegati gdc
+             , agp_protocolli_log log_protocollazione             
+             , agp_protocolli p
+         where p.id_documento = @ID_DOCUMENTO
+           and pl.utente_upd = @UTENTE
+           and to_char (pl.data_upd, 'dd/mm/yyyy hh24:mi') = @DATA_AGGIORNAMENTO
+           and p.id_documento = gdc.id_documento
+           and pl.id_documento = gdc.id_collegato
+           and p.data is not null
+           and pl.codice = 'FILE_ALLEGATO'
+           and p.id_documento = log_protocollazione.id_documento
+           and log_protocollazione.data_mod = 1
+           and pl.rev > log_protocollazione.rev           
+</query>                  	  	
+</queryes>
+<staticData/>
+</documentRoot>

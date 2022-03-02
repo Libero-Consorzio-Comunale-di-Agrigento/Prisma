@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+
+    <!-- Questo è il Primo Target che viene invocato. Serve per configurare e verificare le connessioni al db -->
+    <target name="config">
+        <resolve-conn nome="agspr" istanza="${progetto.istanza.codice}"/>
+        <resolve-conn nome="as4" istanza="${global.db.as4.istanza}"/>
+        <resolve-conn nome="gdm" istanza="${global.db.gdm.istanza}"/>
+        <resolve-conn nome="so4" istanza="${global.db.so4.istanza}"/>
+        <resolve-conn nome="dbfw" istanza="${global.db.dbfw.istanza}"/>
+        <resolve-conn nome="jwf" istanza="${global.db.jwf.istanza}"/>
+        <resolve-conn nome="ad4" istanza="${global.db.ad4.istanza}"/>
+    </target>
+
+    <!-- Questo è il Secondo Target che viene invocato. Aggiorna il Database. -->
+    <target name="install:db"/>
+
+    <target name="install:fs" depends="-check-tomcat-config,-copia-config.groovy"/>
+
+    <target name="-check-tomcat-config">
+        <available file="${global.tomcat.home}/${global.tomcat.webapps}" property="global.tomcat.home.exists"/>
+        <available file="${global.tomcat.home}/confapps/Protocollo/Config.groovy" property="confapps.config-groovy.exists"/>
+    </target>
+
+    <target name="-copia-config.groovy" if="confapps.config-groovy.exists">
+
+        <echo message="Creo il file application.properties"/>
+        <loadfile srcFile="${global.tomcat.home}/confapps/Protocollo/Config.groovy" property="ags.urlWebdav">
+            <filterchain>
+                <tokenfilter>
+                    <containsregex pattern="^grails.plugins.gestionetesti.urlDirectory" flags="gi"/>
+                </tokenfilter>
+                <tokenfilter>
+                    <replaceregex pattern="^grails.plugins.gestionetesti.urlDirectory[ ]*[\t]*[ ]*[\t]*[ ]*=[ ]*&quot;([^&quot;]+)(&quot;.*)" replace="\1"/>
+                </tokenfilter>
+            </filterchain>
+        </loadfile>
+
+        <loadfile srcFile="${global.tomcat.home}/confapps/Protocollo/Config.groovy" property="ags.conversionEngine">
+            <filterchain>
+                <tokenfilter>
+                    <containsregex pattern="^grails.plugins.gestionetesti.reporter.conversionEngine" flags="gi"/>
+                </tokenfilter>
+                <tokenfilter>
+                    <replaceregex pattern="^grails.plugins.gestionetesti.reporter.conversionEngine[ ]*=[ ]*&quot;([^&quot;]+)(&quot;.*)" replace="\1"/>
+                </tokenfilter>
+            </filterchain>
+        </loadfile>
+
+        <loadfile srcFile="${global.tomcat.home}/confapps/Protocollo/Config.groovy" property="ags.mailMergeEngine">
+            <filterchain>
+                <tokenfilter>
+                    <containsregex pattern="^grails.plugins.gestionetesti.reporter.mailMergeEngine"/>
+                </tokenfilter>
+                <tokenfilter>
+                    <replaceregex pattern="^grails.plugins.gestionetesti.reporter.mailMergeEngine[ ]*=[ ]*&quot;([^&quot;]+)(&quot;.*)" replace="\1"/>
+                </tokenfilter>
+            </filterchain>
+        </loadfile>
+        <copy file="../../commons/confapps/application.properties" todir="${global.tomcat.home}/confapps/Protocollo">
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </copy>
+    </target>
+
+</project>

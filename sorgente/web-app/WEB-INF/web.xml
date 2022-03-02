@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <!-- Proteggo tutti i path con il Single Sign On -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Private</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>modulo@istanza</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <!-- Lascio liberi da single-sign-on le risorse statiche, i webservice e le chiamate a zkau, 
+         ci penserà comunque Spring a proteggere questi url -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Public</web-resource-name>
+            <url-pattern>/public/*</url-pattern>
+            <url-pattern>/webscan/*</url-pattern>
+            <url-pattern>/static/*</url-pattern>
+            <url-pattern>/css/*</url-pattern>
+            <url-pattern>/js/*</url-pattern>
+            <url-pattern>/images/*</url-pattern>
+            <url-pattern>/services/*</url-pattern>
+            <url-pattern>/zkau/*</url-pattern>
+            <url-pattern>/api/*</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login</form-login-page>
+            <form-error-page>/login?error</form-error-page>
+        </form-login-config>
+    </login-config>
+</web-app>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="ROOT">
+		<xs:complexType> 
+			<xs:all>   
+				<xs:element name="ID_DOCUMENTO_1" type="xs:string"/> 
+				<xs:element name="ID_DOCUMENTO_2" type="xs:string"/> 
+				<xs:element name="TIPO_RELAZIONE">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							 <xs:pattern value="COLLEGAMENTO|PRECEDENTE"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="RELAZIONE_ATTIVA">
+				<xs:simpleType>
+						<xs:restriction base="xs:string">
+							 <xs:pattern value="SI|NO"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element> 
+				<xs:element name="UTENTE" type="xs:string" /> 
+			</xs:all>
+		</xs:complexType>
+	</xs:element> 
+</xs:schema> 

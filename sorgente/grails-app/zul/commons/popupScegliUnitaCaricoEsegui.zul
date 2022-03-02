@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/protocollo.css"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('commons.PopupScegliUnitaCaricoEseguiViewModel')"
+            border="normal"
+            width="600px"
+            title=" "
+            sizable="false">
+
+        <style>
+            .monospaced {
+            font-family: monospace;
+            white-space: pre;
+            }
+        </style>
+
+        <vlayout width="100%" spacing="10px">
+            <h:div class="barraTitoloPagina">
+                <label sclass="titoloPagina" value="Scelta Unità"/>
+            </h:div>
+            <groupbox closable="false">
+                <grid>
+                    <rows>
+                        <row>
+                            <cell width="300px">
+
+                                <listbox model="@load(vm.listaSmistamenti)"
+                                         multiple="true"
+                                         selectedItems="@bind(vm.listaSmistamentiSelezionati)"
+                                         nonselectableTags="*"
+                                         checkmark="true">
+                                    <listhead>
+                                        <listheader label="Seleziona Unità"  />
+                                    </listhead>
+                                    <template name="model" var="smistamento">
+                                        <listitem value="@load(smistamento)" label="@load(smistamento.unitaSmistamento.descrizione)"/>
+                                    </template>
+                                </listbox>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>
+            </groupbox>
+            <h:div class="barraPulsanti">
+                <button label="@load(vm.labelOperazione)" mold="trendy" onClick="@command('onEseguiOperazione')"/>
+                <button label="Chiudi" mold="trendy" onClick="@command('onChiudi')"/>
+            </h:div>
+        </vlayout>
+    </window>
+</zk>

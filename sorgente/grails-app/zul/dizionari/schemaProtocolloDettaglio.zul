@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('it.finmatica.protocollo.dizionari.SchemaProtocolloDettaglioViewModel')"
+            border="normal"
+            sizable="true" width="950px" height="600px"
+            title=" ">
+
+        <h:div class="barraTitoloPagina">
+            <label sclass="titoloPagina"
+                   value="@load(c:cat(vm.titolo, (empty vm.selectedRecord.codice? '': c:cat( ' - ', vm.selectedRecord.codice)) ) )"/>
+            <image
+                    src="@load(vm.selectedRecord.valido? '/images/ags/22x22/viewok.png' : '/images/ags/22x22/cancel.png')"
+                    tooltiptext="@load(vm.selectedRecord.valido? 'Tipo di Documento attivo' : 'Tipo di Documento disattivato')"/>
+        </h:div>
+
+        <grid sclass="form">
+            <rows>
+                <row>
+                    <cell>
+                        <label class="mandatoryLabel" visible="@load(vm.modifica)" >*</label>
+                        <label value="Codice"/>
+                    </cell>
+                    <cell colspan="5">
+                        <textbox value="@bind(vm.selectedRecord.codice)" hflex="1" style="text-transform: uppercase"
+                                 disabled="@load(vm.selectedRecord.id ne -1)" visible="@load(vm.modifica)"/>
+                        <label value="@load(vm.selectedRecord.codice)" hflex="1" style="text-transform: uppercase"
+                               visible="@load(vm.lettura)"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <label class="mandatoryLabel" visible="@load(vm.modifica)" >*</label>
+                        <label value="Descrizione"/>
+                    </cell>
+                    <cell colspan="5">
+                        <textbox value="@bind(vm.selectedRecord.descrizione)" hflex="1" multiline="true" rows="2"
+                                 sclass="noresizable" visible="@load(vm.modifica)"/>
+                        <label value="@load(vm.selectedRecord.descrizione)" hflex="1" multiline="true"
+                               sclass="noresizable" visible="@load(vm.lettura)"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <label value="Tipo Registro: "/>
+                    </cell>
+                    <cell colspan="5">
+                        <combobox model="@load(vm.listaTipiRegistro)"
+                                  selectedItem="@bind(vm.selectedRecord.tipoRegistro) @converter('it.finmatica.zk.utils.PropertyConverter', property='codice')"
+                                  visible="@load(vm.modifica)"
+                                  width="100%">
+                            <template name="model" var="ta">
+                                <comboitem description="@load(ta.codice)" label="@load(ta.commento)"/>
+                            </template>
+                        </combobox>
+                        <label value="@load(vm.selectedRecord.tipoRegistro.commento)" visible="@load(vm.lettura)"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <label value="Ufficio Esibente: "/>
+                    </cell>
+                    <cell colspan="5" visible="@load(vm.lettura)">
+                        <label value="@load(vm.selectedRecord.ufficioEsibente.descrizione)"/>
+                    </cell>
+                    <cell colspan="5" visible="@load(vm.modifica)">
+                        <bandbox id="ufficioEsibente"
+                                 value="@load(vm.selectedRecord.ufficioEsibente.descrizione)"
+                                 mold="rounded"
+                                 width="100%"
+                                 autodrop="true"
+                                 onChanging="@command('onRicercaUnita', cercaUfficio=event.value)"
+                                 onOpen="@command('onRicercaUnita', cercaUfficio=event.value)">
+                            <bandpopup width="502px">
+                                <listbox model="@load(vm.listaUnita)"
+                                         multiple="false"
+                                         emptyMessage="Nessun risultato"
+                                         mold="paging"
+                                         pageSize="20"
+                                         sizedByContent="false"
+                                         width="500px"
+                                         height="250px"
+                                         selectedItem="@bind(vm.selectedRecord.ufficioEsibente)"
+                                         onSelect="@command('onSelectUfficioEsibente', target=ufficioEsibente)">
+                                    <listhead sizable="true">
+                                        <listheader
+                                                label="Nome"/>
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.descrizione}"/>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </bandpopup>
+                        </bandbox>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <label class="mandatoryLabel" visible="@load(vm.modifica)" >*</label>
+                        <label value="Utilizzato come risposta"/>
+                    </cell>
+                    <cell>
+                        <label value="@load(vm.selectedRecord.risposta ? 'Sì' : 'No')" visible="@load(vm.lettura)"/>
+                        <radiogroup selectedIndex="@load(vm.selectedRecord.risposta ? 0 : 1)"
+                                    selectedItem="@save(vm.selectedRecord.risposta)" visible="@load(vm.modifica)">
+                            <radio label="Sì" value="@load(true)"
+                                   disabled="@load(vm.listaSchemiPrincipali.size() > 0 or vm.selectedRecord.domandaAccesso)"/>
+                            <radio label="No" value="@load(false)"
+                                   disabled="@load(vm.listaSchemiPrincipali.size() > 0 or vm.selectedRecord.domandaAccesso)"/>
+                        </radiogroup>
+                    </cell>
+                    <cell>
+                        <label value="Documento di risposta" visible="@load(not vm.selectedRecord.risposta)"/>
+                        <label value="Flusso" visible="@load(vm.selectedRecord.risposta)"/>
+                    </cell>
+                    <cell>
+                        <combobox model="@load(vm.listaSchemiRisposta)"
+                                  visible="@load(not vm.selectedRecord.risposta and vm.modifica)"
+                                  width="95%"
+                                  selectedItem="@bind(vm.selectedRecord.schemaProtocolloRisposta) @converter('it.finmatica.zk.utils.PropertyConverter', property='codice')">
+                            <template name="model" var="risposta">
+                                <comboitem description="@load(risposta.codice)" label="@load(risposta.descrizione)"/>
+                            </template>
+                        </combobox>
+                        <combobox model="@load(vm.listaTipiProtocollo)"
+                                  visible="@load(vm.selectedRecord.risposta and vm.modifica)" width="95%"
+                                  selectedItem="@bind(vm.selectedRecord.tipoProtocollo) @converter('it.finmatica.zk.utils.PropertyConverter', property='codice')">
+                            <template name="model" var="tipo">
+                                <comboitem description="@load(tipo.codice)"
+                                           label="@load(tipo.descrizione)"
+                                           image="/images/ags/16x16/point_green.png">
+                                </comboitem>
+                            </template>
+                        </combobox>
+                        <label value="@load(vm.selectedRecord.schemaProtocolloRisposta.descrizione)"
+                               visible="@load(not vm.selectedRecord.risposta and vm.lettura)"/>
+                        <label value="@load(vm.selectedRecord.tipoProtocollo.descrizione)"
+                               visible="@load(vm.selectedRecord.risposta and vm.lettura)"/>
+                    </cell>
+                    <cell>
+                        <label value="Scadenza (in giorni)" visible="@load(not vm.selectedRecord.risposta)"/>
+                    </cell>
+                    <cell>
+                        <intbox value="@bind(vm.selectedRecord.scadenza)" maxlength="3"
+                                visible="@load(not vm.selectedRecord.risposta and vm.modifica)"></intbox>
+                        <label value="@load(vm.selectedRecord.scadenza)"
+                               visible="@load(not vm.selectedRecord.risposta and vm.lettura)"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <label class="mandatoryLabel" visible="@load(vm.modifica)" >*</label>
+                        <label value="Domanda di Accesso Civico"/>
+                    </cell>
+                    <cell>
+                        <label value="@load(vm.selectedRecord.domandaAccesso ? 'Sì' : 'No')" visible="@load(vm.lettura)"/>
+                        <radiogroup selectedIndex="@load(vm.selectedRecord.domandaAccesso ? 0 : 1)"
+                                    selectedItem="@save(vm.selectedRecord.domandaAccesso)" visible="@load(vm.modifica)"
+                                    onCheck="@command('onSelectDomandaAccesso')">
+                            <radio label="Sì" value="@load(true)"/>
+                            <radio label="No" value="@load(false)"/>
+                        </radiogroup>
+                    </cell>
+                    <cell>
+                        <label value="Riservato"/>
+                    </cell>
+                    <cell>
+                        <label value="@load(vm.selectedRecord.riservato ? 'Sì' : 'No')" visible="@load(vm.lettura)"/>
+                        <radiogroup selectedIndex="@load(vm.selectedRecord.riservato ? 0 : 1)"
+                                    selectedItem="@save(vm.selectedRecord.riservato)"  visible="@load(vm.modifica)">
+			     				<radio label="Sì" value="@load(true)" />
+					            <radio label="No" value="@load(false)"/>
+				            </radiogroup>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <label value="Note"/>
+                    </cell>
+                    <cell colspan="5">
+                        <textbox value="@bind(vm.selectedRecord.note)" hflex="1" multiline="true" rows="2"
+                                 sclass="noresizable" visible="@load(vm.modifica)"/>
+                        <label value="@load(vm.selectedRecord.note)" hflex="1" multiline="true"
+                               sclass="noresizable" visible="@load(vm.lettura)"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+
+        <tabbox vflex="1">
+            <tabs>
+                <tab label="Dati Protocollo"/>
+                <tab label="Unità competenti" disabled="@load(vm.selectedRecord.id eq -1)"/>
+                <tab label="Iter smistamenti" disabled="@load(vm.selectedRecord.id eq -1)"/>
+                <tab label="Per rispondere a" disabled="@load(vm.selectedRecord.id eq -1)"
+                     visible="@load(vm.selectedRecord.risposta)"/>
+                <tab label="Allegati" disabled="@load(vm.selectedRecord.id eq -1)"/>
+                <tab label="Categorie" disabled="@load(vm.selectedRecord.id eq -1)"/>
+            </tabs>
+            <tabpanels vflex="1">
+                <!-- Generale -->
+                <tabpanel>
+                    <grid sclass="form" vflex="1">
+                        <rows>
+                            <row>
+                                <cell>
+                                    <label value="Movimento:"/>
+                                </cell>
+                                <cell colspan="3">
+                                    <combobox id="movimemto"
+                                              hflex="1"
+                                              selectedItem="@bind(vm.selectedRecord.movimento)"
+                                              visible="@load(vm.modifica)">
+                                        <comboitem label="PARTENZA" value="PARTENZA"/>
+                                        <comboitem label="INTERNO" value="INTERNO"/>
+                                        <comboitem label="ARRIVO" value="ARRIVO" visible="@bind(vm.arrivo)"/>
+                                    </combobox>
+                                    <label value="@load(vm.selectedRecord.movimento)" visible="@load(vm.lettura)"/>
+                                </cell>
+                            </row>
+                            <row>
+                                <cell>
+                                    <label value="Oggetto:"/>
+                                </cell>
+                                <cell colspan="3">
+                                    <textbox value="@bind(vm.selectedRecord.oggetto)" hflex="1"  multiline="true"
+                                             rows="2" sclass="noresizable" visible="@load(vm.modifica)" style="text-transform: uppercase" />
+                                    <label value="@load(vm.selectedRecord.oggetto)" visible="@load(vm.lettura)" style="text-transform: uppercase"/>
+                                </cell>
+                            </row>
+                            <row>
+                                <cell width="100px">
+                                    <label value="@load(c:l('label.classificazione'))"/>
+                                </cell>
+                                <cell visible="@load(vm.lettura)">
+                                    <label value="@load(vm.selectedRecord.classificazione.descrizione)"/>
+                                </cell>
+                                <cell visible="@load(vm.modifica)">
+                                    <BandboxClassificazione
+                                            hflex="1"
+                                            selectedItem="@bind(vm.selectedRecord.classificazione)"
+                                            tooltiptext="@load(vm.selectedRecord.classificazione.descrizione)"
+                                            disabled="@load(!vm.modifica)"/>
+                                </cell>
+                                <cell width="100px">
+                                    <label value="@load(c:l('label.fascicolo'))"/>
+                                    <RicercaTitolarioButton
+                                            classificazione="@bind(vm.selectedRecord.classificazione)"
+                                            fascicolo="@bind(vm.selectedRecord.fascicolo)"
+                                            disabled="@load(!vm.modifica)"/>
+                                    <VisualizzaFascicoloButton fascicolo="@load(vm.selectedRecord.fascicolo)"
+                                                               visible="@load(vm.modifica and vm.selectedRecord.fascicolo.id ne -1)"/>
+                                </cell>
+                                <cell visible="@load(vm.lettura)">
+                                    <label
+                                            value="@load(not empty vm.selectedRecord.fascicolo.anno? c:cat5(vm.selectedRecord.fascicolo.anno, ' - ', vm.selectedRecord.fascicolo.numero, ' - ', vm.selectedRecord.fascicolo.oggetto) : '')"/>
+                                </cell>
+                                <cell visible="@load(vm.modifica)">
+                                    <BandboxFascicolo
+                                            hflex="1"
+                                            classificazione="@load(vm.selectedRecord.classificazione)"
+                                            selectedItem="@bind(vm.selectedRecord.fascicolo)"
+                                            tooltiptext="@load(vm.selectedRecord.fascicolo.oggetto)"
+                                            fascicoliChiusi="false"
+                                            disabled="@load(!vm.modifica or empty vm.selectedRecord.classificazione)"/>
+
+                                </cell>
+                            </row>
+                            <row>
+                                <cell>
+                                    <label class="mandatoryLabel" visible="@load(vm.modifica)" >*</label>
+                                    <label value="Con segnatura:"/>
+                                </cell>
+                                <cell>
+                                    <radiogroup selectedIndex="@load(vm.selectedRecord.segnatura ? 0 : 1)"
+                                                selectedItem="@save(vm.selectedRecord.segnatura)"
+                                                visible="@load(vm.modifica)">
+                                        <radio label="Sì" value="@load(true)"/>
+                                        <radio label="No" value="@load(false)"/>
+                                    </radiogroup>
+                                    <label value="@load(vm.selectedRecord.segnatura ? 'Sì' : 'No')"
+                                           visible="@load(vm.lettura)"/>
+                                </cell>
+                                <cell>
+                                    <label class="mandatoryLabel" visible="@load(vm.modifica)" >*</label>
+                                    <label value="Segnatura completa:"/>
+                                </cell>
+                                <cell>
+                                    <radiogroup selectedIndex="@load(vm.selectedRecord.segnaturaCompleta ? 0 : 1)"
+                                                selectedItem="@save(vm.selectedRecord.segnaturaCompleta)"
+                                                visible="@load(vm.modifica)">
+                                        <radio label="Sì" value="@load(true)"/>
+                                        <radio label="No" value="@load(false)"/>
+                                    </radiogroup>
+                                    <label value="@load(vm.selectedRecord.segnaturaCompleta ? 'Sì' : 'No')"
+                                           visible="@load(vm.lettura)"/>
+                                </cell>
+                            </row>
+                            <row>
+                                <cell>
+                                    <label class="mandatoryLabel" visible="@load(vm.modifica)" >*</label>
+                                    <label value="Conservazione illimitata:"/>
+                                </cell>
+                                <cell>
+                                    <radiogroup selectedIndex="@load(vm.selectedRecord.conservazioneIllimitata ? 0 : 1)"
+                                                selectedItem="@save(vm.selectedRecord.conservazioneIllimitata)"
+                                                visible="@load(vm.modifica)">
+                                        <radio label="Sì" value="@load(true)"/>
+                                        <radio label="No" value="@load(false)"/>
+                                    </radiogroup>
+                                    <label value="@load(vm.selectedRecord.conservazioneIllimitata ? 'Sì' : 'No')"
+                                           visible="@load(vm.lettura)"/>
+                                </cell>
+                                <cell>
+                                    <label value="Anni Conservazione:" visible="@load(not vm.selectedRecord.conservazioneIllimitata)"/>
+                                </cell>
+                                <cell>
+                                    <decimalbox value="@bind(vm.selectedRecord.anniConservazione)"
+                                                visible="@load(vm.modifica and not vm.selectedRecord.conservazioneIllimitata)"></decimalbox>
+                                    <label value="@load(vm.selectedRecord.anniConservazione)"
+                                           visible="@load(vm.lettura)"/>
+                                </cell>
+                            </row>
+                        </rows>
+                    </grid>
+                </tabpanel>
+
+                <!-- Unita -->
+                <tabpanel vflex="1">
+                    <!-- COMPETENZE -->
+                    <listbox model="@load(vm.listaSchemaProtocolloUnita)" emptyMessage="Nessuna competenza assegnata" height="300px">
+                            <listhead>
+                                <listheader label="Utente" width="33%" />
+                                <listheader label="Ruolo" width="33%" />
+                                <listheader label="Unità Organizzativa" width="29%" />
+                                <listheader label="" width="5%">
+                                    <image width="15px" src="/images/afc/16x16/add.png" onClick="@command('onAggiungiSchemaProtocolloUnita')"></image>
+                                </listheader>
+                            </listhead>
+                            <template name="model" var="competenza">
+                                <listitem>
+                                    <listcell label="@load(competenza.utenteAd4.nominativo)" />
+                                    <listcell label="@load(competenza.ruoloAd4.ruolo)" />
+                                    <listcell label="@load(competenza.unita.descrizione)" />
+                                    <listcell>
+                                        <image src="/images/ags/22x22/trash.png" onClick="@command('onEliminaSchemaProtocolloUnita', schemaProtocolloUnita=competenza)"/>
+                                    </listcell>
+                                </listitem>
+                            </template>
+                        </listbox>
+                    </tabpanel>
+
+                <!-- Smistamenti -->
+                <tabpanel>
+                    <listbox model="@load(vm.listaSchemaProtocolloSmistamenti)" emptyMessage="Nessuno smistamento"
+                             height="250px">
+                        <listhead>
+                            <listheader label="Unità Organizzativa" width="23%"/>
+                            <listheader label="Sequenza" width="23%"/>
+                            <listheader label="Tipo smistamento" width="25%"/>
+                            <listheader label="Fascicolo obbligatorio" width="23%"/>
+                            <listheader label="Indirizzi e-mail" width="23%"/>
+                            <listheader label="" width="6%" align="center">
+                                <image width="15px" src="/images/afc/16x16/add.png"
+                                       onClick="@command('onAggiungiSmistamenti')"
+                                       tooltiptext="Aggiungi uno smistamento al tipo di documento"
+                                       style="cursor: pointer;"
+                                       visible="@load(vm.modifica)"/>
+                            </listheader>
+                        </listhead>
+                        <template name="model" var="smistamento">
+                            <listitem>
+                                <listcell label="@load(smistamento.unitaSo4Smistamento.descrizione)"/>
+                                <listcell>
+                                    <intbox inplace="true"
+                                            value="@bind(smistamento.sequenza)"
+                                            width="99%"
+                                            onBlur="@command('onModificaSequenza', smistamento = smistamento)"
+                                            onOK="@command('onModificaSequenza', smistamento = smistamento)"
+                                            visible="@load(vm.modifica)">
+                                    </intbox>
+                                    <label value="@load(smistamento.sequenza)" visible="@load(vm.lettura)"/>
+                                </listcell>
+                                <listcell label="@load(smistamento.tipoSmistamento)"/>
+                                <listcell>
+                                    <radiogroup selectedIndex="@load(smistamento.fascicoloObbligatorio ? 0 : 1)"
+                                                selectedItem="@save(smistamento.fascicoloObbligatorio)"
+                                                onCheck="@command('onModificaFascicoloObb', smistamento = smistamento)"
+                                                visible="@load(vm.modifica)">
+                                        <radio label="Sì" value="@load(true)"/>
+                                        <radio label="No" value="@load(false)"/>
+                                    </radiogroup>
+                                    <label value="@load(smistamento.fascicoloObbligatorio ? 'Sì' : 'No')"
+                                           visible="@load(vm.lettura)"/>
+                                </listcell>
+                                <listcell>
+                                    <textbox inplace="true"
+                                             value="@bind(smistamento.email)"
+                                             width="99%"
+                                             onBlur="@command('onModificaEmail', smistamento = smistamento)"
+                                             onOK="@command('onModificaEmail', smistamento = smistamento)"
+                                             visible="@load(vm.modifica)"/>
+                                    <label value="@load(smistamento.email)" visible="@load(vm.lettura)"/>
+                                </listcell>
+                                <listcell>
+                                    <image src="/images/ags/16x16/trash.png"
+                                           onClick="@command('onEliminaSchemaProtocolloSmistamento', schemaProtocolloSmistamento = smistamento)"
+                                           tooltiptext="Elimina lo smistamento"
+                                           style="cursor: pointer;"
+                                           visible="@load(vm.modifica)"/>
+                                </listcell>
+                            </listitem>
+                        </template>
+                    </listbox>
+                </tabpanel>
+
+                <!-- Tipi documento associati -->
+                <tabpanel>
+                    <listbox model="@load(vm.listaSchemiPrincipali)" emptyMessage="Nessuna associazione"
+                             height="250px">
+                        <listhead>
+                            <listheader label="Tipo documento" width="20%"/>
+                            <listheader label="Descrizione" width="75%"/>
+                            <listheader label="" width="5%"/>
+                        </listhead>
+                        <template name="model" var="collegato">
+                            <listitem>
+                                <listcell label="@load(collegato.codice)"/>
+                                <listcell label="@load(collegato.descrizione)"/>
+                                <listcell
+                                        image="@load(collegato.valido  ? '/images/ags/16x16/point_green.png' : '/images/ags/16x16/point_red.png')"/>
+                            </listitem>
+                        </template>
+                    </listbox>
+                </tabpanel>
+
+                <!-- Allegati -->
+                <tabpanel>
+                    <listbox model="@load(vm.fileAllegati)" emptyMessage="Nessun File Allegato" vflex="1">
+                        <listhead>
+                            <listheader label="" width="25px"/>
+                            <listheader label="Tipo di Allegato" width="35%"/>
+                            <listheader label="Nome File" width="50%"/>
+                            <listheader label="Dimensione" width="15%"/>
+                            <listheader label="" width="50px">
+                                <CaricaFileButton upload="true,maxsize=-1,multiple=true,native"
+                                                  documento="@load(vm.selectedRecord)"
+                                                  onCaricaFile="@command('onCaricaFile')" visible="@load(vm.modifica)"/>
+                            </listheader>
+                        </listhead>
+                        <template name="model" var="a">
+                            <listitem>
+                                <listcell label="@load(aStatus.index + 1)" style="text-align:center;"/>
+                                <listcell>
+                                    <combobox model="@load(vm.listaTipoAllegato)" hflex="1"
+                                              selectedItem="@bind(a.tipoAllegato) @converter('it.finmatica.zk.utils.PropertyConverter', property='id')"
+                                              readonly="true"
+                                              disabled="@load(not vm.modifica)">
+                                        <template name="model" var="tipoAll">
+                                            <comboitem label="@load(tipoAll.descrizione)" value="@load(tipoAll)"/>
+                                        </template>
+                                    </combobox>
+                                </listcell>
+                                <listcell label="@load(a.nome)"
+                                          onDoubleClick="@command('onDownloadFileAllegato', fileAllegato=a)"
+                                          tooltip="Scarica File"/>
+                                <listcell label="@load(a.dimensioneMB)" style="text-align:right;"/>
+                                <listcell style="text-align:center;">
+                                    <image src="/images/ags/16x16/trash.png"
+                                           tooltiptext="Elimina"
+                                           onClick="@command('onEliminaFileAllegato', fileAllegato=a)"
+                                           visible="@load(vm.modifica)"/>
+                                </listcell>
+                            </listitem>
+                        </template>
+                    </listbox>
+                </tabpanel>
+                <!-- Categorie -->
+                <tabpanel>
+                    <listbox model="@load(vm.selectedRecord.categorie)" vflex="1">
+                        <listhead>
+                            <listheader label="Categoria" width="25%"/>
+                            <listheader label="Tipo di Protocollo" width="60%"/>
+                            <listheader label="Modificabile" width="100px"/>
+                            <listheader width="20px">
+                                <image width="15px" src="/images/afc/16x16/add.png"
+                                       onClick="@command('onAggiungiSchemaProtocolloCategoria')"
+                                       tooltiptext="Aggiungi Categoria"
+                                       style="cursor: pointer;"
+                                       visible="@load(vm.modifica and vm.visibileAddCategorie)"/>
+                            </listheader>
+                        </listhead>
+                        <template name="model" var="c">
+                            <listitem>
+                                <listcell>
+                                    <combobox model="@load(vm.categorieCombo)" hflex="1"
+                                              selectedItem="@bind(c.categoria)"
+                                              onChange="@command(vm.onChangeCategoria(c))"
+                                              readonly="true"
+                                              disabled="@load(not vm.modifica)">
+                                        <template name="model">
+                                            <comboitem label="${each}"/>
+                                        </template>
+                                    </combobox>
+                                </listcell>
+                                <listcell>
+                                    <combobox model="@load(vm.tipiProtocolloPerCategoria(c.categoria))" hflex="1"
+                                              selectedItem="@bind(c.tipoProtocollo) @converter('it.finmatica.zk.utils.PropertyConverter', property='id')"
+                                              readonly="true"
+                                              visible="@load(c.tipoProtocollo ne null)"
+                                              disabled="@load(not vm.modifica)">
+                                        <template name="model" var="tipoProtocollo">
+                                            <comboitem label="@load(tipoProtocollo.descrizione)"
+                                                       value="@load(tipoProtocollo)"/>
+                                        </template>
+                                    </combobox>
+                                </listcell>
+                                <listcell>
+                                    <radiogroup selectedIndex="@load(c.modificabile ? 0 : 1)"
+                                                selectedItem="@save(c.modificabile)"
+                                                style="text-align: right;"
+                                                onCheck="@command(vm.controllaFlagModificabile(c))">
+                                        <radio label="Sì" value="@load(true)"/>
+                                        <radio label="No" value="@load(false)"/>
+                                    </radiogroup>
+                                </listcell>
+                                <listcell style="cursor: pointer;">
+                                    <image src="/images/ags/16x16/trash.png"
+                                           tooltiptext="Elimina"
+                                           onClick="@command('onEliminaCategoria', categoria=c)"
+                                           visible="@load(vm.modifica)"/>
+                                </listcell>
+                            </listitem>
+                        </template>
+                    </listbox>
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+
+        <!-- Inizio informazioni relative al salvataggio e bottoni salva / chiudi -->
+        <vlayout sclass="datiCreazioneModifica" height="30px">
+            <label value="@bind(vm.datiCreazione)" visible="@bind(not empty vm.selectedRecord.codice)"/>
+            <label value="@bind(vm.datiModifica)" visible="@bind(not empty vm.selectedRecord.codice)"/>
+        </vlayout>
+
+        <h:div visible="@load(vm.modifica)">
+            <controlBarRecord duplicaAttivo="false"/>
+        </h:div>
+        <h:div class="barraPulsanti" visible="@load(vm.lettura)">
+            <h:div>
+                <button
+                        mold="trendy"
+                        label="Chiudi"
+                        onClick="@command('onChiudi')"
+                        image="/images/afc/16x16/close.png"/>
+            </h:div>
+        </h:div>
+    </window>
+</zk>

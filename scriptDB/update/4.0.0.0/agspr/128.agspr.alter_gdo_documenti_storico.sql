@@ -1,0 +1,10 @@
+--liquibase formatted sql
+--changeset mfrancesconi:4.0.0.0_20200226_128_alter_gdo_documenti_storico
+
+ALTER TABLE GDO_DOCUMENTI_STORICO
+ ADD (STATO_TRASCODIFICA  VARCHAR2(255 BYTE))
+/
+
+ALTER TABLE GDO_DOCUMENTI_STORICO
+ ADD (ERRORE_TRASCODIFICA  CLOB)
+/

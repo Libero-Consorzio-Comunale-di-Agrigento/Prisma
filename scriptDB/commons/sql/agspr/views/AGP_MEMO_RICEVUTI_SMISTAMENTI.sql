@@ -1,0 +1,97 @@
+--liquibase formatted sql
+--changeset mmalferrari:AGSPR_VIEW_AGP_AGP_MEMO_RICEVUTI_SMISTAMENTI runOnChange:true stripComments:false
+
+CREATE OR REPLACE FORCE VIEW AGP_MEMO_RICEVUTI_SMISTAMENTI
+(
+   ID_DOCUMENTO_SMISTAMENTO,
+   ID_DOCUMENTO,
+   UNITA_TRASMISSIONE_PROGR,
+   UNITA_TRASMISSIONE_DAL,
+   UNITA_TRASMISSIONE_OTTICA,
+   UTENTE_TRASMISSIONE,
+   UNITA_SMISTAMENTO_PROGR,
+   UNITA_SMISTAMENTO_DAL,
+   UNITA_SMISTAMENTO_OTTICA,
+   DATA_SMISTAMENTO,
+   STATO_SMISTAMENTO,
+   TIPO_SMISTAMENTO,
+   UTENTE_PRESA_IN_CARICO,
+   DATA_PRESA_IN_CARICO,
+   UTENTE_ESECUZIONE,
+   DATA_ESECUZIONE,
+   UTENTE_ASSEGNANTE,
+   UTENTE_ASSEGNATARIO,
+   DATA_ASSEGNAZIONE,
+   NOTE,
+   NOTE_UTENTE,
+   ID_DOCUMENTO_ESTERNO,
+   UTENTE_RIFIUTO,
+   DATA_RIFIUTO,
+   MOTIVO_RIFIUTO,
+   VALIDO,
+   UTENTE_INS,
+   DATA_INS,
+   UTENTE_UPD,
+   DATA_UPD,
+   idrif,
+   VERSION
+)
+AS
+   SELECT -S.ID_DOCUMENTO ID_DOCUMENTO_SMISTAMENTO,
+          -M.ID_DOCUMENTO ID_DOCUMENTO,
+          UNITA_TRASMISSIONE.PROGR UNITA_TRASMISSIONE_PROGR,
+          UNITA_TRASMISSIONE.DAL UNITA_TRASMISSIONE_DAL,
+          UNITA_TRASMISSIONE.OTTICA UNITA_TRASMISSIONE_OTTICA,
+          UTENTE_TRASMISSIONE,
+          UNITA_SMISTAMENTO.PROGR UNITA_SMISTAMENTO_PROGR,
+          UNITA_SMISTAMENTO.DAL UNITA_SMISTAMENTO_DAL,
+          UNITA_SMISTAMENTO.OTTICA UNITA_SMISTAMENTO_OTTICA,
+          smistamento_dal DATA_SMISTAMENTO,
+          DECODE (stato_smistamento,
+                  'N', 'CREATO',
+                  'R', 'DA_RICEVERE',
+                  'C', 'IN_CARICO',
+                  'E', 'ESEGUITO',
+                  'F', 'STORICO',
+                  'S', 'STORICO',
+                  STATO_SMISTAMENTO)
+             STATO_SMISTAMENTO,
+          TIPO_SMISTAMENTO,
+          presa_in_carico_utente UTENTE_PRESA_IN_CARICO,
+          presa_in_carico_DAL DATA_PRESA_IN_CARICO,
+          UTENTE_ESECUZIONE,
+          DATA_ESECUZIONE,
+          TO_CHAR (NULL) UTENTE_ASSEGNANTE,
+          codice_assegnatario UTENTE_ASSEGNATARIO,
+          assegnazione_dal DATA_ASSEGNAZIONE,
+          NOTE,
+          NOTE_UTENTE,
+          S.ID_DOCUMENTO ID_DOCUMENTO_ESTERNO,
+          TO_CHAR (NULL) UTENTE_RIFIUTO,
+          TO_DATE (NULL) DATA_RIFIUTO,
+          TO_CHAR (NULL) MOTIVO_RIFIUTO,
+          CAST (
+             DECODE (NVL (d.stato_documento, 'BO'), 'CA', 'N', 'Y') AS CHAR (1))
+             valido,
+          M.UTENTE_PROTOCOLLANTE UTENTE_INS,
+          TO_DATE (NULL) DATA_INS,
+          d.utente_aggiornamento UTENTE_UPD,
+          d.data_aggiornamento DATA_UPD,
+          s.idrif,
+          0 VERSION
+     FROM GDM_SEG_SMISTAMENTI S,
+          GDM_SEG_MEMO_PROTOCOLLO M,
+          GDM_DOCUMENTI D,
+          SO4_V_UNITA_ORGANIZZATIVE_PUBB UNITA_TRASMISSIONE,
+          SO4_V_UNITA_ORGANIZZATIVE_PUBB UNITA_SMISTAMENTO
+    WHERE     M.IDRIF = S.IDRIF
+          AND d.id_documento = s.id_documento
+          AND UNITA_TRASMISSIONE.CODICE = S.UFFICIO_TRASMISSIONE
+          AND S.smistamento_dal BETWEEN UNITA_TRASMISSIONE.dal
+                                    AND NVL (UNITA_TRASMISSIONE.al,
+                                             TO_DATE (3333333, 'j'))
+          AND UNITA_SMISTAMENTO.CODICE = S.UFFICIO_SMISTAMENTO
+          AND S.smistamento_dal BETWEEN UNITA_SMISTAMENTO.dal
+                                    AND NVL (UNITA_SMISTAMENTO.al,
+                                             TO_DATE (3333333, 'j'))
+/

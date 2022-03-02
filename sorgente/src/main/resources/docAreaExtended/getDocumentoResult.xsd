@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>Metodo getDocumento</xs:appinfo>
+		<xs:documentation xml:lang="it">
+			Questo metodo recupera tutti i metadati di un documento 
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="PROTOCOLLO">
+		<xs:complexType> 
+			<xs:sequence>
+				<xs:element ref="DOC" />
+				<xs:element ref="FILE_PRINCIPALE" minOccurs="0" />
+				<xs:element ref="ALLEGATI" minOccurs="0" />
+				<xs:element ref="SMISTAMENTI" minOccurs="0" />
+				<xs:element ref="RAPPORTI" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType> 
+	</xs:element>
+	<xs:element name="DOC">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="IDRIF" type="xs:string" minOccurs="0"/> 
+				<xs:element name="ANNO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="NUMERO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="TIPO_REGISTRO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DESCRIZIONE_TIPO_REGISTRO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DATA" type="xs:string" minOccurs="0"/> 
+				<xs:element name="OGGETTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DATA_DOCUMENTO" type="xs:string" minOccurs="0"/>
+				<xs:element name="DATA_ARRIVO" type="xs:string" minOccurs="0"/>
+				<xs:element name="NUMERO_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="CLASS_COD" type="xs:string" minOccurs="0"/> 
+				<xs:element name="CLASS_DAL" type="xs:string" minOccurs="0"/> 
+				<xs:element name="FASCICOLO_ANNO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="FASCICOLO_NUMERO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="RISERVATO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="STATO_PR" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DOCUMENTO_TRAMITE" type="xs:string" minOccurs="0"/> 
+				<xs:element name="TIPO_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DESCRIZIONE_TIPO_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="UNITA_ESIBENTE" type="xs:string" minOccurs="0"/> 
+				<xs:element name="UNITA_PROTOCOLLANTE" type="xs:string" minOccurs="0"/> 
+				<xs:element name="UTENTE_PROTOCOLLANTE" type="xs:string" minOccurs="0"/> 
+				<xs:element name="ANNULLATO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DATA_ANN" type="xs:string" minOccurs="0"/> 
+				<xs:element name="UTENTE_ANN" type="xs:string" minOccurs="0"/> 
+				<xs:element name="MODALITA" type="xs:string" minOccurs="0"/>
+				<xs:element name="DATA_SPEDIZIONE" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SMISTAMENTI">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SMISTAMENTO" minOccurs="0" maxOccurs="unbounded"/> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SMISTAMENTO">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DES_UFFICIO_SMISTAMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DES_UFFICIO_TRASMISSIONE" type="xs:string" minOccurs="0"/> 
+				<xs:element name="IDRIF" type="xs:string" minOccurs="0"/> 
+				<xs:element name="SMISTAMENTO_DAL" type="xs:string" minOccurs="0"/> 
+				<xs:element name="STATO_SMISTAMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="TIPO_SMISTAMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="UFFICIO_SMISTAMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="UFFICIO_TRASMISSIONE" type="xs:string" minOccurs="0"/> 
+				<xs:element name="UTENTE_TRASMISSIONE" type="xs:string" minOccurs="0"/> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RAPPORTI">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="RAPPORTO" minOccurs="0" maxOccurs="unbounded" /> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RAPPORTO">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="COGNOME_NOME" type="xs:string" minOccurs="0"/> 
+				<xs:element name="CODICE_FISCALE" type="xs:string" minOccurs="0"/> 
+				<xs:element name="EMAIL" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DENOMINAZIONE" type="xs:string" minOccurs="0"/> 
+				<xs:element name="INDIRIZZO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="CAP" type="xs:string" minOccurs="0"/> 
+				<xs:element name="IDRIF" type="xs:string" minOccurs="0"/> 
+				<xs:element name="CONOSCENZA" type="xs:string" minOccurs="0"/> 
+				<xs:element name="COD_AMM" type="xs:string" minOccurs="0"/> 
+				<xs:element name="COD_AOO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="COD_UO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DESCRIZIONE_AMM" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DESCRIZIONE_AOO" type="xs:string" minOccurs="0"/> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="ALLEGATI">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ALLEGATO" minOccurs="0" maxOccurs="unbounded" /> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ALLEGATO">
+		<xs:complexType>
+			<xs:sequence> 
+				<xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DESC_TIPO_ALLEGATO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="TIPO_ALLEGATO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DESCRIZIONE" type="xs:string" minOccurs="0"/> 
+				<xs:element name="IDRIF" type="xs:string" minOccurs="0"/> 
+				<xs:element name="NUMERO_PAG" type="xs:string" minOccurs="0"/> 
+				<xs:element name="QUANTITA" type="xs:string" minOccurs="0"/> 
+				<xs:element name="RISERVATO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="TITOLO_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="COD_AMM" type="xs:string" minOccurs="0"/> 
+				<xs:element name="COD_AOO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="COD_UO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DESCRIZIONE_AMM" type="xs:string" minOccurs="0"/> 
+				<xs:element name="DESCRIZIONE_AOO" type="xs:string" minOccurs="0"/> 
+				<xs:element ref="FILE_ALLEGATI" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>	
+	<xs:element name="FILE_ALLEGATI">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FILE" minOccurs="0" maxOccurs="unbounded"/> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FILE_PRINCIPALE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FILE" minOccurs="0"/> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FILE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID_OGGETTO_FILE" minOccurs="0" />
+				<xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="FILENAME" type="xs:string" minOccurs="0"/> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>	
+</xs:schema>

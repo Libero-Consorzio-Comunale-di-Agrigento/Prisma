@@ -1,0 +1,4 @@
+--liquibase formatted sql
+--changeset mmalferrari:4.1.0.0_20201007_48.AGP_PROTOCOLLI_DATI_INTEROP_alter failOnError:false
+ALTER TABLE AGP_PROTOCOLLI_DATI_INTEROP DROP COLUMN ID_MESSAGGIO_CONFERMA
+/

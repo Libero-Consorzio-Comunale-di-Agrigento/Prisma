@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zkoss.org/2005/zul"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <vlayout apply="org.zkoss.bind.BindComposer" vflex="1"
+             viewModel="@id('vm') @init('it.finmatica.protocollo.documenti.storico.StoricoProtocolloEnversViewModel')">
+        <grid sclass="form">
+            <rows>
+                <row>
+                    <cell align="right">
+                        <label value="Ricerca storico dal:"/>
+                    </cell>
+                    <cell>
+                        <datebox value="@bind(vm.ricercaDal)" hflex="1" format="dd/MM/yyyy" onChange="@command('onRicerca')"/>
+                    </cell>
+                    <cell align="right">
+                        <label value="Ricerca storico al:"/>
+                    </cell>
+                    <cell>
+                        <datebox value="@bind(vm.ricercaAl)" hflex="1" format="dd/MM/yyyy" onChange="@command('onRicerca')"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell align="right">
+                        <label value="Mostra Campi:"/>
+                    </cell>
+                    <cell>
+                        <combobox model="@load(vm.filtri)" hflex="1" readonly="true"
+                                  selectedItem="@bind(vm.filtroSelezionato) @converter('it.finmatica.zk.utils.PropertyConverter', property='codice')"
+                                  onSelect="@command('onRicerca')">
+                            <template name="model" var="filtro">
+                                <comboitem label="@load(filtro.titolo)"
+                                           description="@load(filtro.descrizione)"
+                                           value="@load(filtro)"/>
+                            </template>
+                        </combobox>
+                    </cell>
+                    <cell colspan="2" style="text-align: left;">
+                        <button label="Cerca" onClick="@command('onRicerca')"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+        <listbox emptyMessage="Nessun dato storicizzato." model="@load(vm.datiStorici)" vflex="1">
+            <listhead>
+                <listheader label="Data" width="150px"/>
+                <listheader label="Utente" width="150px"/>
+                <listheader label="" width="25px"/>
+                <listheader label="Campo" width="150px"/>
+                <listheader label="Valore"/>
+            </listhead>
+            <template name="model" var="nodo">
+                <listitem>
+                    <listcell
+                        label="@load(not empty nodo.dataModifica ? c:formatDate(nodo.dataModifica, 'dd/MM/yyyy HH:mm:ss') : '')"/>
+                    <listcell label="@load(nodo.nominativoUtente)"/>
+                    <listcell
+                        image="@load((nodo.tipoStorico eq 'MODIFICATO' ? '/images/ags/16x16/pencil.png' : (nodo.tipoStorico eq 'CANCELLATO' ? '/images/ags/16x16/removed.png' : '/images/ags/16x16/added.png')))"
+                        tooltiptext="@load((nodo.tipoStorico eq 'MODIFICATO' ? 'Modificato' : (nodo.tipoStorico eq 'CANCELLATO' ? 'Cancellato' : 'Aggiunto')))"/>
+                    <listcell label="@load(nodo.descrizioneCampo)"/>
+                    <listcell label="@load(nodo.valore)" visible="@load(empty nodo.idFileEsterno)"/>
+                    <listcell hoverImage="/images/afc/16x16/arrow_light_down.png" image="/images/afc/16x16/arrow_down.png"
+                              label="@load(nodo.valore)"
+                              onClick="@command('onDownloadFileStorico', storico=nodo)"
+                              visible="@load(not empty nodo.idFileEsterno)"/>
+                </listitem>
+            </template>
+        </listbox>
+    </vlayout>
+</zk>

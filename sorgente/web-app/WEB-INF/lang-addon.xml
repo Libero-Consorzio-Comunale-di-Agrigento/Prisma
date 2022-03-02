@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<language-addon>
+  <addon-name>myaddon</addon-name>
+  <language-name>xul/html</language-name>
+  <component>
+    <component-name>controlBarGrid</component-name>
+    <macro-uri>/afc/controlBarGrid.zul</macro-uri>
+    <inline>true</inline>
+  </component>
+  <component>
+    <component-name>controlBarRecord</component-name>
+    <macro-uri>/afc/controlBarRecord.zul</macro-uri>
+    <inline>true</inline>
+  </component>
+  <component>
+    <component-name>cfControlBarGrid</component-name>
+    <macro-uri>/gestionedocumenti/cf/utility/cfGrid.zul</macro-uri>
+    <inline>true</inline>
+  </component>
+  <component>
+    <component-name>cfControlBarRecord</component-name>
+    <macro-uri>/gestionedocumenti/cf/utility/cfRecord.zul</macro-uri>
+    <inline>true</inline>
+  </component>
+  <component>
+        <component-name>BandboxRuoli</component-name>
+        <extends>bandbox</extends>
+        <component-class>it.finmatica.gestionedocumenti.zk.BandboxRuoliAd4</component-class>
+    </component>
+    <component>
+        <component-name>BandboxUnita</component-name>
+        <extends>bandbox</extends>
+        <component-class>it.finmatica.gestionedocumenti.zk.BandboxUnitaSo4</component-class>
+    </component>
+
+    <component>
+        <component-name>BandboxSoggettiUnita</component-name>
+        <extends>bandbox</extends>
+        <component-class>it.finmatica.gestionedocumenti.zk.BandboxSoggettiUnitaSo4</component-class>
+    </component>
+
+    <component>
+        <component-name>BandboxSoggettiUtenti</component-name>
+        <extends>bandbox</extends>
+        <component-class>it.finmatica.gestionedocumenti.zk.BandboxSoggettiUtentiSo4</component-class>
+    </component>
+
+    <component>
+        <component-name>BandboxUtenti</component-name>
+        <extends>bandbox</extends>
+        <component-class>it.finmatica.gestionedocumenti.zk.BandboxUtenti</component-class>
+    </component>
+    <component>
+        <component-name>BandboxSoggetti</component-name>
+        <extends>bandbox</extends>
+        <component-class>it.finmatica.gestionedocumenti.zk.BandboxSoggetti</component-class>
+    </component>
+
+  <component>
+    <component-name>combobox</component-name>
+    <extends>combobox</extends>
+    <annotation>
+      <annotation-name>ZKBIND</annotation-name>
+      <property-name>selectedItem</property-name>
+      <attribute>
+        <attribute-name>SAVE_EVENT</attribute-name>
+          <!-- bug #2966241, since 5.0, combobox changes the sequence to fire onChange
+          then onSelect event when end user select an item from the drop down list(In 3.x,
+          it used to fire onSelect then onChange). This could cause the currently selected
+          bean to be modified in onChange event if we still trigger binding of the
+          selectedItem with onSelect event. Thus we change this to be triggered when "onChange" event
+           -->
+          <attribute-value>onChange</attribute-value>
+      </attribute>
+      <attribute>
+        <attribute-name>LOAD_EVENT</attribute-name>
+        <attribute-value>onAfterRender</attribute-value>
+      </attribute>
+      <attribute>
+        <attribute-name>ACCESS</attribute-name>
+        <attribute-value>both</attribute-value>
+      </attribute>
+      <attribute>
+        <attribute-name>CONVERTER</attribute-name>
+        <attribute-value>org.zkoss.bind.converter.sys.ComboboxSelectedItemConverter</attribute-value>
+      </attribute>
+    </annotation>
+    <annotation>
+      <annotation-name>ZKBIND</annotation-name>
+      <property-name>selectedIndex</property-name>
+      <attribute>
+        <attribute-name>SAVE_EVENT</attribute-name>
+        <attribute-value>onSelect</attribute-value>
+      </attribute>
+      <attribute>
+        <attribute-name>LOAD_EVENT</attribute-name>
+        <attribute-value>onAfterRender</attribute-value>
+      </attribute>
+      <attribute>
+        <attribute-name>ACCESS</attribute-name>
+        <attribute-value>both</attribute-value>
+      </attribute>
+      <attribute>
+        <attribute-name>CONVERTER</attribute-name>
+        <attribute-value>org.zkoss.bind.converter.sys.ComboboxSelectedIndexConverter</attribute-value>
+      </attribute>
+    </annotation>
+  </component>
+
+    <!-- nuovi componenti protocollo -->
+    <component>
+    <component-name>EditaTesto</component-name>
+    <extends>span</extends>
+    <component-class>it.finmatica.protocollo.zk.components.testo.EditaTestoComponent</component-class>
+  </component>
+
+  <component>
+    <component-name>EliminaTesto</component-name>
+    <extends>button</extends>
+    <component-class>it.finmatica.protocollo.zk.components.testo.EliminaTestoButton</component-class>
+
+    <annotation>
+      <annotation-name>ZKBIND</annotation-name>
+      <property-name>value</property-name>
+      <attribute>
+        <attribute-name>ACCESS</attribute-name>
+        <attribute-value>both</attribute-value>
+      </attribute>
+      <attribute>
+        <attribute-name>SAVE_EVENT</attribute-name>
+        <attribute-value>onTestoEliminato</attribute-value>
+      </attribute>
+    </annotation>
+  </component>
+
+  <component>
+    <component-name>CaricaTesto</component-name>
+    <extends>span</extends>
+    <component-class>it.finmatica.protocollo.zk.components.testo.CaricaTestoComponent</component-class>
+  </component>
+  <component>
+    <component-name>DownloadTesto</component-name>
+    <extends>a</extends>
+    <component-class>it.finmatica.protocollo.zk.components.testo.LinkTestoButton</component-class>
+  </component>
+  <component>
+    <component-name>ScanButton</component-name>
+    <extends>button</extends>
+    <component-class>it.finmatica.protocollo.zk.components.upload.ScanButton</component-class>
+  </component>
+  <component>
+    <component-name>CaricaFileButton</component-name>
+    <extends>button</extends>
+    <component-class>it.finmatica.protocollo.zk.components.upload.CaricaFileButton</component-class>
+  </component>
+  <component>
+    <component-name>ImportaFilePecButton</component-name>
+    <extends>button</extends>
+    <component-class>it.finmatica.protocollo.zk.components.upload.ImportaFilePecButton</component-class>
+  </component>
+
+    <component>
+        <component-name>RinominaFile</component-name>
+        <extends>span</extends>
+        <component-class>it.finmatica.protocollo.zk.components.testo.RinominaFileComponent</component-class>
+    </component>
+
+    <component>
+      <component-name>RinominaFileImport</component-name>
+      <extends>span</extends>
+      <component-class>it.finmatica.protocollo.zk.components.testo.RinominaFileImportComponent</component-class>
+    </component>
+
+  <component>
+    <component-name>BandboxRegistro</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.collegamenti.BandboxRegistro</component-class>
+  </component>
+  <component>
+    <component-name>BandboxModalitaInvioRicezione</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.movimento.BandboxModalitaInvioRicezione</component-class>
+  </component>
+  <component>
+    <component-name>BandboxClassificazione</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.titolario.BandboxClassificazione</component-class>
+  </component>
+  <component>
+    <component-name>BandboxClassificazioneInsFascicolo</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.titolario.BandboxClassificazioneInsFascicolo</component-class>
+  </component>
+  <component>
+    <component-name>BandboxClassificazioneFascicolo</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.titolario.BandboxClassificazioneFascicolo</component-class>
+  </component>
+  <component>
+    <component-name>BandboxFascicolo</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.titolario.BandboxFascicolo</component-class>
+  </component>
+  <component>
+    <component-name>BandboxUfficioCompetente</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.ufficioCompetente.BandboxUfficioCompetente</component-class>
+  </component>
+  <component>
+    <component-name>RicercaTitolarioButton</component-name>
+    <extends>toolbarbutton</extends>
+    <component-class>it.finmatica.protocollo.zk.components.titolario.RicercaTitolarioButton</component-class>
+  </component>
+  <component>
+    <component-name>VisualizzaFascicoloButton</component-name>
+    <extends>toolbarbutton</extends>
+    <component-class>it.finmatica.protocollo.zk.components.titolario.VisualizzaFascicoloButton</component-class>
+  </component>
+  <component>
+    <component-name>CreaFascicoloButton</component-name>
+    <extends>toolbarbutton</extends>
+    <component-class>it.finmatica.protocollo.zk.components.titolario.CreaFascicoloButton</component-class>
+  </component>
+  <component>
+    <component-name>BandboxUtenteProtocollo</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.utenti.BandboxUtenteProtocollo</component-class>
+  </component>
+  <component>
+    <component-name>BandboxSchemaProtocollo</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.documenti.BandboxSchemaProtocollo</component-class>
+  </component>
+
+  <component>
+    <component-name>BandboxSchemaProtocolloIntegrazioni</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.documenti.BandboxSchemaProtocolloIntegrazioni</component-class>
+  </component>
+
+  <component>
+    <component-name>BandboxUnitaIterDocumentale</component-name>
+    <extends>bandbox</extends>
+    <component-class>it.finmatica.protocollo.zk.components.iterdocumentale.BandboxUnitaIterDocumentale</component-class>
+  </component>
+
+
+
+  <component>
+    <component-name>Corrispondenti</component-name>
+    <extends>div</extends>
+    <component-class>it.finmatica.protocollo.zk.components.corrispondenti.CorrispondentiComponent</component-class>
+  </component>
+
+  <component>
+    <component-name>Smistamenti</component-name>
+    <extends>div</extends>
+    <component-class>it.finmatica.protocollo.zk.components.smistamenti.SmistamentiComponent</component-class>
+  </component>
+
+  <component>
+    <component-name>SmistamentiStorici</component-name>
+    <extends>div</extends>
+    <component-class>it.finmatica.protocollo.zk.components.smistamenti.SmistamentiStoriciComponent</component-class>
+  </component>
+
+  <component>
+    <component-name>AlberoCatenaDocumentale</component-name>
+    <extends>div</extends>
+    <component-class>it.finmatica.protocollo.zk.components.catenadocumentale.AlberoCatenaDocumentaleComponent</component-class>
+  </component>
+
+  <component>
+    <component-name>Movimento</component-name>
+    <extends>div</extends>
+    <component-class>it.finmatica.protocollo.zk.components.movimento.MovimentoComponent</component-class>
+  </component>
+
+  <component>
+    <component-name>MenuFunzionalita</component-name>
+    <extends>span</extends>
+    <component-class>commons.menu.MenuItemProtocollo</component-class>
+  </component>
+
+  <component>
+    <component-name>MenuFunzionalitaMessaggioArrivo</component-name>
+    <extends>span</extends>
+    <component-class>commons.menu.MenuItemMessaggioArrivo</component-class>
+  </component>
+
+  <component>
+    <component-name>MenuFunzionalitaFascicolo</component-name>
+    <extends>span</extends>
+    <component-class>commons.menu.MenuItemFascicolo</component-class>
+  </component>
+
+  <component>
+    <component-name>EsitoFirmaImage</component-name>
+    <extends>image</extends>
+    <component-class>it.finmatica.protocollo.zk.components.firma.EsitoFirmaImage</component-class>
+  </component>
+
+  <component>
+    <component-name>Messaggio</component-name>
+    <extends>div</extends>
+    <component-class>it.finmatica.protocollo.zk.components.si4cs.MessaggioComponent</component-class>
+  </component>
+</language-addon>

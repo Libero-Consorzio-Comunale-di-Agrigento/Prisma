@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer"
+    	viewModel="@id('vm') @init('it.finmatica.protocollo.dizionari.TipoSpedizioneDettaglioViewModel')"
+    	border="normal"
+        width="500px" sizable="false" title=" ">
+
+		<h:div class="barraTitoloPagina">
+  			<label sclass="titoloPagina" value="@load(vm.selectedRecord.id le 0 ? 'Gestione del Tipo Spedizione' : 'Nuovo Tipo Spedizione')"/>
+		<image
+			src="@load(vm.selectedRecord.valido? '/images/ags/22x22/viewok.png' : '/images/ags/22x22/cancel.png')"
+			tooltiptext="@load(vm.selectedRecord.valido? 'Tipo attivo' : 'Tipo disattivato')" />
+   		</h:div>
+
+	      <vlayout width="100%" vflex="max">
+      		<grid  sclass="form">
+				<rows>
+	        		<row>
+		        		<cell colspan="1" align="right">
+							<h:span class="mandatoryLabel">*</h:span>
+							<label value="Tipo Spedizione"/>
+	        			</cell>
+						<cell colspan="3">
+							<textbox value="@bind(vm.selectedRecord.codice)" hflex="1"
+									 class="noresizable"
+									 style="text-transform: uppercase"/>
+	        			</cell>
+	        		</row>
+					<row>
+						<cell colspan="1" align="right">
+							<h:span class="mandatoryLabel">*</h:span>
+							<label value="Descrizione"/>
+						</cell>
+						<cell colspan="3">
+							<textbox value="@bind(vm.selectedRecord.descrizione)" hflex="1"
+									 class="noresizable" multiline="true" rows="3"/>
+						</cell>
+					</row>
+					<row>
+						<cell colspan="1" align="right">
+							<label value="Barcode IT"/>
+						</cell>
+						<cell colspan="3">
+							<radiogroup selectedIndex="@load(vm.selectedRecord.barcodeItalia ? 0 : 1)" selectedItem="@save(vm.selectedRecord.barcodeItalia)">
+			     				<radio label="Sì" value="@load(true)" />
+					            <radio label="No" value="@load(false)"/>
+				            </radiogroup>
+						</cell>
+					</row>
+					<row>
+						<cell colspan="1" align="right">
+							<label value="Barcode ES"/>
+						</cell>
+						<cell colspan="3">
+							<radiogroup selectedIndex="@load(vm.selectedRecord.barcodeEstero ? 0 : 1)" selectedItem="@save(vm.selectedRecord.barcodeEstero)">
+			     				<radio label="Sì" value="@load(true)" />
+					            <radio label="No" value="@load(false)"/>
+				            </radiogroup>
+						</cell>
+					</row>
+					<row>
+						<cell colspan="1" align="right">
+							<label value="Stampa"/>
+						</cell>
+						<cell colspan="3">
+							<radiogroup selectedIndex="@load(vm.selectedRecord.stampa ? 0 : 1)" selectedItem="@save(vm.selectedRecord.stampa)">
+			     				<radio label="Sì" value="@load(true)" />
+					            <radio label="No" value="@load(false)"/>
+				            </radiogroup>
+						</cell>
+					</row>
+	        	</rows>
+	        </grid>
+	       </vlayout>
+
+	     <vlayout sclass="datiCreazioneModifica" height="30px">
+            <label value="@load(vm.datiCreazione)" visible="@load(vm.selectedRecord.id gt 0)"/>
+            <label value="@load(vm.datiModifica)" visible="@load(vm.selectedRecord.id gt 0)"/>
+        </vlayout>
+
+			<controlBarRecord duplicaAttivo="false"/>
+
+    </window>
+</zk>

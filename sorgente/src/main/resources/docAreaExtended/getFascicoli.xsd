@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>Metodo getFascicoli</xs:appinfo>
+		<xs:documentation xml:lang="it">
+			Questo metodo ricerca Fascicoli all'interno del Titolario.
+			I campi necessari sono 
+				CLASS_COD, 
+				FASCICOLO_NUMERO ( o FASCICOLO_NUMERO_DAL/AL),
+				FASICOLO_ANNO ( o FASCICOLO_ANNO_DAL/AL ),
+				UTENTE
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ROOT">
+		<xs:complexType> 
+			<xs:sequence>  
+				<xs:element name="CLASS_COD" type="xs:string" >
+					<xs:annotation>
+						<xs:documentation>Codice della Classifica da Ricercare</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:choice>  
+					<xs:element name="FASCICOLO_NUMERO" type="xs:string" >
+						<xs:annotation>
+							<xs:documentation>Numero del Fascicolo/subfascicolo da Ricercare (tramite LIKE) </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:group ref="FASCICOLO_NUMERO_GRUPPO">
+						<xs:annotation>
+							<xs:documentation>Deve essere inserito il numero del fascicolo da ricercare o un range DAL/AL</xs:documentation>
+						</xs:annotation>
+					</xs:group>
+				</xs:choice>
+				<xs:choice>  
+					<xs:element name="FASCICOLO_ANNO" type="xs:string" >
+						<xs:annotation>
+							<xs:documentation>Anno del Fascicolo/subfascicolo da Ricercare  </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:group ref="FASCICOLO_ANNO_GRUPPO">
+						<xs:annotation>
+							<xs:documentation>Deve essere inserito l'anno del fascicolo da ricercare o un range DAL/AL</xs:documentation>
+						</xs:annotation>
+					</xs:group>
+				</xs:choice>
+				<xs:element name="FASCICOLO_OGGETTO" type="xs:string" minOccurs="0" >
+					<xs:annotation>
+						<xs:documentation>Oggetto del Fascicolo da Ricercare (tramite LIKE) </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="NOTE" type="xs:string" minOccurs="0" >
+					<xs:annotation>
+						<xs:documentation>Note del Fascicolo da Ricercare (tramite LIKE) </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+
+				<xs:element name="STATO_SCARTO"  minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Stato Scarto del Fascicolo, i valori ammessi sono elencati </xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="**" >
+								<xs:annotation>
+									<xs:documentation>Default</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="RR" >
+								<xs:annotation>
+									<xs:documentation>Con richiesta di scarto rifiutata</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="CO" >
+								<xs:annotation>
+									<xs:documentation>Conservato</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="AA" >
+								<xs:annotation>
+									<xs:documentation>In attesa di approvazione dello scarto</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="PS" >
+								<xs:annotation>
+									<xs:documentation>Proposto per lo scarto</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="SC" >
+								<xs:annotation>
+									<xs:documentation>Scartato</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+
+				</xs:element>
+				<xs:element name="STATO_FASCICOLO" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="1" >
+								<xs:annotation>
+									<xs:documentation>Corrente</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="2" >
+								<xs:annotation>
+									<xs:documentation>Deposito</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="3" >
+								<xs:annotation>
+									<xs:documentation>Storico</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="UFFICIO_COMPETENZA" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice dell' Ufficio di competenza del Fascicolo da Ricercare</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UFFICIO_CREAZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice dell' Ufficio di creazione del Fascicolo da Ricercare</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="UTENTE_CREAZIONE" type="xs:string" minOccurs="0" >
+					<xs:annotation>
+						<xs:documentation>Codice dell' Utente di creazione del Fascicolo da Ricercare</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="DATA_APERTURA_DAL" type="DateType" minOccurs="0" >
+					<xs:annotation>
+						<xs:documentation>Range di ricerca per la Data Apertura del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DATA_APERTURA_AL" type="DateType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Range di ricerca per la Data Apertura del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="DATA_STATO_SCARTO_DAL" type="DateType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Range di ricerca per la Data Scarto del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="DATA_STATO_SCARTO_AL" type="DateType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Range di ricerca per la Data Scarto del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="DATA_CHIUSURA_DAL" type="DateType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Range di ricerca per la Data Chiusura del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="DATA_CHIUSURA_AL" type="DateType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Range di ricerca per la Data Chiusura del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="DATA_CREAZIONE_DAL" type="DateType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Range di ricerca per la Data Creazione del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="DATA_CREAZIONE_AL" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Range di ricerca per la Data Creazione del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="CODICE_AMMINISTRAZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice amministrazione dell'ente se non passato prende quello di default</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="CODICE_AOO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice aoo dell'ente se non passato prende quello di default</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="UTENTE" type="xs:string" >
+					<xs:annotation>
+						<xs:documentation>
+							Nominativo dell'utente che deve eseguire la ricerca.
+							L'utente deve avere le competenze sui documenti da ricercare.
+							Se non passato viene preso l'utente di accesso al WebService ( esempio AGSPRWS)
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+			</xs:sequence>
+		</xs:complexType>
+
+	</xs:element> 
+	<xs:group name="FASCICOLO_ANNO_GRUPPO">
+		<xs:sequence>
+			<xs:element name="FASCICOLO_ANNO_DAL" type="xs:string"  /> 
+			<xs:element name="FASCICOLO_ANNO_AL" type="xs:string"  /> 
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="FASCICOLO_NUMERO_GRUPPO">
+		<xs:sequence>
+			<xs:element name="FASCICOLO_NUMERO_DAL" type="xs:string" /> 
+			<xs:element name="FASCICOLO_NUMERO_AL" type="xs:string" /> 
+		</xs:sequence>
+	</xs:group>
+	<xs:simpleType name="DateType">
+		<xs:restriction base="xs:string" >
+			<xs:pattern value="(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema> 

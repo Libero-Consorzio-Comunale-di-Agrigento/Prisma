@@ -1,0 +1,665 @@
+--liquibase formatted sql
+--changeset mfrancesconi:4.0.0.0_20200226_150_upd_seg_bottoni_notifiche
+
+declare
+   d_codice_amministrazione   varchar2 (100);
+   d_codice_aoo               varchar2 (100);
+begin
+   d_codice_amministrazione   := ag_parametro.get_valore ('CODICE_AMM_1', '@agVar@');
+   d_codice_aoo               := ag_parametro.get_valore ('CODICE_AOO_1', '@agVar@');
+
+   delete seg_bottoni_notifiche
+    where tipo = 'ATTIVA_ITER_DOCUMENTALE';
+
+   --INSERISCO I Nuovi bottoni
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , modello_azione
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'A'
+              , 'operazione=APRI_ASSEGNA'
+              , 'Assegna'
+              , 'Assegna'
+              , 'fa fa-user-plus'
+              , 'IN_CARICO'
+              , 'FORM'
+              , 1
+              , 'M_MULTI_ASSEGNA'
+              , 'Y'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 150
+              , 'user-plus'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , modello_azione
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'A'
+              , 'operazione=APRI_INOLTRA_FLEX'
+              , 'Inoltra'
+              , 'Inoltra'
+              , 'fa fa-arrow-circle-right'
+              , 'IN_CARICO'
+              , 'FORM'
+              , 1
+              , 'M_MULTI_INOLTRO'
+              , 'N'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 210
+              , 'arrow-circle-right'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , modello_azione
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'A'
+              , 'operazione=APRI_SMISTA_FLEX'
+              , 'Smista'
+              , 'Smista'
+              , 'fa fa-arrow-right'
+              , 'IN_CARICO'
+              , 'FORM'
+              , 1
+              , 'M_MULTI_SMISTA'
+              , 'N'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 60
+              , 'arrow-right'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'A'
+              , 'operazione=ESEGUI'
+              , 'Esegui'
+              , 'Esegui'
+              , 'fa fa-arrow-circle-up'
+              , 'IN_CARICO'
+              , 'FORM'
+              , 1
+              , 'N'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 40
+              , 'arrow-circle-up'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , modello_azione
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'C'
+              , 'operazione=APRI_ASSEGNA'
+              , 'Assegna'
+              , 'Assegna'
+              , 'fa fa-user-plus'
+              , 'IN_CARICO'
+              , 'FORM'
+              , 1
+              , 'M_MULTI_ASSEGNA'
+              , 'Y'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 170
+              , 'user-plus'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , modello_azione
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'C'
+              , 'operazione=APRI_INOLTRA_FLEX'
+              , 'Inoltra'
+              , 'Inoltra'
+              , 'fa fa-arrow-circle-right'
+              , 'IN_CARICO'
+              , 'FORM'
+              , 1
+              , 'M_MULTI_INOLTRO'
+              , 'N'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 160
+              , 'arrow-circle-right'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , modello_azione
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'C'
+              , 'operazione=APRI_SMISTA_FLEX'
+              , 'Smista'
+              , 'Smista4'
+              , 'fa fa-arrow-right'
+              , 'IN_CARICO'
+              , 'FORM'
+              , 1
+              , 'M_MULTI_SMISTA'
+              , 'N'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 70
+              , 'arrow-right'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'C'
+              , 'operazione=ESEGUI'
+              , 'Esegui'
+              , 'Esegui'
+              , 'fa fa-arrow-circle-up'
+              , 'IN_CARICO'
+              , 'FORM'
+              , 1
+              , 'N'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 10
+              , 'arrow-circle-up'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , modello_azione
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'R'
+              , 'operazione=APRI_CARICO_ASSEGNA'
+              , 'Prendi in carico ed assegna'
+              , 'Prendi in carico ed assegna'
+              , 'fa fa-user-circle'
+              , 'DA_RICEVERE'
+              , 'FORM'
+              , 1
+              , 'M_MULTI_CARICO_ASSEGNA'
+              , 'Y'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 80
+              , 'user-circle'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , modello_azione
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'R'
+              , 'operazione=APRI_CARICO_FLEX'
+              , 'Prendi in carico ed inoltra'
+              , 'Prendi in carico ed inoltra'
+              , 'fa fa-arrow-circle-right'
+              , 'DA_RICEVERE'
+              , 'FORM'
+              , 1
+              , 'M_MULTI_CARICO_INOLTRA'
+              , 'N'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 110
+              , 'arrow-circle-right'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , modello_azione
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'R'
+              , 'operazione=APRI_SMISTA_ESEGUI_FLEX'
+              , 'Prendi in carico, esegui e smista'
+              , 'Prendi in carico, esegui e smista'
+              , 'fa fa-arrow-up'
+              , 'DA_RICEVERE'
+              , 'FORM'
+              , 1
+              , 'M_MULTI_CARICO_ESEGUI_SMISTA'
+              , 'N'
+              , '#COMPETENZA#CONOSCENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 90
+              , 'arrow-up'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , modello_azione
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'R'
+              , 'operazione=APRI_SMISTA_FLEX'
+              , 'Smista'
+              , 'Smista'
+              , 'fa fa-arrow-right'
+              , 'DA_RICEVERE'
+              , 'FORM'
+              , 1
+              , 'M_MULTI_SMISTA'
+              , 'N'
+              , '#COMPETENZA#CONOSCENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 50
+              , 'arrow-right'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'R'
+              , 'operazione=CARICO'
+              , 'Prendi in carico'
+              , 'Prendi in carico'
+              , 'fa fa-arrow-circle-down'
+              , 'DA_RICEVERE'
+              , 'FORM'
+              , 1
+              , 'N'
+              , '#COMPETENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 25
+              , 'arrow-circle-down'
+              , '../Protocollo/standalone.zul?');
+
+   insert into seg_bottoni_notifiche (tipo
+                                    , stato
+                                    , azione
+                                    , label
+                                    , tooltip
+                                    , icona
+                                    , modello
+                                    , tipo_azione
+                                    , azione_multipla
+                                    , assegnazione
+                                    , tipo_smistamento
+                                    , utente_ins
+                                    , data_ins
+                                    , utente_upd
+                                    , data_upd
+                                    , valido_dal
+                                    , version
+                                    , codice_amministrazione
+                                    , codice_aoo
+                                    , sequenza
+                                    , icona_short
+                                    , url_azione)
+        values ('ATTIVA_ITER_DOCUMENTALE'
+              , 'R'
+              , 'operazione=CARICO_ESEGUI'
+              , 'Prendi in carico ed esegui'
+              , 'Prendi in carico ed esegui'
+              , 'fa fa-arrow-circle-up'
+              , 'DA_RICEVERE'
+              , 'FORM'
+              , 1
+              , 'N'
+              , '#COMPETENZA#CONOSCENZA'
+              , 'RPI'
+              , sysdate
+              , 'RPI'
+              , sysdate
+              , sysdate
+              , 1
+              , d_codice_amministrazione
+              , d_codice_aoo
+              , 30
+              , 'arrow-circle-up'
+              , '../Protocollo/standalone.zul?');
+end;
+/

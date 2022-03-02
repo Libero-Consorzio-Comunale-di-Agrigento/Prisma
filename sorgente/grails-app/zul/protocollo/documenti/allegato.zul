@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('it.finmatica.protocollo.documenti.AllegatoViewModel')"
+            border="normal" sizable="true" width="800px" height="600px" title=" ">
+        <grid sclass="documentoBandaTitolo">
+            <rows>
+                <row>
+                    <cell width="50px">
+                        <image src="/images/ags/48x48/attach.png"/>
+                    </cell>
+                    <cell>
+                        <!-- titolo della pagina -->
+                        <label value="Allegato" sclass="documentoTitolo"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+
+        <space height="3px"/>
+        <!-- TIPOLOGIA E POSIZIONE FLUSSO -->
+        <grid sclass="form">
+            <rows>
+                <row>
+                    <cell colspan="2" align="right" width="150px">
+                        <h:span class="mandatoryLabel">*</h:span>
+                        <label value="Titolo:"/>
+                    </cell>
+                    <cell colspan="4">
+                        <textbox id="titoloAllegato" value="@bind(vm.allegato.descrizione)" hflex="1"
+                                 readonly="@load(not vm.competenze.modifica)"
+                                 onBlur="@command('doCommand', val=self.value, descrizioneAllegato = descrizioneAllegato)"
+                        />
+                    </cell>
+                </row>
+                <row>
+                    <cell colspan="2" align="right">
+                        <label value="Tipo Allegato:"/>
+                    </cell>
+                    <cell colspan="4">
+                        <combobox model="@load(vm.listaTipoAllegato)" hflex="1"
+                                  selectedItem="@bind(vm.allegato.tipoAllegato) @converter('it.finmatica.zk.utils.PropertyConverter', property='id')"
+                                  readonly="true"
+                                  disabled="@load(not vm.competenze.modifica)">
+                            <template name="model" var="tipoAll">
+                                <comboitem label="@load(tipoAll.descrizione)" value="@load(tipoAll)"/>
+                            </template>
+                        </combobox>
+                    </cell>
+                </row>
+                <row>
+                    <cell colspan="2" align="right">
+                        <label value="Descrizione:"/>
+                    </cell>
+                    <cell colspan="4">
+                        <textbox id="descrizioneAllegato" value="@bind(vm.allegato.commento)" multiline="true" rows="3" hflex="1"
+                                 sclass="noresizable" readonly="@load(not vm.competenze.modifica)"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell colspan="2" align="right">
+                        <label value="Stato Firma:"/>
+                    </cell>
+                    <cell colspan="2">
+                        <radiogroup onCheck="@command('onChangeStatoFirma')"
+                                    selectedIndex="@load(vm.allegato.statoFirma eq 'FIRMATO' ? 2 : (vm.allegato.statoFirma eq 'DA_NON_FIRMARE' ? 0 : 1))"
+                                    selectedItem="@save(vm.allegato.statoFirma)">
+                            <radio label="Da Non Firmare" value="@load('DA_NON_FIRMARE')"
+                                   disabled="@load(not vm.competenze.modifica or vm.allegato.statoFirma eq 'FIRMATO')"/>
+                            <radio label="Da Firmare" value="@load('DA_FIRMARE')"
+                                   disabled="@load(not vm.competenze.modifica or vm.allegato.statoFirma eq 'FIRMATO'))"/>
+                            <radio label="Firmato" value="@load('FIRMATO')" disabled="@load(not vm.competenze.modifica)"
+                                   visible="@load(vm.allegato.statoFirma eq 'FIRMATO')"/>
+                        </radiogroup>
+                    </cell>
+                </row>
+                <row>
+                    <cell colspan="2" align="right">
+                        <label value="Stampa Unica:"/>
+                    </cell>
+                    <cell colspan="1">
+                        <radiogroup selectedIndex="@load(vm.allegato.stampaUnica ? 0 : 1)" selectedItem="@save(vm.allegato.stampaUnica)">
+                            <radio label="Sì" value="@load(true)" disabled="@load(not vm.competenze.modifica or not vm.abilitaRadioStampaUnica)"/>
+                            <radio label="No" value="@load(false)" disabled="@load(not vm.competenze.modifica or not vm.abilitaRadioStampaUnica)"/>
+                        </radiogroup>
+                    </cell>
+                    <cell colspan="2" align="right">
+                        <label value="Riservato:"/>
+                    </cell>
+                    <cell colspan="1">
+                        <radiogroup selectedIndex="@load(vm.allegato.riservato ? 0 : 1)"
+                                    selectedItem="@save(vm.allegato.riservato)">
+                            <radio label="Sì" value="@load(true)" disabled="@load(not vm.competenze.modifica)"/>
+                            <radio label="No" value="@load(false)" disabled="@load(not vm.competenze.modifica)"/>
+                        </radiogroup>
+                    </cell>
+                </row>
+                <row>
+                    <cell align="right">
+                        <label value="Quantità:"/>
+                    </cell>
+                    <cell>
+                        <textbox value="@bind(vm.allegato.quantita)" hflex="1"
+                                 readonly="@load(not vm.competenze.modifica)"/>
+                    </cell>
+                    <cell align="right">
+                        <label value="Numero Pagine:"/>
+                    </cell>
+                    <cell>
+                        <textbox value="@bind(vm.allegato.numPagine)" hflex="1"
+                                 readonly="@load(not vm.competenze.modifica)"/>
+                    </cell>
+                    <cell align="right">
+                        <label value="Sequenza:"/>
+                    </cell>
+                    <cell>
+                        <textbox value="@bind(vm.allegato.sequenza)" hflex="1"
+                                 readonly="@load(not vm.competenze.modifica)"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell colspan="2" align="right">
+                        <label value="Ubicazione:"/>
+                    </cell>
+                    <cell colspan="4">
+                        <textbox value="@bind(vm.allegato.ubicazione)" hflex="1"
+                                 readonly="@load(not vm.competenze.modifica)"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell colspan="2" align="right">
+                        <label value="Origine:"/>
+                    </cell>
+                    <cell colspan="4">
+                        <textbox value="@bind(vm.allegato.origine)" hflex="1"
+                                 readonly="@load(not vm.competenze.modifica)"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+
+        <listbox model="@load(vm.fileAllegati)" emptyMessage="Nessun File Allegato" vflex="1">
+            <listhead>
+                <listheader label="" width="25px"/>
+                <listheader label="" width="25px"/>
+                <listheader label="" width="25px"/>
+                <listheader label="" width="25px"/>
+                <listheader label="Nome File"  width="55%"/>
+                <listheader label="Dimensione" width="10%"/>
+                <listheader label="" width="18%">
+                    <CaricaFileButton upload="true,maxsize=-1,multiple=true,native" documento="@load(vm.documentoPadre)" allegato="@load(vm.allegato)"
+                                      onCaricaFile="@command('onCaricaFile')" visible="@load(vm.competenze.modifica)"
+                                      disabled="@load(not vm.competenze.modifica)"/>
+                    <ScanButton documento="@load(vm.documentoPadre)" onCaricaFile="@command('onCaricaFile')"
+                                visible="@load(vm.competenze.modifica)" disabled="@load(not vm.competenze.modifica)"/>
+                    <button image="/images/afc/16x16/search.png"
+                            tooltiptext="Apri finestra per la ricerca dei documenti"
+                            visible="@load(vm.abilitaCercaDocumenti and vm.competenze.modifica)"
+                            onClick="@command('onApriPopupRicercaDocumenti')"
+                            mold="trendy"/>
+                </listheader>
+            </listhead>
+            <template name="model" var="a">
+                <listitem>
+                    <listcell label="@load(aStatus.index + 1)" style="text-align:center;"/>
+                    <listcell>
+                        <EsitoFirmaImage esitoFirma="@load(a.esitoVerifica)"
+                                         height = "18px"
+                                         visible="@load(a.firmato)"
+                                         dataVerifica="@load(a.dataVerifica) @converter('formattedDate', format='dd/MM/yyyy HH:mm:ss')"/>
+                    </listcell>
+                    <listcell>
+                        <image src="/images/afc/16x16/arrow_down.png"
+                               onClick="@command('onDownloadFileAllegato', fileAllegato=a)"/>
+                    </listcell>
+                    <listcell>
+                        <image src="/images/ags/16x16/pdf.png" tooltiptext="Anteprima PDF"
+                               onClick="@command('onDownloadPdfFileAllegato', fileAllegato=a)"
+                               visible="@load(a.isConvertibilePdf() and vm.allegato.statoFirma eq 'DA_FIRMARE')"/>
+                        <toolbarbutton visible="@load(vm.fileCompresso(a))"
+                                       onClick="@command('onUnzipAllegato', fileAllegato=a)"
+                                       image="/images/afc/16x16/zip.png"/>
+                    </listcell>
+                    <listcell onDoubleClick="@command('onDownloadFileAllegato', fileAllegato=a)"
+                              tooltip="Scarica File" hflex="1">
+                        <RinominaFile onCambiaNome="@command('onCambiaNome')" fileDocumento="@bind(a)" allegato="@load(vm.allegato)" hflex="1"/>
+                    </listcell>
+                    <listcell label="@load(a.dimensioneMB)"/>
+                    <listcell style="text-align:center;">
+                        <image src="/images/ags/16x16/trash.png"
+                               tooltiptext="Elimina" onClick="@command('onEliminaFileAllegato', fileAllegato=a)"
+                               visible="@load(vm.competenze.modifica)"/>
+                    </listcell>
+
+                </listitem>
+            </template>
+        </listbox>
+
+        <!-- - - - - - - - - - - - - - - -->
+        <!-- Pulsanti -->
+        <!-- - - - - - - - - - - - - - - -->
+        <h:div class="pulsantiIter">
+            <button
+                label="Stampa Barcode"
+                image="/images/afc/16x16/print.png"
+                mold="trendy"
+                onClick="@command('onStampaBarcode')"
+                style="float:left"
+                visible="@load(vm.visStampaBrAllegato)"
+            />
+            <button label="Chiudi" onClick="@command('onChiudi')" mold="trendy" image="/images/afc/16x16/close.png"/>
+            <button label="@load(vm.allegato.id eq -1 ? 'Inserisci e chiudi': 'Salva e chiudi')" onClick="@command('onSalvaChiudi')" mold="trendy"
+                    image="/images/afc/16x16/save.png"
+                    visible="@load(vm.competenze.modifica)"
+                    disabled="@load(not vm.competenze.modifica)"/>
+            <button label="@load(vm.allegato.id eq -1 ? 'Inserisci':'Salva')" onClick="@command('onSalva')" mold="trendy"
+                    image="/images/afc/16x16/save.png"
+                    visible="@load(vm.competenze.modifica)"
+                    disabled="@load(not vm.competenze.modifica)"/>
+            <button label="Firma" onClick="@command('onFirmaAllegato')" mold="trendy"
+                    image="/images/pulsanti/16x16/signature.png"
+                    visible="@bind(vm.visButtonFirma)"
+            />
+        </h:div>
+    </window>
+</zk>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:w="http://www.zkoss.org/2005/zk/client" xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window closable="false" apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('it.finmatica.protocollo.IterDocumentaleViewModel')" width="100%" height="100%">
+
+        <style>
+            div.z-grid-body {
+            background: white;
+            border: 0;
+            overflow: hidden;
+            width: 100%;
+            }
+        </style>
+        <vlayout vflex="1">
+            <h:br></h:br>
+            <div visible="@load(not vm.smartDesktop)">
+                <label value="Unità Organizzativa:" style="text-align: left"/>
+                <BandboxUnitaIterDocumentale width="37%"
+                                             selectedItem="@bind(vm.unitaOrganizzativa)"
+                                             onSelectItem = "@command(vm.abilitaPulsanti())"
+                />
+            </div>
+            <h:br></h:br>
+        <tabbox visible="@load(not vm.smartDesktop)">
+            <tabs width="100px">
+                <tab label="Documenti Da Ricevere" onSelect="@command('onCambiaTab', codiceTab = 'da_ricevere')"></tab>
+                <tab label="Documenti In Carico" onSelect="@command('onCambiaTab' , codiceTab = 'in_carico')"></tab>
+                <tab label="Documenti Assegnati" onSelect="@command('onCambiaTab', codiceTab = 'assegnati')"></tab>
+            </tabs>
+            <tabpanels>
+                    <tabpanel vflex="1" id="ric" >
+                         <include  src="iterdocumentale/iterDocumentaleNavBar.zul" mode="instant"  codiceTab="da_ricevere"/>
+                    </tabpanel>
+                    <tabpanel vflex="1" id="car">
+                        <include  src="iterdocumentale/iterDocumentaleNavBar.zul" mode="instant" codiceTab="in_carico"/>
+                     </tabpanel>
+                     <tabpanel vflex="1" id="ass">
+                        <include  src="iterdocumentale/iterDocumentaleNavBar.zul" mode="instant" codiceTab="assegnati"/>
+                     </tabpanel>
+            </tabpanels>
+        </tabbox>
+        <tabbox visible="@load(vm.smartDesktop)">
+                <tabs width="100px">
+                    <tab label="Documenti Da Ricevere" onSelect="@command('onCambiaTab', codiceTab = 'da_ricevere')" visible="@load(vm.daRicevere)"></tab>
+                    <tab label="Documenti In Carico" onSelect="@command('onCambiaTab' , codiceTab = 'in_carico')" visible="@load(vm.inCarico)"></tab>
+                    <tab label="Documenti Assegnati" onSelect="@command('onCambiaTab', codiceTab = 'assegnati')" visible="@load(vm.assegnati)"></tab>
+                </tabs>
+                <tabpanels>
+                    <tabpanel vflex="1" id="ricS" >
+                        <include  src="iterdocumentale/iterDocumentaleNavBar.zul" mode="instant"  codiceTab="da_ricevere"/>
+                    </tabpanel>
+                    <tabpanel vflex="1" id="carS">
+                        <include  src="iterdocumentale/iterDocumentaleNavBar.zul" mode="instant" codiceTab="in_carico"/>
+                    </tabpanel>
+                    <tabpanel vflex="1" id="assS">
+                        <include  src="iterdocumentale/iterDocumentaleNavBar.zul" mode="instant" codiceTab="assegnati"/>
+                    </tabpanel>
+                </tabpanels>
+            </tabbox>
+
+        <listbox hflex="1" vflex="1" model="@load(vm.lista.content)" selectedItem="@bind(vm.selected)" emptyMessage="@load( c:cat('Non sono presenti documenti ', vm.msgNoDocumentiPerTab))"
+                 id="listaDocumentiIter" onSelect="@command('onSelectDocumento')"
+                 multiple="true"  checkmark="true" nonselectableTags="*">
+            <listhead>
+                <listheader label="" width="35px"/>
+                <listheader label="" width="35px"/>
+                <listheader label="Documento" />
+                <listheader label="File" width="3%"/>
+            </listhead>
+            <template name="model" var="smistamento">
+                <listitem onDoubleClick="@command('onItemDoubleClick')">
+                    <listcell style="background-color: #FFFFFF;"/>
+                    <listcell style="background-color: #FFFFFF;">
+                        <image src="@load((not smistamento.messaggioRicevuto)?c:cat('/images/ags/22x22/',smistamento.documento.tipoProtocollo.categoriaProtocollo.icona):'/images/ags/22x22/memo.png')"/>
+                    </listcell>
+                    <!--Visibile solo per tipo PROTOCOLLO -->
+                    <listcell  visible="@load(not smistamento.messaggioRicevuto)">
+                        <grid >
+                            <rows>
+                                <row visible = "@load( smistamento.protocollo ? smistamento.documento.annullato : false)" style="background-color: #FFFFFF;">
+                                    <cell colspan="2"><label style="font-weight:bold; color:red" value="@load(smistamento.protocollo ? smistamento.documento.stato : '')"/></cell>
+                                </row>
+                                <row style="background-color: #EDEFF5;">
+                                    <cell colspan="2">
+                                        <label style="font-weight:bold" value="@load((smistamento.protocollo and not empty smistamento.documento.numero  )?
+                                                                                    c:cat4('Protocollo Generale - ', smistamento.documento.annoNumeroProtocollo , ' del ', vm.dateTimeToString(smistamento.documento.data) )
+                                                                                    : smistamento.protocollo?c:cat('Documento del ', vm.dateTimeToString(smistamento.documento.dateCreated)) : '' )"/>
+                                    </cell>
+                                </row>
+                                <row style="background-color: #FFFFFF;" valign="top">
+                                    <!-- Riga visibile solo per categoria PROTOCOLLO o LETTERA -->
+                                    <cell><label  style="font-weight:bold" value="Modalità: " visible ="@load( smistamento.protocollo ? smistamento.documento.categoriaProtocollo.protocollo or smistamento.documento.categoriaProtocollo.lettera : false)"/>
+                                           <label value="@load(smistamento.protocollo ? smistamento.documento.movimento : '')" visible = "@load( smistamento.protocollo ? smistamento.documento.categoriaProtocollo.protocollo or smistamento.documento.categoriaProtocollo.lettera : false)"/>
+                                           <h:br visible = "@load( smistamento.protocollo ? smistamento.documento.categoriaProtocollo.protocollo or smistamento.documento.categoriaProtocollo.lettera : false)"/>
+                                           <label  style="font-weight:bold" value="Oggetto: "/>  <label value="@load(smistamento.documento.oggetto)"/>
+                                           <h:br/>
+                                            <label style="font-weight:bold" value="Classifica: "/>
+                                            <label value="@load(smistamento.documento.classificazione.codice)"/>
+                                            <label value="@load(not empty smistamento.documento.fascicolo ?
+                                                                c:cat4(' / ', smistamento.documento.fascicolo.anno , ' / ', smistamento.documento.fascicolo.numero)
+                                                                : '')"/>
+
+                                    </cell>
+                                    <cell>
+                                        <groupbox closable="true" mold="3d" visible = "@load( smistamento.protocollo ? smistamento.documento.categoriaProtocollo.protocollo or smistamento.documento.categoriaProtocollo.lettera : false)">
+                                            <caption label="Mittente/Destinatario">
+                                                <toolbarbutton image="/images/ags/16x16/annotate.png"
+                                                               tooltiptext='Visualizza tutti mittenti/destinatari'
+                                                               visible = "@load( smistamento.protocollo ? smistamento.documento.corrispondenti.size() > 5: false)"
+                                                               onClick="@command('onVisualizzaTuttiDestinatari', destinatari=smistamento.documento.corrispondentiLong, descr ='Mittenti/Destinatari')" />
+                                            </caption>
+                                        <!-- mittente / destinatario -->
+                                        <listbox model="@load(smistamento.protocollo ? smistamento.documento.corrispondentiShort : null)" hflex="1" emptyMessage="Nessun Mittente/Destinatario presente.">
+                                             <template name="model">
+                                                <listitem>
+                                                    <listcell>
+                                                        <label value="@load(smistamento.protocollo ? c:cat4(' - ' , each.denominazione, ' ',  each.email) : '')"/>
+                                                    </listcell>
+                                                </listitem>
+                                             </template>
+                                        </listbox>
+                                        </groupbox>
+                                    </cell>
+                                </row>
+                            </rows>
+                        </grid>
+                    </listcell>
+                    <!--Visibile solo per tipo MESSAGGIO RICEVUTO -->
+                    <listcell visible="@load(smistamento.messaggioRicevuto)">
+                        <grid>
+                            <rows>
+                                <row>
+                                    <cell colspan="2" style="background-color: ##EDEFF5;">
+                                        <label style="font-weight:bold; color:red" value="@load(smistamento.messaggioRicevuto ? smistamento.documento.statoMessaggio.descrizione : '')"/>
+                                    </cell>
+                                </row>
+                                <row style="background-color: #FFFFFF;">
+                                    <cell> <label value="Data Spedizione: " style="font-weight:bold"/>
+                                           <label  value="@load(smistamento.messaggioRicevuto ? vm.dateTimeToString(smistamento.documento.dataSpedizione)  : '')" visible ="@load(smistamento.messaggioRicevuto ? smistamento.documento.idMessaggioSi4Cs ne null : false)"/>
+                                           <label  value="@load(smistamento.messaggioRicevuto ? smistamento.documento.mimeTesto  : '')" visible ="@load(smistamento.messaggioRicevuto ? smistamento.documento.idMessaggioSi4Cs eq null : false )"/>
+                                    </cell>
+                                    <cell></cell>
+                                </row>
+                                <row style="background-color: #FFFFFF;">
+                                    <cell> <label value="Data Ricezione: " style="font-weight:bold"/>
+                                           <label value="@load(smistamento.messaggioRicevuto ? vm.dateTimeToString(smistamento.documento.dataRicezione) : '')"/>
+                                    </cell>
+                                    <cell></cell>
+                                </row>
+                                <row style="background-color: #FFFFFF;">
+                                    <cell><label value="Mittente: " style="font-weight:bold"/>
+                                          <label value="@load(smistamento.messaggioRicevuto ? smistamento.documento.mittente : '')"/></cell>
+                                    <cell></cell>
+                                </row>
+                                <row style="background-color: #FFFFFF;">
+                                    <cell><label value="Destinatari: " style="font-weight:bold"></label>
+                                          <toolbarbutton image="/images/ags/16x16/annotate.png"
+                                                       tooltiptext='Visualizza tutti destinatari'
+                                                       visible = "@load( smistamento.messaggioRicevuto ? smistamento.documento.destinatariList.size() > 5 : false)"
+                                                       onClick="@command('onVisualizzaTuttiDestinatari', destinatari=smistamento.documento.destinatariList, descr ='Destinatari')" />
+                                          <label value="@load(smistamento.messaggioRicevuto ? smistamento.documento.destinatariShort : '')"/>
+                                    </cell>
+                                    <cell></cell>
+                                </row>
+                                <row style="background-color: #FFFFFF;">
+                                    <cell><label value="Oggetto: " style="font-weight:bold"/>
+                                          <label value="@load(smistamento.messaggioRicevuto ?  smistamento.documento.oggetto  : '')"/></cell>
+                                    <cell></cell>
+                                </row>
+                                <row style="background-color: #FFFFFF;">
+                                    <cell><label value="Tipo messaggio: " style="font-weight:bold"/>
+                                          <label value="@load(smistamento.messaggioRicevuto ?  smistamento.documento.tipo : '')"/></cell>
+                                    <cell></cell>
+                                </row>
+                                <row style="background-color: #FFFFFF;">
+                                    <cell> <label value="Classifica: " style="font-weight:bold"/>
+                                          <label value="@load(smistamento.messaggioRicevuto ? smistamento.documento.classificazione.descrizione : '')"/></cell>
+                                    <cell></cell>
+                                </row>
+                            </rows>
+                        </grid>
+                    </listcell>
+                    <listcell style="background-color: #FFFFFF;">
+                        <toolbarbutton image="/images/afc/16x16/attach.png"
+                                       tooltiptext="Allegati" popup="sceltaAllegato"
+                                       visible="@load(vm.visGraffettaDownloadAllegato(smistamento.documento))"
+                                       onClick="@command('onMostraAllegati', documento = smistamento.documento)"/>
+                    </listcell>
+                </listitem>
+            </template>
+        </listbox>
+        <menupopup id="sceltaAllegato" children="@load(vm.listaFilesAllegato)">
+            <template name="children" var="fileAllegato">
+                <menuitem label="@load(fileAllegato.nome)" image=""
+                          onClick="@command('onDownloadFileAllegato', fileAllegato = fileAllegato)"></menuitem>
+            </template>
+        </menupopup>
+        </vlayout>
+    </window>
+</zk>

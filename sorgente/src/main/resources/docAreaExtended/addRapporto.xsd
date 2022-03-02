@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd"/>
+	<xs:element name="ROOT">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID_DOCUMENTO" type="xs:string" /> 
+				<xs:element ref="RAPPORTO"/>
+				<xs:element name="TIPO_RAPPORTO" type="xs:string" /> 
+				<xs:element name="UTENTE" type="xs:string" /> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RAPPORTO">
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element ref="Amministrazione"/>
+					<xs:element ref="AOO"/>
+				</xs:sequence>
+				<xs:element ref="Persona"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="IndirizzoTelematico">
+		<xs:complexType mixed="true">
+			<xs:attribute name="tipo" type="xs:NMTOKEN" use="optional" default="smtp"/>
+			<xs:attribute name="note" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="Amministrazione">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Denominazione"/>
+				<xs:element ref="CodiceAmministrazione"/>
+				<xs:element ref="IndirizzoTelematico"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AOO">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CodiceAOO"/>
+				<xs:element ref="Denominazione" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Persona">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Nome" minOccurs="0"/>
+				<xs:element ref="Cognome" minOccurs="0"/>
+				<xs:element ref="Titolo" minOccurs="0"/>
+				<xs:element ref="CodiceFiscale" minOccurs="0"/>
+				<xs:element ref="Identificativo" minOccurs="0"/>
+				<xs:element ref="Denominazione" minOccurs="0"/>
+				<xs:element ref="IndirizzoTelematico" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Nome" type="xs:string"/>
+	<xs:element name="Cognome" type="xs:string"/>
+	<xs:element name="Titolo" type="xs:string"/>
+	<xs:element name="CodiceFiscale" type="xs:string"/>
+	<xs:element name="Identificativo" type="xs:string"/>
+	<xs:element name="Denominazione" type="xs:string"/>
+	<xs:element name="CodiceAmministrazione" type="xs:string"/>
+	<xs:element name="CodiceAOO" type="xs:string"/>
+</xs:schema>

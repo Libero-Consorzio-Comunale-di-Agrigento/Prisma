@@ -1,0 +1,306 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://nexus.finmatica.it/repository/maven-public/"
+        }
+    }
+    dependencies {
+        // plugin per la continuous-integration di Finmatica
+        classpath "it.finmatica.gradle:gradle-ci-plugin:1.0-SNAPSHOT"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "it.finmatica.gradle:finmatica-adsinstaller-gradle-plugin:1.5"
+    }
+}
+
+apply plugin: 'fin.gradle-ci-plugin'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'groovy'
+apply plugin: 'war'
+apply from: 'build-installante.gradle'
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+configurations {
+    integrationTestCompile.extendsFrom testCompile
+    integrationTestRuntime.extendsFrom testRuntime
+}
+
+task classpathJar(type: Jar) {
+    inputs.files sourceSets.main.runtimeClasspath
+
+    archiveName = "runboot-classpath.jar"
+    doFirst {
+        // If run in configuration phase, some artifacts may not exist yet (after clean)
+        // and File.toURI can’t figure out what is directory to add the critical trailing slash.
+        manifest {
+            def classpath = sourceSets.main.runtimeClasspath.files
+            attributes "Class-Path": classpath.collect { f -> f.toURI().toString() }.join(" ")
+        }
+    }
+}
+
+tasks.withType(JavaExec) {
+    if (project.hasProperty('jvmArgs')) {
+        jvmArgs = (project.jvmArgs.split("\\s+") as List)
+    }
+}
+
+bootRun {
+    classpath = classpathJar.outputs.files
+}
+
+bootRepackage {
+    enabled = false
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ["src/groovy", "src/java", "src/dto", "grails-app/actions", "grails-app/controllers", "grails-app/domain", "grails-app/services", "grails-app/viewmodels", "grails-app/views"]
+        }
+
+        java {
+            srcDirs = []
+        }
+    }
+
+    test {
+        groovy {
+            srcDirs = ["test/unit"]
+        }
+
+        resources {
+            srcDirs = ["test/resources"]
+        }
+    }
+
+    integrationTest {
+        groovy {
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+            srcDirs = ["test/integration"]
+        }
+
+        resources {
+            srcDirs = ["test/resources"]
+        }
+    }
+}
+
+task integrationTest(type: Test, group: 'verification') {
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    if (project.hasProperty('jvmArgs')) {
+        jvmArgs = (project.jvmArgs.split("\\s+") as List)
+    }
+}
+
+//test.finalizedBy(integrationTest)
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test
+
+war {
+    webAppDirName = 'web-app'
+
+    from('grails-app/zul') {
+        include '**'
+        into("WEB-INF/zul")
+    }
+
+    rootSpec.exclude('bcmail*.jar')
+    rootSpec.exclude('bcprov*.jar')
+    rootSpec.exclude('bctsp*.jar')
+    rootSpec.exclude('bcpkix*.jar')
+    rootSpec.exclude('axis*jar')
+    rootSpec.exclude('jaxrpc*jar')
+    rootSpec.exclude('xercesImpl*jar')
+    rootSpec.exclude('finmatica-dms-*jar')
+}
+
+dependencies {
+
+    // springboot
+    compile 'org.springframework.boot:spring-boot-starter-web'
+
+    // configuratore iter
+    compile 'it.finmatica.spring:finmatica-configuratoreiter:2.0.0.0'
+    compile 'it.finmatica.spring:finmatica-webscan:3.0.0.0'
+
+    // schedulazione di job
+    compile 'it.finmatica.spring:finmatica-jobscheduler:1.0'
+
+    // reimposta scanner 
+    compile 'bsh:bsh:1.3.0'
+
+    compile 'it.finmatica.spring:finmatica-gorm:1.3'
+    compile("it.finmatica:finmatica-smartdoc:1.1.6") {
+        exclude module: 'bcmail-jdk14'
+        exclude module: 'bcprov-jdk14'
+        exclude module: 'bctsp-jdk14'
+        exclude module: 'xercesImpl'
+    }
+    compile("it.finmatica.ag:finmatica-gestione-documenti:2.1.0.0") {
+        exclude module: 'uploaddownload-applet'
+        exclude module: 'axis'
+        exclude module: 'axis-jaxrpc'
+        exclude module: 'axis-saaj'
+        exclude module: 'guice'
+        exclude module: 'guice-multibindings'
+        exclude module: 'plugin'
+        exclude module: 'atr-xml'
+        exclude module: 'sc-light-jdk15on'
+        exclude module: 'scpkix-jdk15on'
+        exclude module: 'xercesImpl'
+        exclude module: 'jurt'
+        exclude module: 'juh'
+        exclude module: 'ridl'
+        exclude module: 'unoil'
+    }
+
+    // multiproject
+    //  compile project(':finmatica-gestione-documenti')
+    // vari client webservices
+    compile("it.finmatica.ag.protocollo:finmatica-jprotocollointegrazioni:3.1.1.4") {
+        exclude module: 'axis'
+    }
+
+    // console groovy web
+    compile 'it.finmatica.spring:finmatica-groovy-web-console:1.0'
+
+    compile 'xerces:xercesImpl:2.11.0'
+
+    // webservice cxf
+    compile 'org.apache.cxf:cxf-spring-boot-starter-jaxws:3.1.12'
+
+    // hibernate
+    compile("org.hibernate:hibernate-core:5.1.16.Final")
+    compile("org.hibernate:hibernate-ehcache:5.1.16.Final")
+    compile("org.hibernate:hibernate-entitymanager:5.1.16.Final")
+    compile("org.hibernate:hibernate-envers:5.1.16.Final")
+
+    // questa dipendenza serve per il jprotocollo
+    compile "javax.xml:jaxrpc-api:1.1"
+    compile("axis:axis:1.4") {
+        exclude module: 'axis-wsdl4j' // va in conflitto con i ws di cxf
+    }
+
+    // jasper reports: ultima versione compatibile con java 7
+    compile("it.finmatica.jasper:finmatica-jasper-font-extension:1.0")
+    compile('net.sf.jasperreports:jasperreports:6.5.1') {
+        exclude module: 'itext' // questa libreria non viene trovata.
+        exclude module: 'lucene-core' // non ci serve lucene
+        exclude module: 'lucene-analyzers-common' // non ci serve lucene
+        exclude module: 'lucene-queryparser' // non ci serve lucene
+        exclude module: 'olap4j' // non ci serve
+        exclude module: 'core' // non ci serve
+        exclude module: 'icu4j' // non ci serve
+    }
+
+    compile('com.lowagie:itext:2.1.7') {
+        exclude module: 'bcmail-jdk14'
+        exclude module: 'bcprov-jdk14'
+        exclude module: 'bctsp-jdk14'
+    }
+
+    // jsign
+    compile("it.finmatica:finmatica-jsign:3.7.38") {
+        exclude module: 'uploaddownload-applet'
+        exclude module: 'iaikPkcs11Wrapper'
+        exclude module: 'axis'
+        exclude module: 'axis-jaxrpc'
+        exclude module: 'axis-saaj'
+        exclude module: 'guice'
+        exclude module: 'guice-multibindings'
+        exclude module: 'plugin'
+        exclude module: 'atr-xml'
+        exclude module: 'itextpdf'
+        exclude module: 'sc-light-jdk15on'
+        exclude module: 'scpkix-jdk15on'
+    }
+
+    //compile group: 'com.adarshr', name: 'raroscope', version: '1.0.2'
+    //compile group: 'net.sf.sevenzipjbinding', name: 'sevenzipjbinding', version: '9.20-2.00beta'
+    //compile group: 'net.sf.sevenzipjbinding', name: 'sevenzipjbinding-all-platforms', version: '9.20-2.00beta'
+
+    compile group: 'com.jcabi', name: 'jcabi-manifests', version: '1.1'
+
+    // CSV
+    compile 'com.opencsv:opencsv:3.1'
+
+    // mime type da stream/byte[]
+    compile group: 'com.j256.simplemagic', name: 'simplemagic', version: '1.16'
+    
+    //ZK
+    compile("it.finmatica.spring:finmatica-zk:3.0.0.1")
+
+    compile "libreoffice:ridl:4.0"
+    compile "libreoffice:juh:4.0"
+    compile "libreoffice:jurt:4.0"
+    compile "libreoffice:unoil:4.0"
+
+    // dipendenza tomcat necessaria per il run in locale
+    providedCompile 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    // Dipendenze che ridichiaro per non includerle nel war:
+    providedCompile "org.apache.tomcat:tomcat-el-api:8.5.14"
+    providedCompile "org.apache.tomcat:tomcat-jdbc:8.5.29"
+    providedCompile "org.apache.tomcat:tomcat-juli:8.5.29"
+    providedCompile "com.h2database:h2:1.4.197"
+
+    // TODO[SPRINGBOOT] verificare quali di queste dipendenze sono ancora necessarie: nota che tutte queste dipendenze vanno rimosse dal WAR
+    providedCompile "it.finmatica:finmatica-jfcutils:1.20"
+    providedCompile("it.finmatica:finmatica-dbutils:5.2.1.1") {
+        exclude module: 'xercesImpl'
+    }
+    providedCompile "it.finmatica:finmatica-accesscontrol:1.21"
+    providedCompile "it.finmatica:finmatica-cim:2.0"
+    providedCompile "javax.mail:mail:1.4"
+    providedCompile "javax.activation:activation:1.1"
+
+    compile "libreoffice:ridl:4.0"
+    compile "libreoffice:juh:4.0"
+    compile "libreoffice:jurt:4.0"
+    compile "libreoffice:unoil:4.0"
+
+    // nota bene: il driver oracle qui usato è la versione per oracle 10.2.0.5.0 anche se AGSFLEX è in oracle 10.2.0.3.0
+    // questo perché c'è un bug nel driver .3.0 che fa fallire la validazione del db. Questo errore si verifica con hibernate5 e ojdbc14-10.2.0.3.0
+    // il driver 10.2.0.5.0 fa fallire la gestione dei blob di hibernate.
+    // providedCompile "com.oracle:ojdbc14:10.2.0.3.0"
+    providedCompile "com.oracle:ojdbc6:11.2.0.3"
+    providedCompile("it.finmatica.ag.jsuite:finmatica-dms:3.5.8") {
+        exclude module: 'tika-core' // lo escludo dai provided perché mi serve che entri nel war
+        exclude module: 'commons-io'
+        exclude module: 'fop'
+        exclude module: 'itext'
+        exclude module: 'xercesImpl'
+    }
+
+    providedCompile "it.finmatica.ag.protocollo:finmatica-affarigenerali:4.1.0.0"
+    providedCompile("it.finmatica.ag.protocollo:finmatica-jprotocollo:4.0.2.3") {
+        exclude module: 'jurt'
+        exclude module: 'juh'
+        exclude module: 'ridl'
+        exclude module: 'unoil'
+    }
+
+    providedCompile "it.finmatica.ag.albo:finmatica-jalbo:2.3.0.2"
+    providedCompile "it.finmatica.ag.dmserver:finmatica-cacheutility:1.0"
+    providedCompile "it.finmatica.ag.dmserver:finmatica-jpdfwriter:1.0"
+    providedCompile "it.finmatica.ag.dmserver:finmatica-jsuitesync:1.1"
+    providedCompile "it.finmatica.ag.dmserver:finmatica-semafori:1.0"
+    providedCompile "it.finmatica.ag.dmserver:finmatica-log4jsuite:3.5"
+    providedCompile "it.finmatica.ag.dmserver:finmatica-dmserverextension:3.5.1.2"
+    // ^^^^FINE TODO[SPRINGBOOT] verificare quali di queste dipendenze sono ancora necessarie
+
+    // dipendenze per i test
+    testCompile "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testCompile "org.springframework.security:spring-security-test:4.2.2.RELEASE"
+    testCompile "org.apache.tomcat:tomcat-el-api:8.5.14"
+    testCompile "org.apache.tomcat:tomcat-jasper-el:8.5.14"
+    testCompile "cglib:cglib-nodep:3.2.6"
+    testCompile "com.oracle:ojdbc6:11.2.0.3"
+    testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
+    testCompile "org.spockframework:spock-spring:1.1-groovy-2.4"
+}

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('it.finmatica.protocollo.integrazioni.smartdesktop.EsitoSmistamentiViewModel')" border="normal"
+            title="">
+
+        <vlayout width="100%">
+            <label value="@load(vm.esitoSmartDesktopList[0].richiesta)" style="font-weight:bold" ></label>
+            <listbox model="@load(vm.esitoSmartDesktopList)" emptyMessage="Nessun esito."
+                     vflex="1">
+                <listhead>
+                    <listheader label="Documento" width="30%"/>
+                    <listheader label="Esiti" width="70%"/>
+                </listhead>
+                <template name="model" var="esitoSmartDesktop">
+                    <listitem value="@load(esitoSmartDesktop)">
+                        <listcell>
+                            <label value="@load(esitoSmartDesktop.descrizione)"/>
+                        </listcell>
+                        <listcell>
+                            <listbox model="@load(esitoSmartDesktop.esitoTasks)"
+                                     emptyMessage="" vflex="1">
+                                <listhead>
+                                    <listheader label="" width="5%" align="center"/>
+                                    <listheader label="" width="95%" align="left"/>
+                                </listhead>
+                                <template name="model" var="esitoTask">
+                                    <listitem value="@load(esitoTask)">
+                                        <listcell>
+                                            <image src="@load(esitoTask.successo?'/images/ags/16x16/viewok.png':'/images/ags/16x16/removed.png')"/>
+                                        </listcell>
+                                        <listcell>
+                                            <label value="@load(esitoTask.messaggio)"/>
+                                        </listcell>
+                                    </listitem>
+                                </template>
+                            </listbox>
+                        </listcell>
+                    </listitem>
+                </template>
+            </listbox>
+            <space height="5px"/>
+        </vlayout>
+
+    </window>
+</zk>

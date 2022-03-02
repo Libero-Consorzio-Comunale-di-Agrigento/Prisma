@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>Output di Default restituito dai Metodi</xs:appinfo>
+		<xs:documentation xml:lang="it"/>
+	</xs:annotation>
+	<xs:element name="ROOT">
+		<xs:complexType> 
+			<xs:all>  
+				<xs:element name="RESULT">
+					<xs:annotation>
+						<xs:documentation>
+							Qui viene inserito il risultato dell'operazione
+							Puo' avere valore OK ( eseguito correttamente)
+							oppure KO ( ci sono errori specificati nei tag EXCEPTION,MESSAGE)
+							</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="OK|KO"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="EXCEPTION" type="xs:string" minOccurs="0" >
+				<xs:annotation>
+						<xs:documentation>Eccezione generata all'interno del codice del metodo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="MESSAGE" type="xs:string" minOccurs="0" >
+				<xs:annotation>
+						<xs:documentation>Messaggio di errore generato all'interno del codice del metodo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="ERROR_NUMBER" type="xs:string" minOccurs="0" >
+				<xs:annotation>
+						<xs:documentation>Codice di errore generato all'interno del codice del metodo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 				
+				<xs:element name="ID" type="xs:string" minOccurs="0" >
+				<xs:annotation>
+						<xs:documentation>Nei metodi di creazione restituisce l'ID del documento creato</xs:documentation>
+					</xs:annotation>
+				</xs:element>  
+        <xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="0" >
+				<xs:annotation>
+						<xs:documentation>Nei metodi di creazione restituisce l'ID_DOCUMENTO del documento creato</xs:documentation>
+					</xs:annotation>
+				</xs:element>  
+				<xs:element name="FASCICOLO_ANNO" type="xs:string" minOccurs="0" >
+				<xs:annotation>
+						<xs:documentation>Anno del Fascicolo creato ( presente solo per il metodo creaFascicolo)</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="FASCICOLO_NUMERO" type="xs:string" minOccurs="0" >
+				<xs:annotation>
+						<xs:documentation>Numero del Fascicolo creato ( presente solo per il metodo creaFascicolo)</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="CLASS_COD" type="xs:string" minOccurs="0" >
+				<xs:annotation>
+						<xs:documentation>Codice della Classificazione del Fascicolo creato ( presente solo per il metodo creaFascicolo)</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+        <xs:element name="TEXT" type="xs:string" minOccurs="0" >
+				<xs:annotation>
+						<xs:documentation>Testo contenente valori di ritorno di tipo stringa</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+			</xs:all>
+		</xs:complexType>
+	</xs:element> 
+</xs:schema> 

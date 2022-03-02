@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/protocollo.css"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:w="http://www.zkoss.org/2005/zk/client"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer"
+    	viewModel="@id('vm') @init('it.finmatica.protocollo.dizionari.OggettoRicorrenteDettaglioViewModel')"
+    	border="normal"
+        width="500px"
+
+        sizable="false">
+
+        <vlayout width="100%" spacing="10px">
+
+
+		<h:div class="barraTitoloPagina">
+  			<label sclass="titoloPagina" value="@load(vm.selectedRecord.id le 0 ? 'Gestione oggetto ricorrente' : 'Nuovo oggetto ricorrente')"/>
+		<image
+			src="@load(vm.selectedRecord.valido? '/images/ags/22x22/viewok.png' : '/images/ags/22x22/cancel.png')"
+			tooltiptext="@load(vm.selectedRecord.valido? 'Documento attivo' : 'Documento disattivato')" />
+   		</h:div>
+	      <vlayout width="100%" vflex="max">
+      		<grid  sclass="form">
+	        	<rows>
+	        		<row>
+		        		<cell colspan="1" align="right">
+							<label value="Codice"/>
+	        			</cell>
+						<cell colspan="3">
+							<label value="@load(vm.selectedRecord.codice)" hflex="1"
+									 class="noresizable"
+									 style="text-transform: uppercase"
+								     visible="@load(vm.selectedRecord.id le 0)"/>
+							<textbox value="@bind(vm.selectedRecord.codice)" hflex="1"
+									 class="noresizable"
+									 style="text-transform: uppercase"
+									 visible="@load(empty(vm.selectedRecord.id))" />
+	        			</cell>
+	        		</row>
+					<row>
+						<cell colspan="1" align="right">
+							<label value="Oggetto"/>
+						</cell>
+						<cell colspan="3">
+							<textbox value="@bind(vm.selectedRecord.oggetto)" hflex="1"
+									 class="noresizable" multiline="true" rows="3"
+									 style="text-transform: uppercase" />
+						</cell>
+					</row>
+	        	</rows>
+	        </grid>
+	       </vlayout>
+
+	      	<!-- Inizio informazioni relative al salvataggio e bottoni salva / chiudi -->
+     	<vlayout sclass="datiCreazioneModifica" >
+		    <label value="@bind(vm.datiCreazione)" visible="@bind(not empty vm.selectedRecord.codice)"/>
+			<label value="@bind(vm.datiModifica)" visible="@bind(not empty vm.selectedRecord.codice)"/>
+		</vlayout>
+
+			<controlBarRecord/>
+		</vlayout>
+
+    </window>
+</zk>

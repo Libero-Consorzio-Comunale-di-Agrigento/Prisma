@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+         <window apply="org.zkoss.bind.BindComposer"
+                 viewModel="@id('vm') @init('it.finmatica.protocollo.scaricoipa.CriteriScaricoIpaDettaglioViewModel')"
+                 border="normal" width="90%" height="90%" sizable="false" title=" ">
+
+        <h:div class="barraTitoloPagina">
+            <label sclass="titoloPagina" value="Criterio Scarico Ipa"/>
+            <image src="/images/ags/22x22/viewok.png"/>
+        </h:div>
+
+        <tabbox vflex="1">
+            <tabs>
+                <tab label="Criteri di Aggiornamento"/>
+                <tab label="Aggiornamenti Effettuati" disabled="@load(vm.selectedRecord.id eq -1)"/>
+            </tabs>
+            <tabpanels vflex="1">
+                <!-- Criteri di Aggiornamento -->
+                <tabpanel>
+                     <div height="100%" style="border:0px solid black;overflow:auto;">
+                    <grid sclass="form" hflex="1">
+                        <rows>
+
+                            <row>
+                                <cell width="175px">
+                                    <h:span class="mandatoryLabel">*</h:span>
+                                    <label value="Nome Criterio:" style="font-weight: bold"/>
+                                </cell>
+                                <cell colspan="3">
+                                    <textbox value="@bind(vm.selectedRecord.nomeCriterio)" hflex="1"
+                                             style="text-transform: uppercase"/>
+                                </cell>
+                            </row>
+
+                            <row>
+                                <cell colspan="4">
+                                    <groupbox closable="false">
+                                    <caption label="Dati Amministrazione" style="font-weight: bold"/>
+                                        <hlayout>
+                                            <grid sclass="form">
+                                            <rows>
+<row>
+                                <cell width="175px">
+                                    <label value="Importare tutte le amministrazioni?"/>
+                                </cell>
+                                <cell colspan="3">
+                                    <radiogroup selectedIndex="@load(vm.selectedRecord.importaTutteAmm ? 0 : 1)"
+                                                selectedItem="@save(vm.selectedRecord.importaTutteAmm)">
+                                        <radio label="Sì" value="@load(true)"/>
+                                        <radio label="No" value="@load(false)"/>
+                                    </radiogroup>
+                                </cell>
+                            </row>
+
+                            <row>
+                                <cell colspan="4">
+                                    <label
+                                        value="Se non si vogliono importare tutte le amministrazioni, specificare i criteri di ricerca."/>
+                                </cell>
+                            </row>
+
+                            <row>
+                                <cell colspan="4">
+                                    <label
+                                        value="E' possibile ricercare una singola amministrazione (Specificando il CODICE o la DENOMINAZIONE dell'ente desiderato) oppure specificare la tipologia di ente o definire la regione / provincia di interesse."/>
+                                </cell>
+                            </row>
+
+                            <row>
+                                <cell width="175px">
+                                    <label value="Codice Amministrazione"/>
+                                </cell>
+                                <cell>
+                                    <textbox value="@bind(vm.selectedRecord.codAmm)" hflex="1"
+                                             style="text-transform: uppercase"
+                                             disabled="@load(vm.selectedRecord.importaTutteAmm)"/>
+                                </cell>
+                                 <cell width="175px">
+                                    <label value="Denominazione Amm."/>
+                                </cell>
+                                <cell>
+                                    <textbox value="@bind(vm.selectedRecord.descrAmm)" hflex="1"
+                                             style="text-transform: uppercase"
+                                             disabled="@load(vm.selectedRecord.importaTutteAmm)"/>
+                                </cell>
+                            </row>
+
+                            <row>
+                                <cell width="175px">
+                                    <label value="Tipologia Ente"/>
+                                </cell>
+                                <cell colspan="3">
+                                    <combobox model="@load(vm.mappaTipologieAmm)" hflex="1"
+                                              disabled="@load(vm.selectedRecord.importaTutteAmm)"
+                                              selectedItem="@bind(vm.selectedRecord.tipologiaEnte)" readonly="true">
+                                        <template name="model" var="tipologia">
+                                            <comboitem label="@load(tipologia)" value="@load(tipologia)"/>
+                                        </template>
+                                    </combobox>
+                                </cell>
+                            </row>
+
+                            <row>
+                                <cell width="175px">
+                                    <label value="Nella Regione"/>
+                                </cell>
+                                <cell>
+                                    <combobox model="@load(vm.listaRegioni)" hflex="1"
+                                              disabled="@load(vm.selectedRecord.importaTutteAmm)"
+                                              selectedItem="@bind(vm.selectedRecord.regioneAmm) @converter('it.finmatica.zk.utils.PropertyConverter', property='regione')"
+                                              readonly="true"
+                                              onChange="@command('onCaricaProvince',idRegione=vm.selectedRecord.regioneAmm)">
+                                        <template name="model" var="regione">
+                                            <comboitem value="@load(regione.regione)"
+                                                       label="@load(regione.denominazione)"/>
+                                        </template>
+                                    </combobox>
+                                </cell>
+
+                                <cell width="175px">
+                                    <label value="Nella Provincia"/>
+                                </cell>
+                                <cell>
+                                    <combobox model="@load(vm.listaProvince)" hflex="1"
+                                              disabled="@load(vm.selectedRecord.importaTutteAmm)"
+                                              selectedItem="@bind(vm.selectedRecord.provinciaAmm) @converter('it.finmatica.zk.utils.PropertyConverter', property='provincia')"
+                                              readonly="true">
+                                        <template name="model" var="provincia">
+                                            <comboitem value="@load(provincia.provincia)"
+                                                       label="@load(provincia.denominazione)"/>
+                                        </template>
+                                    </combobox>
+                                </cell>
+                            </row>
+
+                            <row>
+                                <cell width="175px">
+                                    <label value="Importare le unità?"/>
+                                </cell>
+                                <cell colspan="3">
+                                    <radiogroup selectedIndex="@load(vm.selectedRecord.importaTutteUnita ? 0 : 1)"
+                                                selectedItem="@save(vm.selectedRecord.importaTutteUnita)">
+                                        <radio label="Sì" value="@load(true)"/>
+                                        <radio label="No" value="@load(false)"/>
+                                    </radiogroup>
+                                </cell>
+                            </row>
+                                            </rows>
+                                        </grid>
+                                    </hlayout>
+
+                                </groupbox>
+                                </cell>
+                            </row>
+
+                            <row>
+                                <cell colspan="4">
+                                    <groupbox closable="false">
+                                    <caption label="Dati AOO" style="font-weight: bold"/>
+                                        <hlayout>
+                                            <grid sclass="form">
+                                            <rows>
+<row>
+                                 <cell width="175px">
+                                    <label value="Importare le AOO?"/>
+                                </cell>
+                                <cell colspan="3">
+                                    <radiogroup selectedIndex="@load(vm.selectedRecord.importaTutteAoo ? 0 : 1)"
+                                                selectedItem="@save(vm.selectedRecord.importaTutteAoo)">
+                                        <radio label="Sì" value="@load(true)"/>
+                                        <radio label="No" value="@load(false)"/>
+                                    </radiogroup>
+                                </cell>
+                            </row>
+
+
+                            <row>
+                                <cell colspan="4">
+                                    <label
+                                        value="Se si vogliono importare tutte le AOO, selezionare SI senza specificare i criteri di ricerca. Selezionando NO non viene importata nessuna AOO."/>
+                                </cell>
+                            </row>
+                            <row>
+                                <cell colspan="4">
+                                    <label
+                                        value="E' possibile ricercare una singola AOO (Specificando il CODICE o la DENOMINAZIONE dell'ente desiderato) oppure specificare la regione / provincia di interesse."/>
+                                </cell>
+                            </row>
+
+                            <row>
+                                 <cell width="175px">
+                                    <label value="Codice AOO"/>
+                                </cell>
+                                <cell>
+                                    <textbox value="@bind(vm.selectedRecord.codAoo)" hflex="1"
+                                             style="text-transform: uppercase"
+                                             disabled="@load(not vm.selectedRecord.importaTutteAoo)"/>
+                                </cell>
+                                 <cell width="175px">
+                                    <label value="Denominazione AOO"/>
+                                </cell>
+                                <cell>
+                                    <textbox value="@bind(vm.selectedRecord.descrAoo)" hflex="1"
+                                             style="text-transform: uppercase"
+                                             disabled="@load(not vm.selectedRecord.importaTutteAoo)"/>
+                                </cell>
+                            </row>
+
+                            <row>
+                                 <cell width="175px">
+                                    <label value="Nella Regione"/>
+                                </cell>
+                                <cell>
+                                    <combobox model="@load(vm.listaRegioni)" hflex="1"
+                                              disabled="@load(not vm.selectedRecord.importaTutteAoo)"
+                                              selectedItem="@bind(vm.selectedRecord.regioneAoo) @converter('it.finmatica.zk.utils.PropertyConverter', property='regione')"
+                                              readonly="true"
+                                              onChange="@command('onCaricaProvinceAoo',idRegione=vm.selectedRecord.regioneAoo)">
+                                        <template name="model" var="regione">
+                                            <comboitem value="@load(regione.regione)"
+                                                       label="@load(regione.denominazione)"/>
+                                        </template>
+                                    </combobox>
+                                </cell>
+
+                                 <cell width="175px">
+                                    <label value="Nella Provincia"/>
+                                </cell>
+                                <cell>
+                                    <combobox model="@load(vm.listaProvinceAoo)" hflex="1"
+                                              disabled="@load(not vm.selectedRecord.importaTutteAoo)"
+                                              selectedItem="@bind(vm.selectedRecord.provinciaAoo) @converter('it.finmatica.zk.utils.PropertyConverter', property='provincia')"
+                                              readonly="true">
+                                        <template name="model" var="provincia">
+                                            <comboitem value="@load(provincia.provincia)"
+                                                       label="@load(provincia.denominazione)"/>
+                                        </template>
+                                    </combobox>
+                                </cell>
+                            </row>
+                                            </rows>
+                                        </grid>
+                                    </hlayout>
+
+                                </groupbox>
+                                </cell>
+                            </row>
+
+                            <row>
+                                <cell colspan="4">
+                                    <groupbox closable="false" visible="@load(vm.selectedRecord.jobConfig ne null)">
+                                    <caption label="Pianificazione" style="font-weight: bold"/>
+                                        <hlayout>
+                                            <grid sclass="form" hflex="1">
+                                            <rows>
+                                            <row>
+                                                 <cell width="175px">
+                                                    <label value="Numero giorni"/>
+                                                </cell>
+                                                <cell>
+                                                     <label value="@bind(vm.selectedRecord.numeroGiorni)"></label>
+                                                </cell>
+                                                 <cell width="175px">
+                                                    <label value="Ora esecuzione"/>
+                                                </cell>
+                                                <cell>
+                                                    <label value="@bind(vm.selectedRecord.oraEsecuzione)"></label>
+                                                    <label value=":"></label>
+                                                    <label value="@bind(vm.selectedRecord.minutiEsecuzione)"></label>
+                                                </cell>
+                                            </row>
+
+                                            <row>
+                                                 <cell width="175px">
+                                                    <label value="Ultima Esecuzione"/>
+                                                </cell>
+                                                <cell>
+                                                    <label value="@bind(vm.ultimaEsecuzione)"></label>
+                                                </cell>
+                                                 <cell width="175px">
+                                                    <label value="Esito"/>
+                                                </cell>
+                                                <cell>
+                                                    <label value="@bind(vm.esitoJob)"></label>
+                                                </cell>
+                                            </row>
+                                            </rows></grid>
+                                        </hlayout>
+                                </groupbox>
+                                </cell>
+                            </row>
+
+
+
+
+
+
+                        </rows>
+
+                    </grid>
+                     </div>
+                </tabpanel>
+
+                <!-- Aggiornamenti Effettuati -->
+                <tabpanel>
+
+                    <listbox model="@load(vm.jobLogList)" selectedItem="@bind(vm.selectedRecord)"
+                             emptyMessage="Nessun log presente." vflex="1">
+                        <listhead>
+                            <listheader align="center" label="Data inizio" width="15%"/>
+                            <listheader align="center" label="Data fine" width="15%"/>
+                            <listheader align="center" label="Esito" width="15%"/>
+                            <listheader label="Note" width="55%"/>
+                        </listhead>
+                        <template name="model" var="elemento">
+                            <listitem>
+                                <listcell label="@load(elemento.dataInizio)"/>
+                                <listcell label="@load(elemento.dataFine)"/>
+                                <listcell label="@load(elemento.stato)"/>
+                                <listcell label="@load(elemento.note)"/>
+                            </listitem>
+                        </template>
+                    </listbox>
+
+                </tabpanel>
+            </tabpanels>
+        </tabbox>
+
+             <!-- Inizio informazioni relative al salvataggio e bottoni salva / chiudi -->
+             <!--
+          <vlayout class="datiCreazioneModifica" height="30px">
+            <label value="@bind(vm.datiCreazione)" visible="true"/>
+            <label value="@bind(vm.datiModifica)" visible="true"/>
+        </vlayout>
+            -->
+
+             <h:div sclass="barraPulsanti">
+            <h:div>
+                <button mold="trendy" image="/images/afc/16x16/arrow_light_down.png" label="Importa Ora"
+                        onClick="@command('onElabora')"/>
+                <button mold="trendy" image="/images/afc/16x16/world.png" label="Pianificazione"
+                        onClick="@command('onPianificazione')" disabled="@load(vm.selectedRecord.id eq -1)"/>
+                <button mold="trendy" label="Salva" onClick="@command('onSalva')" image="/images/afc/16x16/save.png"/>
+                <!--<button mold="trendy" label="Salva e chiudi" onClick="@command('onSalvaChiudi')"
+                        image="/images/afc/16x16/save.png"/> -->
+                <button mold="trendy" label="Chiudi" onClick="@command('onChiudi')"
+                        image="/images/afc/16x16/close.png"/>
+            </h:div>
+        </h:div>
+
+    </window>
+
+</zk>

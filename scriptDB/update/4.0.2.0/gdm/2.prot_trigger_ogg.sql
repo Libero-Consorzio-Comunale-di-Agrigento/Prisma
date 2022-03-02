@@ -1,0 +1,114 @@
+--liquibase formatted sql
+--changeset mmalferrari:prot_trigger_ogg runOnChange:true stripComments:false
+CREATE OR REPLACE TRIGGER AG_SPR_PROT_OGG_TIU
+   BEFORE INSERT OR UPDATE
+   ON SPR_PROTOCOLLI
+   FOR EACH ROW
+BEGIN
+
+   FOR c IN (SELECT code
+               FROM BLACKLISTCHAR)
+   LOOP
+      :new.oggetto := REPLACE (:new.oggetto, CHR (c.code), ' ');
+   END LOOP;
+
+EXCEPTION
+   WHEN OTHERS
+   THEN
+      RAISE;
+END;
+/
+
+CREATE OR REPLACE TRIGGER AG_SPR_PROT_INTERO_OGG_TIU
+   BEFORE INSERT OR UPDATE
+   ON SPR_PROTOCOLLI_INTERO
+   FOR EACH ROW
+BEGIN
+
+   FOR c IN (SELECT code
+               FROM BLACKLISTCHAR)
+   LOOP
+      :new.oggetto := REPLACE (:new.oggetto, CHR (c.code), ' ');
+   END LOOP;
+
+EXCEPTION
+   WHEN OTHERS
+   THEN
+      RAISE;
+END;
+/
+
+CREATE OR REPLACE TRIGGER AG_SPR_LETTERE_OGG_TIU
+   BEFORE INSERT OR UPDATE
+   ON SPR_LETTERE_USCITA
+   FOR EACH ROW
+BEGIN
+
+   FOR c IN (SELECT code
+               FROM BLACKLISTCHAR)
+   LOOP
+      :new.oggetto := REPLACE (:new.oggetto, CHR (c.code), ' ');
+   END LOOP;
+
+EXCEPTION
+   WHEN OTHERS
+   THEN
+      RAISE;
+END;
+/
+
+CREATE OR REPLACE TRIGGER AG_SPR_PROT_EMERGENZA_OGG_TIU
+   BEFORE INSERT OR UPDATE
+   ON SPR_PROTOCOLLI_EMERGENZA
+   FOR EACH ROW
+BEGIN
+
+   FOR c IN (SELECT code
+               FROM BLACKLISTCHAR)
+   LOOP
+      :new.oggetto := REPLACE (:new.oggetto, CHR (c.code), ' ');
+   END LOOP;
+
+EXCEPTION
+   WHEN OTHERS
+   THEN
+      RAISE;
+END;
+/
+
+CREATE OR REPLACE TRIGGER AG_SPR_PROVVEDIMENTI_OGG_TIU
+   BEFORE INSERT OR UPDATE
+   ON SPR_PROVVEDIMENTI
+   FOR EACH ROW
+BEGIN
+
+   FOR c IN (SELECT code
+               FROM BLACKLISTCHAR)
+   LOOP
+      :new.oggetto := REPLACE (:new.oggetto, CHR (c.code), ' ');
+   END LOOP;
+EXCEPTION
+   WHEN OTHERS
+   THEN
+      RAISE;
+END;
+/
+
+CREATE OR REPLACE TRIGGER AG_SPR_REGI_GIORNALIER_OGG_TIU
+   BEFORE INSERT OR UPDATE
+   ON SPR_REGISTRO_GIORNALIERO
+   FOR EACH ROW
+BEGIN
+
+   FOR c IN (SELECT code
+               FROM BLACKLISTCHAR)
+   LOOP
+      :new.oggetto := REPLACE (:new.oggetto, CHR (c.code), ' ');
+   END LOOP;
+
+EXCEPTION
+   WHEN OTHERS
+   THEN
+      RAISE;
+END;
+/

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <!-- configurazione per l'autenticazione ad4 con modulo e istanza -->
+    <Environment name="modulo@istanza" override="false" type="java.lang.String" value="AGSPR@AGSPR"/>
+
+    <!-- realm di ad4 -->
+    <Realm className="it.finmatica.login.tomcat.DSRealm" dataSourceName="jdbc/ad4" debug="0" validate="false"/>
+
+    <!-- connessione di agspr -->
+    <ResourceLink global="jdbc/agspr" name="jdbc/agspr" type="javax.sql.DataSource"/>
+
+    <!-- connessioni per gli user "standard" -->
+    <ResourceLink global="jdbc/ad4" name="jdbc/ad4" type="javax.sql.DataSource"/>
+    <ResourceLink global="jdbc/as4" name="jdbc/as4" type="javax.sql.DataSource"/>
+    <ResourceLink global="jdbc/so4" name="jdbc/so4" type="javax.sql.DataSource"/>
+    <ResourceLink global="jdbc/gdm" name="jdbc/gdm" type="javax.sql.DataSource"/>
+    <ResourceLink global="jdbc/jwf" name="jdbc/jwf" type="javax.sql.DataSource"/>
+    <ResourceLink global="jdbc/si4cs" name="jdbc/si4cs" type="javax.sql.DataSource"/>
+</Context>

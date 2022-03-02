@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk>
+    <session-config>
+    	<!-- espresso in secondi: 1800 = 30 minuti -->
+	    <session-timeout>1800</session-timeout>
+	    
+	    <!-- Nel file index.zul e standalone.zul è presente un timer che ogni 5 minuti lancia un "ping"
+	    	 per manterere attiva la sessione.
+	    	 Questo si è reso necessario siccome gli utenti cliccano "edita testo" e ci lavorano sopra anche per ore
+	    	 con la conseguenza di perdere la sessione tomcat/zk. In questo modo viene tenuta attiva.-->
+	    <timer-keep-alive>true</timer-keep-alive>
+	</session-config>
+    <listener>
+        <description>ThreadLocal Synchronization Listener</description>
+        <listener-class>org.zkoss.zkplus.util.ThreadLocalListener</listener-class>
+    </listener>
+    <library-property>
+		<name>org.zkoss.zul.progressbox.position</name>
+		<value>center,top</value>
+	</library-property>
+	<library-property>
+        <name>org.zkoss.zul.image.preload</name>
+        <value>true</value>
+    </library-property>
+    <library-property>
+        <name>org.zkoss.zk.ui.processMask.enabled</name>
+        <value>true</value>
+    </library-property>
+    <error-page>
+	    <exception-type>java.lang.Throwable</exception-type>    
+	    <location>/system/gestionedocumenti/error.zul</location>
+	</error-page>
+	<language-config>
+		<addon-uri>/WEB-INF/lang-addon.xml</addon-uri>
+	</language-config>
+</zk>

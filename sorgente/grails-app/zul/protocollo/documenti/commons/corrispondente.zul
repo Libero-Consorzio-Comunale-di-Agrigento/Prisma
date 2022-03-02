@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('it.finmatica.protocollo.CorrispondenteViewModel')" border="normal"
+            sizable="true" width="700px" height="620px"
+            title=" "
+            closable="true">
+
+
+        <h:div class="barraTitoloPagina">
+            <label sclass="titoloPagina" value="Corrispondente"/>
+            <image src="/images/afc/22x22/edit.png"
+                   visible="@load(vm.modificaAnagrafe and vm.corrispondente.ni ne null)"
+                   onClick="@command(vm.onModificaSoggetto())"
+                   tooltip="Modifica Anagrafica"
+                   tooltiptext="Modifica Anagrafica"/>
+        </h:div>
+        <vlayout width="100%" height="500px" style="overflow-y: auto !important;">
+            <groupbox mold="3d" hflex="1">
+                <caption label="@load(vm.corrispondente.denominazione)"/>
+                <grid>
+                    <rows>
+                        <row visible="@load(not vm.modificaAnagrafe)">
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="Scegli il mezzo trasmissivo:"/>
+                            </cell>
+                            <cell width="70%">
+                                <combobox hflex="1" model="@load(vm.mezziTrasmissivi)"
+                                          readonly="true"
+                                          selectedItem="@bind(vm.corrispondente.modalitaInvioRicezione) @converter('it.finmatica.zk.utils.PropertyConverter', property='codice')"
+                                          disabled="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))">
+
+                                    <template name="model" var="mezzo">
+                                        <comboitem description="@load(mezzo.codice)"
+                                                   label="@load(mezzo.descrizione)"/>
+                                    </template>
+                                </combobox>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="@load(vm.amministrazione ? 'Denominazione':'Cognome')"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti) or (vm.amministrazione))"
+                                       value="@load(vm.corrispondente.cognome)"/>
+                                <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti and (not vm.amministrazione))"
+                                         value="@bind(vm.corrispondente.cognome)"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell width="30%" visible="@load(not vm.amministrazione)">
+                                <label style="font-weight:bold;" value="Nome"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                       value="@load(vm.corrispondente.nome)"/>
+                                <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti and (not vm.amministrazione))"
+                                         value="@bind(vm.corrispondente.nome)"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="Codice Fiscale"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                       value="@load(vm.corrispondente.codiceFiscale)"/>
+                                <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                         value="@bind(vm.corrispondente.codiceFiscale)"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="Codice Fiscale Estero"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                       value="@load(vm.corrispondente.idFiscaleEstero)"/>
+                                <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                         value="@bind(vm.corrispondente.idFiscaleEstero)"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="Partita Iva"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                       value="@load(vm.corrispondente.partitaIva)"/>
+                                <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                         value="@bind(vm.corrispondente.partitaIva)"/>
+                            </cell>
+                        </row>
+
+                    </rows>
+                </grid>
+            </groupbox>
+
+            <space height="5px"/>
+
+            <groupbox mold="3d" hflex="1">
+                <caption label="Indirizzo"/>
+                <grid>
+                    <rows>
+                        <row>
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="Indirizzo"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                       value="@load(vm.corrispondente.indirizzo)"/>
+                                <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                         value="@bind(vm.corrispondente.indirizzo)"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="Comune"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                       value="@load(vm.corrispondente.comune)"/>
+                                <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                         value="@bind(vm.corrispondente.comune)"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="Provincia"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                       value="@load(vm.corrispondente.provinciaSigla)"/>
+                                <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                         maxlength="2"
+                                         value="@bind(vm.corrispondente.provinciaSigla)"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="CAP"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                       value="@load(vm.corrispondente.cap)"/>
+                                <textbox width="99%" maxlength="5"
+                                         visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                         value="@bind(vm.corrispondente.cap)"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="E-mail"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                       value="@load(vm.corrispondente.email)"/>
+                                <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                         value="@bind(vm.corrispondente.email)"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell width="30%">
+                                <label style="font-weight:bold;" value="Fax"/>
+                            </cell>
+                            <cell width="70%">
+                                <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                       value="@load(vm.corrispondente.fax)"/>
+                                <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                         value="@bind(vm.corrispondente.fax)"/>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>
+            </groupbox>
+
+            <space height="5px"/>
+
+            <grid model="@load(vm.corrispondente.indirizzi)" hflex="1">
+                <template name="model" var="indirizzo">
+                    <row>
+                        <groupbox mold="3d">
+                            <caption label="@load(indirizzo.tipoIndirizzo)"/>
+                            <grid>
+                                <rows>
+                                    <row>
+                                        <cell width="30%">
+                                            <label style="font-weight:bold;" value="Indirizzo"/>
+                                        </cell>
+                                        <cell width="70%">
+                                            <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                                   value="@load(indirizzo.indirizzo)"/>
+                                            <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                                     value="@bind(indirizzo.indirizzo)"/>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell width="30%">
+                                            <label style="font-weight:bold;" value="Comune"/>
+                                        </cell>
+                                        <cell width="70%">
+                                            <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                                   value="@load(indirizzo.comune)"/>
+                                            <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                                     value="@bind(indirizzo.comune)"/>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell width="30%">
+                                            <label style="font-weight:bold;" value="Provincia"/>
+                                        </cell>
+                                        <cell width="70%">
+                                            <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                                   value="@load(indirizzo.provinciaSigla)"/>
+                                            <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                                     value="@bind(indirizzo.provinciaSigla)"/>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell width="30%">
+                                            <label style="font-weight:bold;" value="CAP"/>
+                                        </cell>
+                                        <cell width="70%">
+                                            <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                                   value="@load(indirizzo.cap)"/>
+                                            <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                                     value="@bind(indirizzo.cap)"/>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell width="30%">
+                                            <label style="font-weight:bold;" value="E-mail"/>
+                                        </cell>
+                                        <cell width="70%">
+                                            <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                                   value="@load(indirizzo.email)"/>
+                                            <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                                     value="@bind(indirizzo.email)"/>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell width="30%">
+                                            <label style="font-weight:bold;" value="Fax"/>
+                                        </cell>
+                                        <cell width="70%">
+                                            <label visible="@load((not vm.competenze.modifica) or (not vm.modificaRapporti))"
+                                                   value="@load(indirizzo.fax)"/>
+                                            <textbox width="99%" visible="@load(vm.competenze.modifica and vm.modificaRapporti)"
+                                                     value="@bind(indirizzo.fax)"/>
+                                        </cell>
+                                    </row>
+                                </rows>
+
+                            </grid>
+                        </groupbox>
+                    </row>
+                </template>
+            </grid>
+        </vlayout>
+        <h:div class="barraPulsanti">
+            <h:div>
+                <button label="Salva e Chiudi" onClick="@command('onSalva')" mold="trendy"
+                        image="/images/pulsanti/16x16/filesave.png"
+                        visible="@load(vm.competenze.modifica and vm.modificaRapporti)"/>
+                <button label="Chiudi" onClick="@command('onChiudi')" mold="trendy"
+                        image="/images/pulsanti/16x16/window_close.png"/>
+            </h:div>
+        </h:div>
+    </window>
+</zk>

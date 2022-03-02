@@ -1,0 +1,7 @@
+--liquibase formatted sql
+--changeset mfrancesconi:4.0.0.0_20200226_128_1_drop_agp_protocolli_dati_scarto
+
+DROP TABLE AGP_PROTOCOLLI_DATI_SCARTO_LOG CASCADE CONSTRAINTS
+/
+DROP TABLE AGP_PROTOCOLLI_DATI_SCARTO CASCADE CONSTRAINTS
+/

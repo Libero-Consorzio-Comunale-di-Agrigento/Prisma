@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<documentRoot>
+    <descrizione>Registro Giornaliero</descrizione>
+    <connections>
+        <connectionJNDI>jdbc/agspr</connectionJNDI>
+    </connections>
+    <testStaticData>
+        <documentRoot>
+            <registro_giornaliero>
+                <AMMINISTRAZIONE>AMMINISTRAZIONE</AMMINISTRAZIONE>
+                <CODICE_AMMINISTRAZIONE>C_AMMINISTRAZIONE</CODICE_AMMINISTRAZIONE>
+                <AOO>DENOMINAZIONE_AOO</AOO>
+                <CODICE_AOO>C_AOO</CODICE_AOO>
+                <OGGETTO_REGISTRO>REGISTRO GIORNALIERO DI PROTOCOLLO del 17/10/2019</OGGETTO_REGISTRO>
+                <PRIMO_NUMERO>10</PRIMO_NUMERO>
+                <ULTIMO_NUMERO>13</ULTIMO_NUMERO>
+            </registro_giornaliero>
+            <protocolli>
+                <ANNO>2019</ANNO>
+                <NUMERO>0000010</NUMERO>
+                <ORIGINE>ARRIVO</ORIGINE>
+                <OGGETTO>OGGETTO DOCUMENTO PROTOCOLLATO 1</OGGETTO>
+                <CORRISPONDENTI>CORRISPONDENTE 1</CORRISPONDENTI>
+                <RIFERIM_ESTERNO>RIFERIMENTO ESTERNO 1</RIFERIM_ESTERNO>
+                <RIFERIM_ALTRA_REGISTRAZIONE>RIFERIMENTO ALTRA REGISTRAZIONE 1</RIFERIM_ALTRA_REGISTRAZIONE>
+                <FILE_HASH>IMPRONTA FILE 1</FILE_HASH>
+            </protocolli>
+            <protocolli>
+                <ANNO>2019</ANNO>
+                <NUMERO>0000011</NUMERO>
+                <ORIGINE>PARTENZA</ORIGINE>
+                <OGGETTO>OGGETTO DOCUMENTO PROTOCOLLATO 2</OGGETTO>
+                <CORRISPONDENTI>CORRISPONDENTE 2</CORRISPONDENTI>
+                <RIFERIM_ESTERNO>RIFERIMENTO ESTERNO 2</RIFERIM_ESTERNO>
+                <RIFERIM_ALTRA_REGISTRAZIONE>RIFERIMENTO ALTRA REGISTRAZIONE 2</RIFERIM_ALTRA_REGISTRAZIONE>
+                <FILE_HASH>IMPRONTA FILE 2</FILE_HASH>
+            </protocolli>
+            <protocolli>
+                <ANNO>2019</ANNO>
+                <NUMERO>0000012</NUMERO>
+                <ORIGINE>ARRIVO</ORIGINE>
+                <OGGETTO>OGGETTO DOCUMENTO PROTOCOLLATO 3</OGGETTO>
+                <CORRISPONDENTI>CORRISPONDENTE 3</CORRISPONDENTI>
+                <RIFERIM_ESTERNO>RIFERIMENTO ESTERNO 3</RIFERIM_ESTERNO>
+                <RIFERIM_ALTRA_REGISTRAZIONE>RIFERIMENTO ALTRA REGISTRAZIONE 3</RIFERIM_ALTRA_REGISTRAZIONE>
+                <FILE_HASH>IMPRONTA FILE 3</FILE_HASH>
+            </protocolli>
+            <protocolli>
+                <ANNO>2019</ANNO>
+                <NUMERO>0000013</NUMERO>
+                <ORIGINE>INTERNO</ORIGINE>
+                <OGGETTO>OGGETTO DOCUMENTO PROTOCOLLATO 4</OGGETTO>
+                <CORRISPONDENTI>CORRISPONDENTE 4</CORRISPONDENTI>
+                <RIFERIM_ESTERNO>RIFERIMENTO ESTERNO 4</RIFERIM_ESTERNO>
+                <RIFERIM_ALTRA_REGISTRAZIONE>RIFERIMENTO ALTRA REGISTRAZIONE 4</RIFERIM_ALTRA_REGISTRAZIONE>
+                <FILE_HASH>IMPRONTA FILE 4</FILE_HASH>
+            </protocolli>
+        </documentRoot>
+    </testStaticData>
+    <definitions>
+        <!-- DEFINIZIONE PARAMETRI DI INPUT -->
+        <metaDato tipoParametro="input">
+            <nomeSimbolico>id</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>id del registro giornaliero di protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <!-- DEFINIZIONE CAMPI DELLA QUERY -->
+        <metaDato tipoParametro="input">
+            <nomeSimbolico>ID_ENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>id dell'amministrazione</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>AMMINISTRAZIONE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Codice dell'amministrazione</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>CODICE_AMMINISTRAZIONE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Codice dell'amministrazione</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>AOO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Denominazione dell'aoo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>CODICE_AOO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Codice dell'aoo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>OGGETTO_REGISTRO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Oggetto del registro giornaliero di protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>PRIMO_NUMERO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Primo numero di protocollo presente nel registro</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DATA_PRIMO_NUMERO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data primo numero di protocollo presente nel registro</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>ULTIMO_NUMERO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Ultimo numero di protocollo presente nel registro</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DATA_ULTIMO_NUMERO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data ultimo numero di protocollo presente nel registro</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>ANNO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Anno di protocollazione</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NUMERO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Numero di protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>ORIGINE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Origine del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>OGGETTO_PROTOCOLLO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Oggetto del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>CORRISPONDENTI</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Elenco corrispondenti</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>RIFERIM_ESTERNO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Riferimento esterno del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>RIFERIM_ALTRA_REGISTRAZIONE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Riferimento di altra registrazione</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FILE_HASH</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Impronta del file principale</descrizione>
+            <path/>
+        </metaDato>
+    </definitions>
+    <queryes>
+        <query id="registro_giornaliero"
+               help_descrizione="Ritorna i dati del registro giornaliero di protocollo."
+               help_query_alias="rg"
+               help_field_aliases="AMMINISTRAZIONE, CODICE_AMMINISTRAZIONE, CODICE_AOO, AOO, OGGETTO_REGISTRO, PRIMO_NUMERO, ULTIMO_NUMERO">
+                select  sogg_amm.denominazione AMMINISTRAZIONE
+                      , ge.amministrazione CODICE_AMMINISTRAZIONE
+                      , aoo.descrizione AOO
+                      , aoo.codice CODICE_AOO
+                      , prot.oggetto OGGETTO_REGISTRO
+                      , reg_giorn.primo_numero PRIMO_NUMERO
+                      , reg_giorn.ultimo_numero ULTIMO_NUMERO
+                   from agp_protocolli_dati_reg_giorn reg_giorn
+                      , agp_protocolli prot
+                      , gdo_documenti gd
+                      , gdo_enti ge
+                      , so4_v_amministrazioni amm
+                      , as4_v_soggetti_correnti sogg_amm
+                      , so4_v_aoo aoo
+                  where reg_giorn.id_protocollo_dati_reg_giorn = #id
+                    and prot.id_protocollo_dati_reg_giorn = reg_giorn.id_protocollo_dati_reg_giorn
+                    and prot.id_documento = gd.id_documento
+                    and gd.id_ente = ge.id_ente
+                    and ge.amministrazione = amm.codice
+                    and sogg_amm.ni = amm.id_soggetto
+                    and aoo.amministrazione = ge.amministrazione
+                    and aoo.codice = ge.aoo
+        </query>
+        <query id="protocolli"
+               help_descrizione="Ritorna i dati di un protocollo"
+               help_query_alias="p"
+               help_field_aliases="ANNO, NUMERO, ORIGINE, OGGETTO, CORRISPONDENTI, RIFERIM_ESTERNO, RIFERIM_ALTRA_REGISTRAZIONE, FILE_HASH">
+                select lpad (prot.anno, 7, 0) anno
+                     , prot.numero numero
+                     , prot.movimento origine
+                     , prot.oggetto oggetto
+                     , agp_utility_pkg.get_corrispondenti_protocollo (prot.id_documento, decode (prot.movimento, 'PARTENZA', 'DEST', 'MITT')) corrispondenti
+                     , prot.numero_documento_esterno || decode (prot.data_documento_esterno, null, '', decode (prot.numero_documento_esterno, null, '', ' del ') || to_char (prot.data_documento_esterno, 'dd/mm/yyyy')) riferim_esterno
+                     , gdm_ag_utilities_stampa.get_altra_registrazione (gd.id_documento_esterno) riferim_altra_registrazione
+                     , (select gif.hashcode
+                          from (select f.id_file_esterno id_file
+                                     , d.id_documento id_documento
+                                  from gdo_documenti d, gdo_file_documento f
+                                 where d.valido = 'Y'
+                                   and f.id_documento = d.id_documento
+                                   and f.codice in ('FILE_PRINCIPALE')) file_doc
+                              , gdm_impronte_file gif
+                              , gdm_oggetti_file gof
+                          where gof.id_oggetto_file = file_doc.id_file
+                            and gif.id_documento = gof.id_documento
+                            and gif.filename = gof.filename
+                            and file_doc.id_documento = prot.id_documento) file_hash
+                  from agp_protocolli prot_reg
+                     , gdo_documenti gd_reg
+                     , agp_protocolli_dati_reg_giorn reg_giorn
+                     , agp_protocolli prot
+                     , gdo_documenti gd
+                 where reg_giorn.id_protocollo_dati_reg_giorn = #id
+                   and prot_reg.id_protocollo_dati_reg_giorn = reg_giorn.id_protocollo_dati_reg_giorn
+                   and prot_reg.id_documento = gd_reg.id_documento
+                   and gd_reg.id_ente = gd.id_ente
+                   and gd.valido = 'Y'
+                   and prot.id_documento = gd.id_documento
+                   and prot.numero between reg_giorn.primo_numero and reg_giorn.ultimo_numero
+                   and prot.data between reg_giorn.data_primo_numero and reg_giorn.data_ultimo_numero
+                   order by prot.anno asc, prot.numero asc
+        </query>
+    </queryes>
+    <staticData/>
+</documentRoot>

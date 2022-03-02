@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:annotation>
+		<xs:appinfo>Output del metodo getFascicoli</xs:appinfo>
+		<xs:documentation xml:lang="it">Elenco dei campi di ritorno del metodo</xs:documentation>
+	</xs:annotation>
+	<xs:element name="FASCICOLI">
+		<xs:complexType> 
+			<xs:sequence>
+				<xs:element ref="FASCICOLO" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType> 
+	</xs:element>
+	<xs:element name="FASCICOLO">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="CLASS_COD" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice della Classifica del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="CLASS_DAL" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Data di creazione della Classifica del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>  
+				<xs:element name="FASCICOLO_ANNO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Anno del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>   
+				<xs:element name="FASCICOLO_NUMERO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Numero del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>    
+				<xs:element name="FASCICOLO_OGGETTO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Oggetto del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>    
+				<xs:element name="NOTE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Note del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>    
+				<xs:element name="PROCEDIMENTO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Procedimento del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>    
+				<xs:element name="RESPONSABILE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Responsabile del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>    
+				<xs:element name="STATO_FASCICOLO" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="1" >
+								<xs:annotation>
+									<xs:documentation>Corrente</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="2" >
+								<xs:annotation>
+									<xs:documentation>Deposito</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="3" >
+								<xs:annotation>
+									<xs:documentation>Storico</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="DESCRIZIONE_STATO_FASCICOLO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Descrizione dello Stato del Fasicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>     
+				<xs:element name="UFFICIO_COMPETENZA" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice dell'ufficio di competenza del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>     
+				<xs:element name="DESCRIZIONE_UFFICIO_COMPETENZA" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Descrizione dell'ufficio di competenza del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>     
+				<xs:element name="UFFICIO_CREAZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice dell'ufficio di creazione del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>      
+				<xs:element name="DESCRIZIONE_UFFICIO_CREAZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Descrizione dell'ufficio di creazione del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>      
+				<xs:element name="UTENTE_CREAZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>codice dell'utente di creazione del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>      
+				<xs:element name="DESCRIZIONE_UTENTE_CREAZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>nominativo dell'utente di creazione del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>       
+				<xs:element name="DATA_APERTURA" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Data Apertura del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>       
+				<xs:element name="DATA_CHIUSURA" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Data chiusura del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>        
+				<xs:element name="DATA_CREAZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Data Creazione del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>        
+				<xs:element name="STATO_SCARTO"  minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Stato Scarto del Fascicolo, i valori ammessi sono elencati </xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="**" >
+								<xs:annotation>
+									<xs:documentation>Default</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="RR" >
+								<xs:annotation>
+									<xs:documentation>Con richiesta di scarto rifiutata</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="CO" >
+								<xs:annotation>
+									<xs:documentation>Conservato</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="AA" >
+								<xs:annotation>
+									<xs:documentation>In attesa di approvazione dello scarto</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="PS" >
+								<xs:annotation>
+									<xs:documentation>Proposto per lo scarto</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="SC" >
+								<xs:annotation>
+									<xs:documentation>Scartato</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+
+				</xs:element>
+				<xs:element name="DESCRIZIONE_STATO_SCARTO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Descrizione dello stato Scarto del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>        
+				<xs:element name="DATA_STATO_SCARTO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Data Stato Scarto del Fascicolo</xs:documentation>
+					</xs:annotation>
+				</xs:element>        
+				<xs:element name="CODICE_AMMINISTRAZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>codice Amministrazione dell'ente</xs:documentation>
+					</xs:annotation>
+				</xs:element>        
+				<xs:element name="CODICE_AOO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>codice Aoo dell'ente</xs:documentation>
+					</xs:annotation>
+				</xs:element>         
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

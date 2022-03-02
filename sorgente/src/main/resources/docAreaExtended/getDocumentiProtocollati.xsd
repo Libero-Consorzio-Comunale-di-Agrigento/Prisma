@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:annotation>
+		<xs:appinfo>Metodo getDocumentiProtocollati</xs:appinfo>
+		<xs:documentation xml:lang="it">
+			Questo metodo ricerca Documenti protocollati
+			I campi necessari sono 
+				OGGETTO o DATA_DAL/AL
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ROOT">
+		<xs:complexType> 
+			<xs:sequence> 
+				<xs:choice>
+					<xs:sequence>
+						<xs:element name="OGGETTO" type="xs:string"  >
+							<xs:annotation>
+								<xs:documentation>Oggetto del protocollo da Ricercare (tramite LIKE) </xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:group ref="PROTO_DATA" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Deve essere inserito l' oggetto del protocollo da ricercare o un range DATA_DAL/AL</xs:documentation>
+							</xs:annotation>
+						</xs:group>
+					</xs:sequence>
+					<xs:group ref="PROTO_DATA" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Deve essere inserito l' oggetto del protocollo da ricercare o un range DATA_DAL/AL</xs:documentation>
+						</xs:annotation>
+					</xs:group>
+				</xs:choice>
+				<xs:element name="ANNO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Anno del protocollo da Ricercare </xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="NUMERO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Numero del protocollo da Ricercare </xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="TIPO_REGISTRO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice del TipoRegistro  del protocollo da Ricercare </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CLASS_COD" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice della Classifica da Ricercare</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FASCICOLO_ANNO" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Anno del Fascicolo/subfascicolo da Ricercare  </xs:documentation>
+						</xs:annotation>
+					</xs:element> 
+				<xs:element name="FASCICOLO_NUMERO" type="xs:string"  minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Numero del Fascicolo/subfascicolo da Ricercare (tramite LIKE) </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				<xs:element name="MODALITA" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="INT|PAR|ARR"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="UNITA_PROTOCOLLANTE" type="xs:string"  minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice dell' ufficio che ha protocollato il documento </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UFFICIO_SMISTAMENTO" type="xs:string"  minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice dell' ufficio al quale e' stato smistato il documento </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UTENTE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>
+							Nominativo dell'utente che deve eseguire la ricerca.
+							L'utente deve avere le competenze sui documenti da ricercare.
+							Se non passato viene preso l'utente di accesso al WebService 
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element> 
+	<xs:group name="PROTO_DATA">
+		<xs:sequence>
+			<xs:element name="DATA_DAL" type="DateType">
+					<xs:annotation>
+						<xs:documentation>Range di ricerca per la Data di protocollazione </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DATA_AL" type="DateType">
+					<xs:annotation>
+						<xs:documentation>Range di ricerca per la Data di Protocollazione </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:simpleType name="DateType">
+		<xs:restriction base="xs:string" >
+			<xs:pattern value="(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema> 

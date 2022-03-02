@@ -1,0 +1,50 @@
+<configuration>
+
+  <appender name="FILE_LOG_PEC"  class="ch.qos.logback.core.FileAppender">
+    <file>logs/protocolloPec.log</file>
+    <encoder>
+      <pattern>%date %level [%thread] %logger{10} [%file : %line] %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE_LOG" class="ch.qos.logback.core.FileAppender">
+    <file>logs/protocollo.log</file>
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="it.finmatica.protocollo.documenti.mail.MailService" additivity="false" >
+    <appender-ref ref="FILE_LOG_PEC" />
+  </logger>
+
+  <logger name="it.finmatica.protocollo.integrazioni.si4cs.Si4CSService" additivity="false" >
+    <appender-ref ref="FILE_LOG_PEC" />
+  </logger>
+
+  <logger name="it.finmatica.protocollo.integrazioni.si4cs.MessaggiSi4CSService" additivity="false" >
+    <appender-ref ref="FILE_LOG_PEC" />
+  </logger>
+
+  <logger name="it.finmatica.protocollo.documenti.ProtocolloSegnaturaService" additivity="false">
+    <appender-ref ref="FILE_LOG_PEC" />
+  </logger>
+
+  <logger name="it.finmatica.protocollo.integrazioni.segnatura.interop.SegnaturaInteropService" additivity="false">
+    <appender-ref ref="FILE_LOG_PEC" />
+  </logger>
+
+  <logger name="it.finmatica" additivity="false">
+    <appender-ref ref="FILE_LOG" />
+  </logger>
+
+  <root level="info">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>

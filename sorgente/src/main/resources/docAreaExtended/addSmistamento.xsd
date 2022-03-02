@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="ROOT">
+		<xs:complexType> 
+			<xs:sequence> 
+				<xs:element name="ID_DOCUMENTO" type="xs:string" /> 
+				<xs:element name="TIPO_SMISTAMENTO" >
+				<xs:simpleType>
+						<xs:restriction base="xs:string">
+							 <xs:pattern value="COMPETENZA|CONOSCENZA"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="UNITA_SMISTAMENTO" type="xs:string" />
+				<xs:element name="UTENTE_ASSEGNATARIO" type="xs:string" minOccurs="0" />
+				<xs:element name="NOTE" type="xs:string" minOccurs="0" />
+				<xs:element name="UTENTE" type="xs:string"/> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element> 
+</xs:schema> 

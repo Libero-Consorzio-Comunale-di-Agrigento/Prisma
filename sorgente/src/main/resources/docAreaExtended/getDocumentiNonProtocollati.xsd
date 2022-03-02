@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>Metodo getDocumentiNonProtocollati</xs:appinfo>
+		<xs:documentation xml:lang="it">
+			Questo metodo ricerca documenti non acora protocollati
+			I campi necessari sono 
+			OGGETTO
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ROOT">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="OGGETTO" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Oggetto del protocollo da Ricercare (tramite LIKE) </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CLASS_COD" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice della Classifica da Ricercare</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FASCICOLO_ANNO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Anno del Fascicolo/subfascicolo da Ricercare</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="FASCICOLO_NUMERO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Numero del Fascicolo/subfascicolo da Ricercare	(tramite LIKE) </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UTENTE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>
+							Nominativo dell'utente che deve eseguire la ricerca.
+							L'utente deve avere le competenze sui documenti da ricercare.
+							Se non passato viene preso l'utente di accesso al WebService
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema> 

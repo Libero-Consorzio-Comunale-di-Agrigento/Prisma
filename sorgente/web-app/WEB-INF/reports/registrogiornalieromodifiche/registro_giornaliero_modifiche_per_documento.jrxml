@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.8.0.final utlizzo versione della libreria JasperReports6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registro_giornaliero_modifiche_per_documento" pageWidth="595" pageHeight="600" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="c27502b6-25ea-467a-bed4-fc8169ce62c5">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="svi-agsflex.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="395"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="600"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="default" isDefault="true" fontName="Arial" fontSize="10"/>
+	<parameter name="ID_DOCUMENTO" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[select (select u.nominativo_soggetto from AD4_V_UTENTI u where u.UTENTE = pd.utente_ins) UTENTE_CREAZIONE
+     , to_char(pd.data_ins, 'dd/mm/yyyy" alle ore "hh24:mi') DATA_CREAZIONE
+     , pd.revtype PROTOCOLLO_REVTYPE
+     , (select u.nominativo_soggetto from AD4_V_UTENTI u where u.UTENTE = nvl(pc.utente_upd, nvl(af.UTENTE_UPD, nvl(da.UTENTE_UPD, nvl(pf.UTENTE_UPD, pd.UTENTE_UPD))))) UTENTE_MODIFICA
+     , to_char((select r.revtstmp from revinfo r where r.rev = nvl(pc.rev, nvl(af.rev, nvl(da.rev, nvl(pf.rev, pd.rev))))), 'dd/mm/yyyy" alle ore "hh24:mi') DATA_MODIFICA
+     , p.oggetto PROT_OGGETTO
+     , p.oggetto_mod PROT_OGGETTO_MOD
+     , p.movimento PROT_MOVIMENTO
+     , p.movimento_MOD PROT_MOVIMENTO_MOD
+     , pf.revtype PROT_FILE_PRINCIPALE_TYPE
+     , 'hashcode file principale '||pf.nome PROT_FILE_PRINCIPALE_HASH
+     , decode(da.valido, 'N', 2, da.REVTYPE) ALLEGATO_TYPE
+     , af.revtype ALLEGATO_FILE_TYPE
+     , af.REVISIONE_STORICO ALLE_REVISIONE_STORICO
+     , 'hashcode file allegato - '||af.nome ALLEGATO_FILE_HASH
+     , da.ID_DOCUMENTO_ESTERNO ALLE_ID_DOCUMENTO_ESTERNO
+     , pc.REVTYPE CORRISPONDENTE_TYPE
+     , pc.DENOMINAZIONE CORRISPONDENTE_NOME
+     , pc.INDIRIZZO CORRISPONDENTE_INDIRIZZO
+     , PD.FILE_DOCUMENTI_MOD PROT_FILE_PRINCIPALE_MOD
+   from agp_protocolli_log p
+      , gdo_documenti_log pd
+      , gdo_file_documento_log pf
+      , gdo_documenti_collegati_log c
+      , gdo_allegati_log a
+      , gdo_documenti_log da
+      , gdo_file_documento_log af
+      , agp_protocolli_corr_log pc
+  where pd.id_documento = p.id_documento
+    and pd.rev = p.rev
+    and p.id_documento = $P{ID_DOCUMENTO}
+    and pc.ID_DOCUMENTO(+) = pd.ID_DOCUMENTO
+    and pc.rev(+) >= pd.rev and pc.rev(+) < nvl(pd.revend, 99999999999)
+    and pf.id_documento(+) = pd.id_documento
+    and pf.rev(+) >= pd.rev and pf.rev(+) < nvl(pd.revend, 99999999999)
+    and pf.codice(+) = 'FILE_PRINCIPALE'
+    and c.id_documento(+) = pd.id_documento
+    and c.rev(+) >= pd.rev and c.rev(+) < nvl(pd.revend, 99999999999)
+    and a.id_documento(+) = c.id_collegato
+    and a.rev(+) >= c.rev and a.rev(+) < nvl(c.revend, 99999999999)
+    and da.id_documento(+) = a.id_documento
+    and da.rev(+) = a.rev
+    and af.id_documento(+) = da.id_documento
+    and af.rev(+) >= da.rev and af.rev(+) < nvl(da.revend, 99999999999)
+    order by nvl(pc.rev, nvl(af.rev, nvl(da.rev, nvl(pf.rev, pd.rev)))) asc]]>
+	</queryString>
+	<field name="UTENTE_CREAZIONE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UTENTE_CREAZIONE"/>
+	</field>
+	<field name="DATA_CREAZIONE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_CREAZIONE"/>
+	</field>
+	<field name="PROTOCOLLO_REVTYPE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PROTOCOLLO_REVTYPE"/>
+	</field>
+	<field name="UTENTE_MODIFICA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="UTENTE_MODIFICA"/>
+	</field>
+	<field name="DATA_MODIFICA" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="DATA_MODIFICA"/>
+	</field>
+	<field name="PROT_OGGETTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROT_OGGETTO"/>
+	</field>
+	<field name="PROT_OGGETTO_MOD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PROT_OGGETTO_MOD"/>
+	</field>
+	<field name="PROT_MOVIMENTO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROT_MOVIMENTO"/>
+	</field>
+	<field name="PROT_MOVIMENTO_MOD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PROT_MOVIMENTO_MOD"/>
+	</field>
+	<field name="PROT_FILE_PRINCIPALE_TYPE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PROT_FILE_PRINCIPALE_TYPE"/>
+	</field>
+	<field name="PROT_FILE_PRINCIPALE_HASH" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PROT_FILE_PRINCIPALE_HASH"/>
+	</field>
+	<field name="ALLEGATO_TYPE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ALLEGATO_TYPE"/>
+	</field>
+	<field name="ALLEGATO_FILE_TYPE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ALLEGATO_FILE_TYPE"/>
+	</field>
+	<field name="ALLE_REVISIONE_STORICO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ALLE_REVISIONE_STORICO"/>
+	</field>
+	<field name="ALLEGATO_FILE_HASH" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="ALLEGATO_FILE_HASH"/>
+	</field>
+	<field name="ALLE_ID_DOCUMENTO_ESTERNO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="ALLE_ID_DOCUMENTO_ESTERNO"/>
+	</field>
+	<field name="CORRISPONDENTE_TYPE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CORRISPONDENTE_TYPE"/>
+	</field>
+	<field name="CORRISPONDENTE_NOME" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CORRISPONDENTE_NOME"/>
+	</field>
+	<field name="CORRISPONDENTE_INDIRIZZO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CORRISPONDENTE_INDIRIZZO"/>
+	</field>
+	<field name="PROT_FILE_PRINCIPALE_MOD" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PROT_FILE_PRINCIPALE_MOD"/>
+	</field>
+	<variable name="PAGINA" class="java.lang.Integer" resetType="Page">
+		<variableExpression><![CDATA[$V{PAGE_NUMBER}]]></variableExpression>
+	</variable>
+	<group name="DATA" keepTogether="true">
+		<groupExpression><![CDATA[$F{DATA_MODIFICA}]]></groupExpression>
+		<groupHeader>
+			<band height="81">
+				<textField>
+					<reportElement isPrintRepeatedValues="false" x="0" y="0" width="526" height="10" isRemoveLineWhenBlank="true" uuid="94458a0f-6643-4e30-ab90-4b34fc559674"/>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{PROTOCOLLO_REVTYPE}.intValue() == 0) ? "Creato da "+$F{UTENTE_CREAZIONE}+" in data "+$F{DATA_CREAZIONE} : "Modificato da "+$F{UTENTE_MODIFICA}+" in data "+$F{DATA_MODIFICA}]]></textFieldExpression>
+				</textField>
+				<frame>
+					<reportElement x="34" y="12" width="536" height="18" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true" uuid="e067b97e-b663-40c3-beb1-91c04a6e3d45">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<printWhenExpression><![CDATA[$F{PROT_OGGETTO_MOD}.intValue() == 1]]></printWhenExpression>
+					</reportElement>
+					<staticText>
+						<reportElement x="0" y="0" width="126" height="18" uuid="6d1e51d8-4cc2-49c2-a773-7e04598b8f49">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[Oggetto:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="126" y="0" width="410" height="18" uuid="303defac-d9ed-407c-9c30-6db79e959e07">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<textFieldExpression><![CDATA[$F{PROT_OGGETTO}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement x="34" y="30" width="536" height="15" isRemoveLineWhenBlank="true" uuid="659585db-0b82-4956-b459-05e5f18881f1">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<printWhenExpression><![CDATA[$F{PROT_MOVIMENTO_MOD}.intValue() == 1]]></printWhenExpression>
+					</reportElement>
+					<staticText>
+						<reportElement x="0" y="0" width="126" height="15" uuid="233986aa-3323-4360-85ab-e20347c925a2">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[Modalità:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="126" y="0" width="410" height="15" uuid="bc79babe-79c4-4e0f-a4b5-d36508ede899">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<textFieldExpression><![CDATA[$F{PROT_MOVIMENTO}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement x="34" y="45" width="536" height="18" isRemoveLineWhenBlank="true" uuid="01f2c4e3-e5e1-407c-bf82-36a4615a5c25">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<printWhenExpression><![CDATA[$F{PROT_FILE_PRINCIPALE_MOD}.intValue() == 1]]></printWhenExpression>
+					</reportElement>
+					<staticText>
+						<reportElement x="0" y="0" width="126" height="18" uuid="355e3fd2-a37d-4202-9227-8871afc8a504">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[Impronta File:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="126" y="0" width="410" height="18" uuid="6d72afee-0611-4733-b74a-28312bc4312e">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<textFieldExpression><![CDATA[$F{PROT_FILE_PRINCIPALE_HASH}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<frame>
+					<reportElement x="34" y="63" width="536" height="18" isRemoveLineWhenBlank="true" uuid="057287f6-8d90-4671-b410-c2ef59fa1095">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<printWhenExpression><![CDATA[$F{PROT_FILE_PRINCIPALE_TYPE}.intValue() == 2]]></printWhenExpression>
+					</reportElement>
+					<staticText>
+						<reportElement x="0" y="0" width="126" height="18" uuid="44327618-352f-4345-97dc-033dfb629b67">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<textElement textAlignment="Right"/>
+						<text><![CDATA[Eliminato File:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="126" y="0" width="410" height="18" uuid="2e06e90a-069a-4b70-a7d0-5c1dd83f7b12">
+							<property name="com.jaspersoft.studio.unit.x" value="px"/>
+							<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						</reportElement>
+						<textFieldExpression><![CDATA[$F{PROT_FILE_PRINCIPALE_HASH}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="11" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="282" height="10" uuid="b7b5eaa5-bfd9-4d1e-95f3-45c2a12898d6"/>
+				<textElement>
+					<font size="8" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[STORICO MODIFICHE:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="72" splitType="Stretch">
+			<frame>
+				<reportElement x="34" y="0" width="536" height="18" isRemoveLineWhenBlank="true" uuid="fa5a4198-b310-447f-a9db-db1228ea14bd">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$F{CORRISPONDENTE_TYPE}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="126" height="18" uuid="956af1e4-3c08-4ae0-94d5-108d0716c329">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Aggiunto Corrispondente:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="126" y="0" width="410" height="18" uuid="a34f4f35-66a8-4a2d-8936-6069f28c2535">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{CORRISPONDENTE_NOME}+" - "+($F{CORRISPONDENTE_INDIRIZZO} == null ? "" : $F{CORRISPONDENTE_INDIRIZZO})]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="34" y="18" width="536" height="18" isRemoveLineWhenBlank="true" uuid="e3bb63cf-183b-4057-b90a-7fe9937dab49">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$F{CORRISPONDENTE_TYPE}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="126" height="18" uuid="7fc822cc-c54e-4e42-8c48-902fa0c0a1ef">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Eliminato Corrispondente:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="126" y="0" width="410" height="18" uuid="60b33106-f7cc-4d25-a213-d49340480b2c">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{CORRISPONDENTE_NOME}+" - "+($F{CORRISPONDENTE_INDIRIZZO} == null ? "" : $F{CORRISPONDENTE_INDIRIZZO})]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="34" y="36" width="536" height="18" isRemoveLineWhenBlank="true" uuid="e80c99f4-9561-4feb-94ad-725cabba5c7c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$F{ALLEGATO_FILE_TYPE}.intValue() == 0]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="126" height="18" uuid="9b496990-1595-4ec3-99b4-911dd4e992aa">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Aggiunto File:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="126" y="0" width="410" height="18" uuid="329a1e53-1f21-4e88-9a05-2e846fbf4007">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{ALLEGATO_FILE_HASH}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="34" y="54" width="536" height="18" isRemoveLineWhenBlank="true" uuid="10ef5d01-3754-41c8-9239-3b63b406df8c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[$F{ALLEGATO_TYPE}.intValue() == 2]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="126" height="18" uuid="6f764517-34e2-40a5-bf1f-36476ead81e1">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right"/>
+					<text><![CDATA[Eliminato File:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="126" y="0" width="410" height="18" uuid="0e8c94ec-5bd3-4849-98d8-b88d583213b2">
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{ALLEGATO_FILE_HASH}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

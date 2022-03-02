@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <tree model="@load(vm.catenaDocumentale)" height="100%" width="100%" vflex="1">
+        <treecols>
+            <treecol hflex="22%" label="Numero" />
+            <treecol width="5%" label="Anno" />
+            <treecol width="30%" label="Tipo Registro" />
+            <treecol width="30%" label="Oggetto" />
+            <treecol width="10%" label="Data" />
+            <treecol width="3%"  align="center" />
+        </treecols>
+
+        <template name="model">
+            <treeitem open="@load((each.livello lt vm.livelloApertura))"  onDoubleClick="@command('apriDocumentoCollegato', documentoCollegato=each.protocollo)">
+                <treerow>
+                    <zk if="${each.figli}">
+                        <zk if="${(each.protocollo.id == vm.protocollo.id)}">
+                          <treecell label="${each.protocollo.numero != null ? each.protocollo.numero  : '-' }" style="font-weight:bold;" />
+                            <treecell label="${each.protocollo.anno != null ? each.protocollo.anno : '-'}" style="font-weight:bold;"/>
+                            <treecell label="${each.protocollo.tipoRegistro.commento != null ? each.protocollo.tipoRegistro.commento : '-' }" style="font-weight:bold;"/>
+                            <treecell label="${each.protocollo.oggetto}" style="font-weight:bold;"/>
+                            <zk if="${(each.protocollo.data != null)}">
+                                <treecell label="@load(each.protocollo.data) @converter('formattedDate', format='dd/MM/yyyy HH:mm:ss')" style="font-weight:bold;"/>
+                            </zk>
+                            <zk if="${(each.protocollo.data == null)}">
+                                <treecell label= "-" style="font-weight:bold;"/>
+                            </zk>
+                            <treecell> <image src="/images/ags/16x16/info.png"
+                                              onClick="@command('apriDocumentoCollegato', documentoCollegato=each.protocollo)"
+                                              style="cursor: pointer;" visible="false"/> </treecell>
+                        </zk>
+                        <zk if="${(each.protocollo.id != vm.protocollo.id)}">
+                            <treecell label="${each.protocollo.numero != null ? each.protocollo.numero  : '-' }" />
+                            <treecell label="${each.protocollo.anno != null ? each.protocollo.anno : '-'}"/>
+                            <treecell label="${each.protocollo.tipoRegistro.commento != null ? each.protocollo.tipoRegistro.commento : '-' }"/>
+                            <treecell label="${each.protocollo.oggetto}"/>
+                            <zk if="${(each.protocollo.data != null)}">
+                                <treecell label="@load(each.protocollo.data) @converter('formattedDate', format='dd/MM/yyyy HH:mm:ss')"/>
+                            </zk>
+                            <zk if="${(each.protocollo.data == null)}">
+                                <treecell label= "-"/>
+                            </zk>
+                            <treecell> <image src="/images/ags/16x16/info.png"
+                                              tooltiptext="Apri documento"
+                                              onClick="@command('apriDocumentoCollegato', documentoCollegato=each.protocollo)"
+                                              style="cursor: pointer;" visible = "${each.protocollo.numero != null}"/> </treecell>
+                        </zk>
+                    </zk>
+                </treerow>
+            </treeitem>
+        </template>
+
+     </tree>
+
+
+
+</zk>

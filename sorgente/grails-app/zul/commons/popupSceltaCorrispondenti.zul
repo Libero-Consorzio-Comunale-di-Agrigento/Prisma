@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/protocollo.css"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:w="http://www.zkoss.org/2005/zk/client"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('commons.PopupSceltaCorrispondentiViewModel')"
+            border="normal" sizable="true" width="90%" height="90%" title=" ">
+
+        <h:div class="barraTitoloPagina">
+            <label sclass="titoloPagina" value="Ricerca Corrispondenti"/>
+        </h:div>
+        <div>
+            <groupbox>
+                <grid sclass="form">
+                    <rows>
+                        <row>
+                            <cell colspan="12">
+                                <label style="font-style:italic">Digitare l'intero codice fiscale / partita iva o parte
+                                    della denominazione del
+                                    soggetto (almeno 3 caratteri - carattere jolly %).
+                                </label>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell id="tipoSearch" colspan="1" visible="true">
+                                <combobox selectedItem="@bind(vm.tipoRicercaDenominazione)" hflex="1" readonly="true" mold="rounded"
+                                          width="100%"
+                                >
+                                    <comboitem label="Ricerca Libera" description="Ricerca Libera"
+                                               value="LIBERA"/>
+                                    <comboitem label="Uguale" description="Uguale"
+                                               value="UGUALE"/>
+                                    <comboitem label="Inizia con" description="Inizia con"
+                                               value="INIZIO"/>
+                                    <comboitem label="Termina con" description="Termina con"
+                                               value="FINE"/>
+                                    <comboitem label="Contiene" description="Contiene"
+                                               value="CONTIENE"/>
+                                    <comboitem label="Contiene Frase" description="Contiene Frase"
+                                               value="CONTIENE_FRASE_ESATTA"/>
+                                </combobox>
+                            </cell>
+                            <cell id="simpleSearch" colspan="9" visible="true">
+                                <bandbox id="bd"
+                                         value="@bind(vm.search)"
+                                         width="100%"
+                                         mold="rounded"
+                                         onOK="@command('onCerca', search = event.target.value)"
+                                         onOpen="@command('onCerca', search = event.value)"  />
+                            </cell>
+                            <cell align="right" colspan="2">
+                                <button id="advancedSimpleSwitch"
+                                        image="/images/afc/16x16/filter_box.png"
+                                        style="padding-right: 5px;"
+                                        tooltiptext="Ricerca Avanzata"
+                                        tooltip="Ricerca Avanzata"
+                                        mold="trendy"
+                                        onClick="@command('onVisualizzaFiltriDiRicerca', buttonSwitch = advancedSimpleSwitch, cellA = advancedSearch, cellS = simpleSearch, cellTipo = tipoSearch)">
+                                </button>
+                                <button image="/images/afc/16x16/add.png" tooltiptext="Nuovo" tooltip="Nuovo"
+                                        onClick="@command('onInserisciSoggetto')" mold="trendy" visible="@load(vm.modificaAnagrafica)"></button>
+                            </cell>
+                        </row>
+                        <row id="advancedSearch" visible="false">
+                            <cell  colspan="10" >
+                                <grid>
+                                    <rows>
+                                        <row>
+                                            <cell>
+                                                <label value=" Indirizzo: "/>
+                                                <textbox value="@bind(vm.indirizzo)" mold="rounded"
+                                                         style="text-transform: uppercase" width="95%"/>
+                                            </cell>
+                                            <cell>
+                                                <label value=" Codice Fiscale: "/>
+                                                <textbox value="@bind(vm.codiceFiscale)" mold="rounded"
+                                                         style="text-transform: uppercase" width="95%"/>
+                                            </cell>
+                                            <cell>
+                                                <label value=" Id Fiscale Estero: "/>
+                                                <textbox value="@bind(vm.codiceFiscaleEstero)" mold="rounded"
+                                                         width="95%"/>
+                                            </cell>
+                                            <cell>
+                                                <label value=" Partita Iva: "/>
+                                                <textbox value="@bind(vm.partitaIva)" mold="rounded"
+                                                         style="text-transform: uppercase" width="95%"/>
+                                            </cell>
+                                            <cell>
+                                                <label value=" E-mail: "/>
+                                                <textbox value="@bind(vm.email)" mold="rounded" width="95%"/>
+                                            </cell>
+                                            <cell width="40px">
+                                                <button image="/images/afc/16x16/search.png"
+                                                        mold="trendy"
+                                                        onClick="@command('onRicercaAvanzata', selectedItem = ts1.selectedItem.value)">
+                                                </button>
+                                            </cell>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </cell>
+
+                        </row>
+                        <row vflex="1">
+                            <cell colspan="12">
+                                <radiogroup id="ts" model="@load(vm.listaTipoSoggetto)"
+                                            visible="@load(not vm.ricercaAvanzata)"
+                                            selectedItem="@bind(vm.selectedTipoSoggetto)">
+                                    <template name="model" var="tipoSoggetto">
+                                        <radio label="@load(tipoSoggetto.descrizione)"
+                                               radiogroup="ts"
+                                               onCheck="@command('onCerca', search = bd.value, selectedItem = ts.selectedItem.value)"/>
+                                    </template>
+                                </radiogroup>
+                                <radiogroup id="ts1" model="@load(vm.listaTipoSoggetto)"
+                                            visible="@load(vm.ricercaAvanzata)"
+                                            selectedItem="@bind(vm.selectedTipoSoggetto)">
+                                    <template name="model" var="tipoSoggetto">
+                                        <radio label="@load(tipoSoggetto.descrizione)"
+                                               radiogroup="ts1"
+                                               onCheck="@command('onRicercaAvanzata', selectedItem = ts1.selectedItem.value)"/>
+                                    </template>
+                                </radiogroup>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>
+            </groupbox>
+        </div>
+
+        <listbox vflex="1"
+                 model="@load(vm.listaCorrispondentiDto)"
+                 selectedItem="@bind(vm.selectedCorrispondente)"
+                 emptyMessage="Nessuna risultato trovato"
+                 mold="paging"
+                 pageSize="15"
+                 autopaging="false"
+        >
+            <listhead sizable="true">
+                <listheader label="Denominazione" width="20%"/>
+                <listheader label="Indirizzo" width="20%"/>
+                <listheader label="Codice Fiscale" width="10%"/>
+                <listheader label="Partita Iva" width="10%"/>
+                <listheader label="Id Fiscale Estero" width="10%"/>
+                <listheader label="Email" width="20%"/>
+                <listheader label="Recapito" width="5%"/>
+                <listheader label="" width="3%"/>
+                <listheader label="" width="3%"/>
+            </listhead>
+            <template name="model" var="corrispondente">
+                <listitem onDoubleClick="@command('onSalva')">
+                    <listcell label="@load(corrispondente.denominazione)"/>
+                    <listcell label="@load(corrispondente.indirizzoCompleto)"/>
+                    <listcell label="@load(corrispondente.codiceFiscale)"/>
+                    <listcell label="@load(corrispondente.partitaIva)"/>
+                    <listcell label="@load(corrispondente.idFiscaleEstero)"/>
+                    <listcell label="@load(corrispondente.email)"/>
+                    <listcell label="@load(corrispondente.tipoIndirizzo)"/>
+                    <listcell style="text-align: center">
+                        <image src="/images/afc/22x22/edit.png" visible="@load(corrispondente.tipoSoggetto.id eq 1 and vm.modificaAnagrafica)"
+                               onClick="@command(vm.onModificaSoggetto(corrispondente))"/>
+                    </listcell>
+                    <listcell style="text-align: center">
+                        <image visible="@load(corrispondente.anagrafica eq 'SOGGETTO')"
+                               src="@load(c:cat4('/images/ags/22x22/', corrispondente.anagrafica, corrispondente.tipoIndirizzo eq 'RESIDENZA' ? 'RESIDENZA': '', '.png'))"/>
+                        <image visible="@load(corrispondente.anagrafica ne 'SOGGETTO')"
+                               src="@load(c:cat4('/images/ags/22x22/', corrispondente.anagrafica, corrispondente.tipoIndirizzo, '.png'))"/>
+                    </listcell>
+                </listitem>
+            </template>
+        </listbox>
+
+        <h:div class="barraPulsanti">
+            <h:div>
+                <button label="Seleziona" onClick="@command('onSalva')"
+                        disabled="@load(vm.selectedCorrispondente eq null)" mold="trendy" image="/images/afc/16x16/ok.png"></button>
+                <button mold="trendy" image="/images/afc/16x16/close.png" label="Chiudi"
+                        onClick="@command('onChiudi')"/>
+            </h:div>
+        </h:div>
+    </window>
+</zk>

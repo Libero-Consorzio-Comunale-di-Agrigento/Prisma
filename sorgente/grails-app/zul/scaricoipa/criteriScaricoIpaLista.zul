@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('it.finmatica.protocollo.scaricoipa.CriteriScaricoIpaListaViewModel')" vflex="1"
+            width="100%">
+
+		<hlayout sclass="navigazione" valign="middle" style="padding: 5px;">
+
+		<hlayout sclass="afc-control-bar" valign="middle">
+				<paging sclass="afc-paging" onPaging="@command('onPagina')" activePage="@bind(vm.activePage)"
+                        pageSize="@bind(vm.pageSize)" totalSize="@load(vm.totalSize)"/>
+				<toolbarbutton image="/images/afc/22x22/refresh.png" tooltiptext="Refresh"
+                               onClick="@command('onRefresh')"/>
+				<toolbarbutton image="/images/icon/action/22x22/add.png" tooltiptext="Aggiungi"
+                               onClick="@command('onModifica', isNuovoRecord=true)"/>
+				<toolbarbutton image="/images/icon/action/22x22/edit.png" tooltiptext="Modifica"
+                               onClick="@command('onModifica',isNuovoRecord=false)"
+                               disabled="@load(empty vm.selectedRecord)"/>
+				<toolbarbutton image="/images/icon/action/22x22/delete.png" tooltiptext="Elimina"
+                               onClick="@command('onElimina')" disabled="@load(empty vm.selectedRecord)"/>
+			</hlayout>
+
+			<hlayout hflex="2" style="text-align: right;" valign="middle">
+				<textbox width="120px" mold="rounded" tooltiptext="Filtro per la ricerca" value="@bind(vm.filtro)"
+                         onOK="@command('onFiltro')" onChanging="@command('onFiltro')"/>
+				<toolbarbutton image="/images/afc/22x22/search.png" tooltiptext="Ricerca"
+                               onClick="@command('onFiltro')"/>
+			</hlayout>
+		</hlayout>
+
+			<listbox model="@load(vm.listaZul)"
+                     selectedItem="@bind(vm.selectedRecord)" emptyMessage="Nessun Criterio di Scarico IPA presente."
+                     vflex="1">
+	        <listhead>
+	        	<listheader label="Nome criterio" hflex="3"/>
+				<listheader label="Pianificazione" hflex="1"/>
+	        </listhead>
+        	<template name="model" var="elemento">
+	       		<listitem onDoubleClick="@command('onModifica', isNuovoRecord=false)">
+					<listcell label="@load(elemento.nomeCriterio)"/>
+					<listcell label="@load(c:cat(c:cat3('Numero giorni: ',elemento.numeroGiorni,'. Orario: '),c:cat3(elemento.oraEsecuzione,':',elemento.minutiEsecuzione)))"
+							  visible="@load(elemento.jobConfig ne null)"/>
+				</listitem>
+        	</template>
+        </listbox>
+    </window>
+</zk>

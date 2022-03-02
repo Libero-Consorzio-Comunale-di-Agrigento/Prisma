@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/protocollo.css"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:w="http://www.zkoss.org/2005/zk/client"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('commons.PopupSceltaRecapitiViewModel')"
+		border="normal"	sizable="true" width="70%" height="50%" title =" ">
+
+		<h:div class="barraTitoloPagina">
+ 				<label sclass="titoloPagina" value="Il soggetto scelto ha più di un contatto, si prega di sceglierne uno"/>
+		</h:div>
+
+		<listbox vflex="1"  
+				model="@load(vm.corrispondenti)"
+				selectedItem="@bind(vm.selectedCorrispondente)"
+				emptyMessage="Nessuna risultato trovato"
+				mold="paging" 
+				pageSize="15"
+				autopaging="true"
+				>
+				
+				<listhead sizable="true">
+					<listheader label="Comune" width="25%"/>
+					<listheader label="Provincia" width="10%"/>
+					<listheader label="Indirizzo" width="35%"/>
+					<listheader label="Email" width="15%"/>
+					<listheader label="Recapito" width="10%"/>
+					<listheader label="" width="5%"/>
+				</listhead>
+				<template name="model" var="corrispondente">
+					<listitem onDoubleClick="@command('onSalva')">
+						<listcell label="@load(corrispondente.comune)" />
+						<listcell label="@load(corrispondente.provinciaSigla)" />
+		                <listcell label="@load(corrispondente.indirizzo)" />
+		                <listcell label="@load(corrispondente.email)" />
+						<listcell label="@load(corrispondente.tipoIndirizzo)" />
+                        <listcell style="text-align: center">
+							<image visible="@load(corrispondente.anagrafica eq 'SOGGETTO')" src="@load(c:cat4('/images/ags/22x22/', corrispondente.anagrafica, corrispondente.tipoIndirizzo eq 'RESIDENZA' ? 'RESIDENZA': '', '.png'))"/>
+                            <image visible="@load(corrispondente.anagrafica ne 'SOGGETTO')" src="@load(c:cat4('/images/ags/22x22/', corrispondente.anagrafica, corrispondente.tipoIndirizzo, '.png'))"/>
+                        </listcell>
+					</listitem>
+				</template>
+		</listbox>
+
+		<h:div class="barraPulsanti">
+			<h:div>
+				<button label="Seleziona" onClick="@command('onSalva')" disabled="@load(vm.selectedCorrispondente eq null)"  mold="trendy"></button>
+				<button mold="trendy" image="/images/afc/16x16/close.png"  label="Chiudi" onClick="@command('onChiudi')" />
+			</h:div>
+		</h:div>
+    </window>
+</zk>

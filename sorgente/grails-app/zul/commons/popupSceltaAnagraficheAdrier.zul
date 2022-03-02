@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/protocollo.css"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:w="http://www.zkoss.org/2005/zk/client"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('commons.PopupSceltaAnagraficheAdrierViewModel')"
+            border="normal" sizable="true" width="60%" height="90%" title=" ">
+        <h:div class="barraTitoloPagina">
+            <label sclass="titoloPagina" value="Ricerca Anagrafiche Adrier"/>
+        </h:div>
+
+        <div>
+            <groupbox>
+                <grid sclass="form">
+                    <rows>
+                         <row>
+                            <cell colspan="6">
+                                <label style="font-style:italic">Digitare l'intero codice fiscale / partita iva o parte
+                                    della denominazione del
+                                    soggetto (almeno 4 caratteri).
+                                </label>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell colspan="6">
+                                <bandbox id="bd"
+                                         width="50%"
+                                         mold="rounded"
+                                         onOK="@command('onCerca', search = event.target.value)"
+                                         style="text-transform: uppercase"
+                                         onOpen="@command('onCerca', search = event.value)"/>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>
+            </groupbox>
+        </div>
+
+        <listbox vflex="1"
+                 model="@load(vm.listaAnagraficheAdrier)"
+                 emptyMessage="Nessuna anagrafica trovata"
+                 mold="paging"
+                 pageSize="15"
+                 autopaging="true"
+                 multiple="false"
+                 height="50%"
+        >
+            <listhead sizable="true">
+                <listheader width="60%" label="Denominazione"/>
+                <listheader width="10%" label="Cod. Fiscale"/>
+                <listheader width="10%" label="Partita Iva"/>
+                <listheader width="10%" label="Sigla REA"/>
+                <listheader width="10%" label="Numero Rea"/>
+            </listhead>
+            <template name="model" var="lista">
+
+                <listitem onClick="@command('onCaricaDettaglio', mappa = lista)">
+                    <listcell label="@load(lista.denominazione)" />
+                    <listcell label="@load(lista.codiceFiscale)" />
+                    <listcell label="@load(lista.partitaIva)" />
+                    <listcell label="@load(lista.sigla)" />
+                    <listcell label="@load(lista.numRea)" />
+                </listitem>
+            </template>
+        </listbox>
+        <h:div class="barraTitoloPagina">
+            <label class="titoloPagina" value="@bind(vm.descrizioneAnagraficaScelta)"/>
+            <label class="documentoSottoTitolo" value="@load(c:cat('Codice Fiscale: ', vm.codiceFiscale))"/>
+            <label class="documentoSottoTitolo" value="@load(c:cat('Partita Iva: ', vm.partitaIva))"/>
+        </h:div>
+        <listbox vflex="1"
+                 model="@load(vm.listaDettaglioAnagraficheAdrier)"
+                 selectedItem="@bind(vm.mappaAnagraficaDettaglioSelected)"
+                 emptyMessage="Nessun dettaglio trovato"
+                 mold="paging"
+                 pageSize="15"
+                 autopaging="true"
+                 multiple="false"
+                 height="50%"
+        >
+            <listhead sizable="true">
+                <listheader width="35%" label="Indirizzo"/>
+                <listheader width="10%" label="Comune"/>
+                <listheader width="10%" label="Provincia"/>
+                <listheader width="5%" label="CAP"/>
+                <listheader width="10%" label="Telefono"/>
+                <listheader width="30%" label="Mail"/>
+            </listhead>
+            <template name="model" var="listaDettaglio">
+
+                <listitem>
+                    <listcell label="@load(listaDettaglio.indirizzo)" />
+                    <listcell label="@load(listaDettaglio.comune)" />
+                    <listcell label="@load(listaDettaglio.provincia)" />
+                    <listcell label="@load(listaDettaglio.cap)" />
+                    <listcell label="@load(listaDettaglio.telefono)" />
+                    <listcell label="@load(listaDettaglio.mail)" />
+
+                </listitem>
+            </template>
+        </listbox>
+
+        <h:div class="barraPulsanti">
+            <h:div>
+                <button mold="trendy" image="/images/afc/16x16/ok.png" label="Seleziona" onClick="@command('onScegliAnagrafica')" disabled="@load(vm.mappaAnagraficaDettaglioSelected eq null)"  ></button>
+                <button mold="trendy" image="/images/afc/16x16/close.png" label="Chiudi"
+                        onClick="@command('onChiudi')"/>
+            </h:div>
+        </h:div>
+    </window>
+</zk>

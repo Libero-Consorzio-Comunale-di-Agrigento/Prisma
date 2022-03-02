@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>Metodo delDocumento</xs:appinfo>
+		<xs:documentation xml:lang="it">
+			Annullo logico di un documento non protocollato con identificativo ID_DOCUMENTO
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ROOT">
+		<xs:complexType> 
+			<xs:sequence> 
+				<xs:element name="ID_DOCUMENTO" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>ID_DOCUMENTO del documento non protocollato da eliminare </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="UTENTE" type="xs:string" >
+					<xs:annotation>
+						<xs:documentation>
+							Nominativo dell'utente che deve eseguire il metodo.
+							L'utente deve avere le competenze sui documenti da ricercare.
+							Se non passato viene preso l'utente di accesso al WebService ( esempio AGSPRWS)
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>  
+</xs:schema> 

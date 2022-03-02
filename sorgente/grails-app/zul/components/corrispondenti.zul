@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <bandbox id="corrispondenti-bandbox"
+             mold="rounded"
+             width="75%"
+             height="30px"/>
+
+    <space height="7px"/>
+
+    <toolbarbutton id="tbAddSoggetto"
+                   image="/images/afc/16x16/add.png"
+                   tooltiptext='Aggiungi Soggetto'
+                   width="20px"/>
+
+    <toolbarbutton id="tbListe"
+                   image="/images/ags/16x16/users.png"
+                   tooltiptext='Liste di distribuzione'
+                   width="20px"/>
+
+    <toolbarbutton id="tbAdrier"
+                   image="/images/pulsanti/16x16/company.png"
+                   tooltiptext='Aggiungi Soggetto ADRIER'
+                   width="20px"/>
+
+    <toolbarbutton id="tbModena"
+                   image="/images/pulsanti/16x16/anagrafe.png"
+                   tooltiptext='Aggiungi soggetto residente'
+                   width="20px"/>
+
+    <listbox mold="paging" pageSize="10" pagingPosition="top">
+            <listhead>
+                <listheader width="22px"/>
+                <listheader width="50%"/>
+                <listheader width="47%"/>
+                <listheader width="25px"/>
+                <listheader width="50px"/>
+            </listhead>
+            <template name="model">
+
+            </template>
+    </listbox>
+
+</zk>

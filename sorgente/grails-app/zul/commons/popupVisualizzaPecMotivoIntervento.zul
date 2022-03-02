@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/protocollo.css"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('commons.PopupVisualizzaPecMotivoInteventoOperatore')" position="center" title=" " width="500px"
+            height="400px" border="normal" closable="false" visible="false">
+        <h:div class="barraTitoloPagina">
+            <label sclass="titoloPagina" value="Motivo Intervento Operatore"/>
+        </h:div>
+        <html vflex="1" style="display: block; overflow: scroll; white-space: pre;">
+                            <![CDATA[
+                            ${vm.motivoInterventoOperatore}
+        ]]></html>
+        <h:div class="barraPulsanti">
+            <h:div>
+                <button label="Chiudi" onClick="@command('onChiudi')" mold="trendy"/>
+            </h:div>
+        </h:div>
+    </window>
+</zk>

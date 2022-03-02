@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?><?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?><?component name="storico" macroURI="/protocollo/documenti/storico/storicoProtocollo.zul" inline="true"?><?link rel="stylesheet" type="text/css" href="/css/protocollo.css" ?><?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?component name="appletEditaTesto" macroURI="gestionetesti/applet/appletEditaTesto.zul" class="it.finmatica.gestionetesti.applet.AppletEditaTestoMacroComponent" ?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <zk if="${applet == 'true'}">
+        <appletEditaTesto />
+    </zk>
+
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('it.finmatica.protocollo.documenti.ProvvedimentoViewModel')"
+            visible="@load(vm.competenze.lettura)" border="normal" title=" " position="center" height="100%"
+            width="100%" renderdefer="100" ctrlKeys="@s" onCtrlKey="@command('doSomething',code=event.getKeyCode())">
+
+        <grid sclass="documentoBandaTitolo">
+            <rows>
+                <row>
+                    <cell width="50px" visible="@load(vm.protocollo.tipoProtocollo ne null)">
+                        <image
+                            src="@load(c:cat('/images/ags/48x48/', vm.protocollo.tipoProtocollo.categoriaProtocollo.icona))"/>
+                    </cell>
+                    <cell width="70%">
+                        <!-- titolo della pagina -->
+                        <label
+                            value="@load((vm.protocollo.numero eq null) ? vm.registroVisibile : (c:cat5(vm.protocollo.tipoRegistro.commento,' n° ', vm.protocollo.numero, ' del ', c:formatDate(vm.protocollo.data, 'dd/MM/yyyy HH:mm:ss'))))"
+                            sclass="documentoTitolo"/>
+                        <Movimento protocollo="@bind(vm.protocollo)" onChangeMovimento="@command('cambiaMovimento')"
+                                   readOnly="true"/>
+                        <label
+                            value="@load((vm.protocollo.id > 0)?(c:cat4(vm.protocollo.tipoProtocollo.descrizione, ' (', vm.protocollo.id,')')):vm.protocollo.tipoProtocollo.descrizione)"
+                            sclass="documentoSottoTitolo"/>
+                    </cell>
+                    <cell width="40%">
+                        <grid sclass="documentoBandaTitolo">
+                            <rows>
+                                <row>
+                                    <cell align="right">
+                                        <a onClick="@command('onOpenInformazioniUtente')"
+                                           label="@load(vm.utenteCollegato)"/>
+                                    </cell>
+                                </row>
+                                <row visible="@load(not empty vm.unitaVertice)">
+                                    <cell align="right">
+                                        <label value="Dipartimento: " style="text-align:right; font-weight: bold;"/>
+                                        <label value="@load(vm.unitaVertice.descrizione)" maxlength="60"
+                                               tooltiptext="@load(vm.unitaVertice.descrizione)"/>
+                                    </cell>
+                                </row>
+                                <row>
+                                    <cell align="right">
+                                        <label value="Unità: " style="text-align:right; font-weight: bold;"/>
+                                        <BandboxSoggettiUnita selectedItem="@bind(vm.soggetti.UO_PROTOCOLLANTE)"
+                                                              tipoSoggetto='UO_PROTOCOLLANTE'
+                                                              documento="@load(vm.protocollo)"
+                                                              onSelectItem="@command('onAggiornaSoggetti', unita = vm.soggetti.UO_PROTOCOLLANTE.unita)"
+                                                              soggetti="@load(vm.soggetti)"
+                                                              idTipologiaSoggetto="@load(vm.protocollo.tipoProtocollo.tipologiaSoggetto.id)"
+                                                              visible="@load(vm.modificaUnitaProtocollante)"
+                                                              width="50%"
+                                                              disabled="@load(not vm.competenze.modifica)"/>
+                                        <label value="@load(vm.soggetti.UO_PROTOCOLLANTE.unita.codice)"
+                                               visible="@load(not vm.modificaUnitaProtocollante and vm.concatenaCodiceDescrizioneUO)" maxlength="25"
+                                               tooltiptext="@load(vm.soggetti.UO_PROTOCOLLANTE.unita.codice)"/>
+                                        <label value=" - "
+                                               visible="@load(not vm.modificaUnitaProtocollante and vm.concatenaCodiceDescrizioneUO)" maxlength="3"/>
+                                        <label value="@load(vm.soggetti.UO_PROTOCOLLANTE.unita.descrizione)"
+                                               visible="@load(not vm.modificaUnitaProtocollante)" maxlength="60"
+                                               tooltiptext="@load(vm.soggetti.UO_PROTOCOLLANTE.unita.descrizione)"/>
+                                    </cell>
+                                </row>
+                                <row>
+                                    <cell align="right">
+                                        <label value="@load(c:l('label.protocollo.redattore'))"
+                                               style="text-align:right; font-weight: bold;"
+                                               visible="@load(empty vm.protocollo.numero)"/>
+                                        <label value="@load(c:l('label.protocollo.protocollante'))"
+                                               visible="@load(not empty vm.protocollo.numero)"
+                                               style="text-align:right; font-weight: bold;"/>
+                                        <label value=" "></label>
+                                        <label visible="@load(vm.utenteCollegato ne 'RPI')" value="@load(vm.soggetti.REDATTORE.descrizione)"/>
+                                        <label visible="@load(vm.utenteCollegato eq 'RPI')" value="RPI"/>
+                                        <label value="Redazione: "
+                                               style="margin-left:15px; text-align:right; font-weight: bold;"
+                                               />
+                                        <label width="98px"
+                                               value="@load(vm.protocollo.dataRedazione) @converter('formattedDate', format='dd/MM/yyyy')"/>
+                                    </cell>
+                                </row>
+                            </rows>
+                        </grid>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+        <space height="2px"/>
+        <!-- SOGGETTI DEL PROTOCOLLO -->
+        <include src="@load(vm.protocollo.tipoProtocollo.tipologiaSoggetto.layoutSoggetti)" mode="instant"/>
+
+        <space height="2px"/>
+        <grid sclass="form">
+            <rows>
+                <row>
+                    <cell width="115px" rowspan="2">
+                        <label visible="@load(vm.oggettoObbligatorio)" zclass="mandatoryLabel">*</label>
+                        <label value="Oggetto: "/>
+                        <toolbarbutton image="/images/ags/16x16/annotate.png"
+                                       onClick="@command('onSceltaOggettoRicorrente')"
+                                       visible="@load(vm.competenze.modifica and vm.modificaOggetto)"
+                                       disabled="@load(not vm.competenze.modifica)"/>
+                    </cell>
+                    <cell rowspan="2" colspan="3">
+                        <textbox value="@bind(vm.protocollo.oggetto)" hflex="1" multiline="true" mold="rounded"
+                                 disabled="@load(not vm.competenze.modifica or not vm.modificaOggetto)" rows="4"
+                                 readonly="@load(not vm.competenze.modifica or not vm.modificaOggetto)" focus="true"
+                                 style="text-transform: uppercase" sclass="noresizable"
+                                 />
+                    </cell>
+                    <cell width="115px">
+                        <label value="Doc. Principale: "/>
+                        <EsitoFirmaImage esitoFirma="@load(vm.protocollo.esitoVerifica)"
+                                         height = "18px"
+                                         visible="@load(vm.protocollo.testoPrincipale.firmato)"
+                                         dataVerifica="@load(vm.protocollo.dataVerifica) @converter('formattedDate', format='dd/MM/yyyy HH:mm:ss')"/>
+                    </cell>
+                    <cell colspan="2"
+                          visible="@load((vm.listaModelliTesto.size() > 0) and vm.competenze.modifica and not (vm.protocollo.statoFirma eq 'IN_FIRMA' or vm.protocollo.statoFirma eq 'FIRMATO'))">
+                        <combobox model="@load(vm.listaModelliTesto)" hflex="1" readonly="true" mold="rounded"
+                                  width="100%"
+                                  selectedItem="@bind(vm.protocollo.testoPrincipale.modelloTesto) @converter('it.finmatica.zk.utils.PropertyConverter', property='id')">
+                            <template name="model" var="mt">
+                                <comboitem label="@load(mt.nome)" description="@load(mt.descrizione)"
+                                           value="@load(mt)"/>
+                            </template>
+                        </combobox>
+                    </cell>
+                    <cell colspan="@load(vm.colspanTesto)" style="text-align: right;"
+                          visible="@load(vm.protocollo.id > 0)">
+                        <EditaTesto documento="@load(vm.protocollo)" testo="@load(vm.protocollo.testoPrincipale)"
+                                    visible="@load(vm.competenze.lettura and vm.editaTesto)"
+                                    readOnly="@load(not vm.competenze.modifica)"
+                                    onVerifcaFirma="@command('onAggiornaMaschera')"/>
+                        <CaricaTesto documento="@bind(vm.protocollo)" testo="@load(vm.protocollo.testoPrincipale)"
+                                     visible="@load(vm.competenze.lettura and (not vm.editaTesto))"
+                                     readOnly="@load(not vm.competenze.modifica or not vm.modificaFilePrincipale)"
+                                     onCaricaTesto="@command('onAggiornaMaschera')"/>
+                        <EliminaTesto onTestoEliminato="@command('onTestoEliminato')"
+                                      testo="@load(vm.protocollo.testoPrincipale)" documento="@load(vm.protocollo)"
+                                      visible="@load((empty vm.protocollo.numero) and vm.competenze.modifica and vm.modificaFilePrincipale))"/>
+                        <button mold="trendy" image="/images/afc/16x16/zip.png" visible="@load(vm.zipFilePrincipale)"
+                                onClick="@command('onApriPopupUnzipFilePrincipale')"/>
+                    </cell>
+                </row>
+                <row>
+                </row>
+
+                <row>
+                    <cell width="115px">
+                        <label value="@load(c:l('label.classificazione'))"/>
+                    </cell>
+                    <cell colspan="3">
+                        <BandboxClassificazione hflex="1" selectedItem="@bind(vm.protocollo.classificazione)"
+                                                tooltiptext="@load(vm.protocollo.classificazione.descrizione)"
+                                                disabled="@load((not vm.competenze.modifica) or vm.campiProtetti.CLASSIFICAZIONE)"
+                                                visible="@load(vm.competenze.modifica and not vm.campiProtetti.CLASSIFICAZIONE)"/>
+                        <label value="@load(vm.protocollo.classificazione.nome)"
+                               visible="@load((not vm.competenze.modifica) or vm.campiProtetti.CLASSIFICAZIONE)"/>
+                    </cell>
+                    <cell width="115px">
+                        <label value="@load(c:l('label.fascicolo'))"/>
+                        <RicercaTitolarioButton classificazione="@bind(vm.protocollo.classificazione)"
+                                                fascicolo="@bind(vm.protocollo.fascicolo)"
+                                                onSelectFascicolo="@command('onSelectFascicolo')"
+                                                disabled="@load((not vm.competenze.modifica) or (not vm.inserimentoInFascicoliAperti) or (vm.campiProtetti.FASCICOLO))"/>
+
+                    </cell>
+                    <cell colspan="3">
+                        <BandboxFascicolo
+                            width="@load((vm.haTitolari or not empty vm.protocollo.fascicolo)? '85%': '100%')"
+                            classificazione="@load(vm.protocollo.classificazione)"
+                            selectedItem="@bind(vm.protocollo.fascicolo)"
+                            onSelectItem="@command('onSelectFascicolo')"
+                            tooltiptext="@load(vm.protocollo.fascicolo.oggetto)" fascicoliChiusi="false"
+                            disabled="@load((empty vm.protocollo.classificazione) or (not vm.competenze.modifica) or (not vm.inserimentoInFascicoliAperti) or (vm.campiProtetti.FASCICOLO))"
+                            visible="@load(vm.competenze.modifica)"/>
+                        <label value="@load(vm.protocollo.fascicolo.nome)"  maxlength="35"
+                               visible="@load(not vm.competenze.modifica and vm.protocollo.fascicolo ne null)" onClick="@command('onMostraInfoBox')"/>
+                        <toolbarbutton style="float: right; cursor: default;" visible="@load(vm.haTitolari)"
+                                       image="/images/icon/action/16x16/folderimport.png"
+                                       tooltiptext="@load(c:l('protocollo.disponibiliPosizioniSecondarie'))"/>
+                        <VisualizzaFascicoloButton style="float: right;" fascicolo="@load(vm.protocollo.fascicolo)"
+                                                   visible="@load(not empty vm.protocollo.fascicolo)"/>
+                    </cell>
+
+                </row>
+            </rows>
+        </grid>
+        <space height="3px"/>
+        <!-- VARI DATI E ALLEGATI DEL PROTOCOLLO -->
+        <tabbox orient="vertical" vflex="1" id="tabMenuSx">
+            <tabs sclass="docMenuSx">
+                <tab label="Documenti" image="/images/ags/30x30/annullamenti.png"/>
+                <tab label="Allegati"
+                     image="@load((vm.listaAllegati.size() > 0)?'/images/ags/30x30/allegati_on.png':'/images/ags/30x30/allegati_off.png')"/>
+                <tab label="Titolari" onClick="@command('onApriTabRiferimenti')" image="/images/ags/30x30/todo.png"/>
+            </tabs>
+
+            <!-- Documenti da Annullare -->
+            <tabpanels>
+                <!-- Documenti da Annullare -->
+                <tabpanel vflex="1" style="overflow:auto">
+                    <tabbox vflex="1">
+                        <tabs sclass="tabsImgRight">
+                            <tab label="Documenti da Annullare"
+                                 image="@load((not empty vm.protocollo.note)? '/images/ags/16x16/info.png' : '')"/>
+                        </tabs>
+                        <tabpanels vflex="1">
+                            <tabpanel vflex="1">
+                                <groupbox closable="false" vflex="1">
+                                    <grid sclass="form">
+                                        <rows>
+                                            <row>
+                                                <cell width="80px">
+                                                    <label value="Da Annullare"/>
+                                                </cell>
+                                                <cell colspan="3">
+                                                    <label value=" Anno "></label>
+                                                    <intbox id="annoPrecedente" value="@load(vm.annoPrecedente)"
+                                                             mold="rounded" width="70px" maxlength="4" tooltip="Anno"
+                                                             onOK="@command('onRicercaDocumentoDaAnnullare', annoSearch=event.target.value, numeroSearch = numeroPrecedente.value)"
+                                                             disabled="@load(not vm.competenze.modifica or vm.protocollo.numero gt 0)"/>
+                                                    <label value=" Numero "></label>
+                                                    <intbox id="numeroPrecedente" value="@load(vm.numeroPrecedente)"
+                                                             mold="rounded" width="100px" tooltip="Numero"
+                                                             onOK="@command('onRicercaDocumentoDaAnnullare', numeroSearch=event.target.value, annoSearch = annoPrecedente.value)"
+                                                             disabled="@load(not vm.competenze.modifica or vm.protocollo.numero gt 0)"/>
+                                                    <label value=" Registro "></label>
+                                                    <BandboxRegistro mold="rounded" width="215px"
+                                                                     id="tipoRegistroPrecedente" tooltiptext="Registro"
+                                                                     selectedItem="@bind(vm.tipoRegistroPrecedente)"
+                                                                     disabled="@load(not vm.competenze.modifica or vm.protocollo.numero gt 0)"/>
+                                                    <label value=" "></label>
+                                                    <button label="Inserisci" mold="trendy"
+                                                            style="margin-right: 20px"
+                                                            width="15px"
+                                                            image="/images/afc/16x16/add.png"
+                                                            disabled="@load(not vm.competenze.modifica or vm.protocollo.numero gt 0)"
+                                                            onClick="@command('onRicercaDocumentoDaAnnullare', numeroSearch=numeroPrecedente.value, annoSearch = annoPrecedente.value )">
+                                                    </button>
+                                                </cell>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                    <space height="3px"/>
+
+                                    <listbox model="@load(vm.listaProtocolliAnnullamento)" emptyMessage="Nessun documento da Annullare" vflex="1"
+                                             mold="paging"
+                                             pageSize="15"
+                                             autopaging="false">
+                                        <listhead vflex="1" >
+                                            <listheader label="Protocollo" width="10%"/>
+                                            <listheader label="Tipo Registro" width="10%"/>
+                                            <listheader label="Data Richiesta Ann." width="15%"/>
+                                            <listheader label="Utente Richiesta" width="20%"/>
+                                            <listheader label="Unità" width="15%"/>
+                                            <listheader label="Motivo" width="25%"/>
+                                            <listheader width="5%" style="text-align:center;" align="center"/>
+                                        </listhead>
+                                        <template name="model" var="protocolloDaAnnullare">
+                                            <listitem
+                                                 onDoubleClick="@command('apriDocumentoCollegato', documentoCollegato=(protocolloDaAnnullare.protocollo))">
+                                                <listcell label="@load(c:cat3(protocolloDaAnnullare.protocollo.numero, ' / ', protocolloDaAnnullare.protocollo.anno))"/>
+
+                                                <listcell label="@load(protocolloDaAnnullare.protocollo.tipoRegistro.commento)"/>
+
+                                                <listcell label="@load(protocolloDaAnnullare.dateCreated) @converter('formattedDate', format='dd/MM/yyyy')"/>
+
+                                                <listcell label= "@load(protocolloDaAnnullare.utenteIns.nominativoSoggetto)"/>
+
+                                                <listcell label="@load(protocolloDaAnnullare.unita.descrizione)" />
+
+                                                <listcell label="@load(protocolloDaAnnullare.motivo)"/>
+                                                <listcell>
+                                                    <toolbarbutton image="/images/afc/16x16/delete.png"
+                                                                   onClick="@command(vm.onEliminaDocumentoDaAnnullare(protocolloDaAnnullare))"
+                                                                   disabled="@load(not vm.competenze.modifica or vm.protocollo.numero gt 0 )"
+                                                                   visible="true" style="align:center;"/>
+                                                </listcell>
+
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+
+                                </groupbox>
+
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </tabpanel>
+
+                <!-- Allegati -->
+                <tabpanel>
+                    <tabbox vflex="1">
+                        <tabs>
+                            <tab label="Allegati"/>
+                        </tabs>
+                        <tabpanels>
+                            <!-- Allegati-->
+                            <tabpanel>
+                                <groupbox closable="false" vflex="1">
+                                    <listbox model="@load(vm.listaAllegati)" emptyMessage="Nessun Allegato" vflex="1">
+                                        <listhead>
+                                            <listheader label="" width="30px"/>
+                                            <listheader label="Tipo Allegato" width="50%"/>
+                                            <listheader label="Descrizione" width="50%"/>
+                                            <listheader label="Riservato" width="80px" align="center"/>
+                                            <listheader label="Da firmare" width="80px" align="center"/>
+                                            <listheader label="" width="50px" align="center">
+                                                <image width="15px" src="/images/afc/16x16/add.png"
+                                                       onClick="@command('onModificaAllegato', nuovo=true)"
+                                                       tooltiptext="Aggiungi allegati" style="cursor: pointer;"
+                                                       visible="@load(vm.competenze.modifica and vm.protocollo.id > 0 and vm.inserimentoAllegati)"/>
+                                            </listheader>
+                                            <listheader label="" width="30px" align="center"/>
+                                        </listhead>
+                                        <template name="model" var="a">
+                                            <listitem value="@load(a)"
+                                                      onDoubleClick="@command('onModificaAllegato', nuovo=false, allegato=a)">
+                                                <listcell label="@load(a.sequenza)"/>
+                                                <listcell>
+                                                    <a href="#"
+                                                       onClick="@command('onModificaAllegato', nuovo=false, allegato=a)"
+                                                       label="@load(a.tipoAllegato.descrizione)"/>
+                                                </listcell>
+                                                <listcell label="@load(a.descrizione)"/>
+                                                <listcell style="text-align: center"
+                                                          label="@load(a.riservato? 'Sì': 'No')"/>
+                                                <listcell style="text-align: center">
+                                                    <image
+                                                        src="@load((a.statoFirma eq 'DA_FIRMARE') or (a.statoFirma eq 'FIRMATO') or (a.statoFirma eq 'IN_FIRMA')  or (a.statoFirma eq 'FIRMATO_DA_SBLOCCARE') ? '/images/afc/16x16/legitimate.png' : '')"/>
+                                                </listcell>
+                                                <listcell>
+                                                    <image src="/images/ags/16x16/trash.png"
+                                                           onClick="@command('onEliminaAllegato', allegato=a)"
+                                                           tooltiptext="Elimina allegati" style="cursor: pointer;"
+                                                           visible="@load(vm.competenze.modifica and vm.eliminaAllegati)"/>
+                                                </listcell>
+                                                <listcell>
+                                                    <toolbarbutton image="/images/afc/16x16/attach.png"
+                                                                   tooltiptext="Allegati"
+                                                                   popup="sceltaAllegato"
+                                                                   visible="@load(vm.visGraffettaDownloadAllegato(a))"
+                                                                   onClick="@command('onMostraAllegati', allegato = a)"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <menupopup id="sceltaAllegato" children="@load(vm.listaFilesAllegato)">
+                                        <template name="children" var="fileAllegato">
+                                            <menuitem label="@load(fileAllegato.nome)" image=""
+                                                      onClick="@command('onDownloadFileAllegato', fileAllegato = fileAllegato)"></menuitem>
+                                        </template>
+                                    </menupopup>
+                                </groupbox>
+
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </tabpanel>
+                <!-- Riferimenti -->
+                <tabpanel>
+                    <tabbox vflex="1">
+                        <tabs>
+                             <tab label="Posizioni Archivistiche Secondarie" visible="true"
+                                 id="tabPosizioniArcSecond"/>
+                        </tabs>
+                        <tabpanels>
+
+                            <!-- Posizioni Archivistiche Secondarie -->
+                            <tabpanel visible="true">
+                                <grid sclass="form" visible="true">
+                                    <rows>
+                                        <row>
+                                            <cell width="125px">
+                                                <label value="Stato Archivio: "/>
+                                            </cell>
+                                            <cell colspan="3">
+                                                <combobox
+                                                    disabled="@load(not vm.competenze.modifica or not vm.modificaDatiArchivio)"
+                                                    model="@load(vm.statiArchivio)"
+                                                    selectedItem="@bind(vm.protocollo.statoArchivio)" mold="rounded"
+                                                    readonly="true"
+                                                    onSelect="@command('onSelectStatoArchivistico')">
+                                                    <template name="model" var="stato">
+                                                        <comboitem label="@load(stato.name())"/>
+                                                    </template>
+                                                </combobox>
+                                                <label> del </label>
+                                                <datebox value="@load(vm.protocollo.dataStatoArchivio)" mold="rounded"
+                                                         format="dd/MM/yyyy"
+                                                         disabled="@load(not vm.competenze.modifica or not vm.modificaDatiArchivio)"/>
+                                            </cell>
+                                        </row>
+                                    </rows>
+                                </grid>
+                                <groupbox closable="false" vflex="1">
+                                    <listbox model="@load(vm.listaTitolari)" emptyMessage="Nessun Titolario" vflex="1">
+                                        <listhead>
+                                            <listheader label="Codice" width="10%"/>
+                                            <listheader label="Descrizione" width="35%"/>
+                                            <listheader label="Anno" width="5%"/>
+                                            <listheader label="Numero" width="10%"/>
+                                            <listheader label="Oggetto" width="38%"/>
+                                            <listheader label="" width="50px" align="center">
+                                                <image width="15px" src="/images/afc/16x16/add.png"
+                                                       onClick="@command('onInserisciTitolario')"
+                                                       tooltiptext="Aggiungi Classificazione/Fascicolo"
+                                                       style="cursor: pointer;"
+                                                       visible="@load(vm.competenze.modifica and vm.inserimentoInClassificheSecondarie)"/>
+                                            </listheader>
+                                        </listhead>
+                                        <template name="model" var="t">
+                                            <listitem value="@load(t)">
+                                                <listcell label="@load(t.classificazione.codice)"/>
+                                                <listcell label="@load(t.classificazione.descrizione)"/>
+                                                <listcell label="@load(t.fascicolo.anno)"/>
+                                                <listcell label="@load(t.fascicolo.numero)"/>
+                                                <listcell label="@load(t.fascicolo.oggetto)"/>
+                                                <listcell>
+                                                    <image src="/images/ags/16x16/trash.png"
+                                                           onClick="@command('onEliminaTitolario', titolario=t)"
+                                                           tooltiptext="Elimina titolario" style="cursor: pointer;"
+                                                           visible="@load(vm.competenze.modifica and vm.eliminaDaClassificheSecondarie)"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                </groupbox>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </tabpanel>
+
+            </tabpanels>
+        </tabbox>
+
+        <!-- - - - - - - - - - - - - - - -->
+        <!-- 			Pulsanti 		 -->
+        <!-- - - - - - - - - - - - - - - -->
+
+        <h:div class="pulsantiIter">
+            <button label="Chiudi" onClick="@command('onChiudi')" mold="trendy"
+                    image="/images/pulsanti/16x16/window_close.png"/>
+            <h:span children="@load(vm.pulsanti)" class="singoloPulsanteIter">
+                <template name="children" var="p">
+                    <button mold="trendy" image="@load(p.icona)" label="@load(p.etichetta)"
+                            onClick="@command('clickPulsanteIter', idPulsante=p.id)"/>
+                </template>
+            </h:span>
+            <button label="Presa Visione" onClick="@command('onPresaVisione')" visible="@load(vm.isNotificaPresente)"
+                    mold="trendy" image="/images/pulsanti/16x16/button_accept.png"/>
+
+            <button label="Elimina" mold="trendy" image="/images/afc/16x16/delete.png" style="margin-right: 20px"
+                    visible="@load(vm.competenze.modifica and vm.protocollo.numero eq null and vm.protocollo.id gt 0)"
+                    onClick="@command('onElimina')">
+            </button>
+
+            <MenuFunzionalita id="menuFunzionalita" style="float: left;" protocollo="@load(vm.protocollo)"
+                              onClose="@command('onChiudi')" onHide="@command('onNascondi')"
+                              onClickVoceMenu="@command('menu')" onClickStampaUnica="@command('creaStampaUnica')"
+                              competenzaInModifica="@load(vm.competenze.modifica)"
+                              onAggiornaMaschera="@command('onAggiornaMaschera')"/>
+
+            <button tooltiptext="Assistente Virtuale" mold="trendy" image="/images/ags/16x16/info.png" style="float: left;"
+                    visible="@load(vm.assistenteVirtuale)"
+                    onClick="@command('apriAssistenteVirtuale')">
+            </button>
+        </h:div>
+    </window>
+</zk>

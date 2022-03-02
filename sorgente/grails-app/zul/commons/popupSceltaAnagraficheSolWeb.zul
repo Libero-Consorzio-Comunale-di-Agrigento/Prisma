@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/protocollo.css"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:w="http://www.zkoss.org/2005/zk/client"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('commons.PopupSceltaAnagraficheSolWebViewModel')"
+            border="normal" sizable="true" width="60%" height="90%" title=" ">
+        <h:div class="barraTitoloPagina">
+            <label sclass="titoloPagina" value="Ricerca Anagrafe Popolazione"/>
+        </h:div>
+
+        <div>
+            <groupbox>
+
+                <grid sclass="form">
+                    <rows>
+                        <row>
+                            <cell align="right" width="20%">
+                                <label value="Cognome/Cod. Fisc.:"/>
+                            </cell>
+                            <cell width="28%">
+                                <textbox value="@bind(vm.cognomeCodFiscSearch)" onOK="@command('onCerca')" hflex="1"/>
+                            </cell>
+                            <cell align="right" width="10%">
+                                <label value="Nome:"/>
+                            </cell>
+                            <cell width="27%">
+                                <textbox value="@bind(vm.nomeSearch)" onOK="@command('onCerca')" hflex="1"/>
+                            </cell>
+                            <cell width="15%">
+                                <button mold="trendy" image="/images/afc/16x16/search.png" label="Cerca"
+                                        onClick="@command('onCerca')"/>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>
+            </groupbox>
+        </div>
+
+        <listbox vflex="1"
+                 model="@load(vm.listaAnagraficheSolWeb)"
+                 selectedItem="@bind(vm.mappaAnagraficaSelected)"
+                 emptyMessage="Nessuna anagrafica trovata"
+                 mold="paging"
+                 pageSize="15"
+                 autopaging="true"
+                 multiple="false"
+                 height="100%"
+                 >
+            <listhead sizable="true">
+                <listheader width="20%" label="Cognome"/>
+                <listheader width="15%" label="Nome"/>
+                <listheader width="15%" label="Codice Fiscale"/>
+                <listheader width="50%" label="Indirizzo"/>
+            </listhead>
+            <template name="model" var="lista">
+
+                <listitem>
+                    <listcell label="@load(lista.cognome)" />
+                    <listcell label="@load(lista.nome)" />
+                    <listcell label="@load(lista.codiceFiscale)" />
+                    <listcell label="@load(lista.indirizzo)" />
+                </listitem>
+            </template>
+        </listbox>
+
+        <h:div class="barraPulsanti">
+            <h:div>
+                <button mold="trendy" image="/images/afc/16x16/ok.png" label="Seleziona" onClick="@command('onScegliAnagrafica')" disabled="@load(vm.mappaAnagraficaSelected eq null)"></button>
+                <button mold="trendy" image="/images/afc/16x16/close.png" label="Chiudi"
+                        onClick="@command('onChiudi')"/>
+            </h:div>
+        </h:div>
+    </window>
+</zk>

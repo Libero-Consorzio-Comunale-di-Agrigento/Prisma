@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>Metodo getInfoPec</xs:appinfo>
+		<xs:documentation xml:lang="it">
+			Questo metodo recupera tutti le informazioni sulle ricevute/notifiche PEC associatead un protocollo
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="PROTOCOLLO">
+		<xs:complexType> 
+			<xs:sequence>
+				<xs:element ref="DATI" minOccurs="0" maxOccurs="1" >
+					<xs:annotation>
+						<xs:documentation>Dati del documento di protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+
+				<xs:element ref="MEMO_INVIATI" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Collezione dei messaggi inviati dal documento di Protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType> 
+	</xs:element>
+	<xs:element name="DATI">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="0" maxOccurs="1" > 
+					<xs:annotation>
+						<xs:documentation>Identificatore del documento di protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="IDRIF" type="xs:string" minOccurs="0" maxOccurs="1" /> 
+				<xs:element name="ANNO" type="xs:string" minOccurs="0" maxOccurs="1" > 
+					<xs:annotation>
+						<xs:documentation>Anno del documento di protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="NUMERO" type="xs:string" minOccurs="0" maxOccurs="1" > 
+					<xs:annotation>
+						<xs:documentation>Numero del documento di protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="TIPO_REGISTRO" type="xs:string" minOccurs="0" maxOccurs="1" > 
+					<xs:annotation>
+						<xs:documentation>tipo Registro del documento di protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="DESCRIZIONE_TIPO_REGISTRO" type="xs:string" minOccurs="0" maxOccurs="1" /> 
+				<xs:element name="DATA" type="xs:string" minOccurs="0" maxOccurs="1" > 
+					<xs:annotation>
+						<xs:documentation>Data di protocollazione del documento di protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="OGGETTO" type="xs:string" minOccurs="0" maxOccurs="1" /> 
+				<xs:element name="CLASS_COD" type="xs:string" minOccurs="0" maxOccurs="1"> 
+					<xs:annotation>
+						<xs:documentation>Codice della classifica in cui e' inserito il documento di protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="CLASS_DAL" type="xs:string" minOccurs="0" maxOccurs="1"> 
+					<xs:annotation>
+						<xs:documentation>Data di creazione della classifica in cui e' inserito il documento di protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element>  
+				<xs:element name="FASCICOLO_ANNO" type="xs:string" minOccurs="0" maxOccurs="1"> 
+					<xs:annotation>
+						<xs:documentation>Anno del Fascicolo in cui e' inserito il documento di protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element>  
+				<xs:element name="FASCICOLO_NUMERO" type="xs:string" minOccurs="0" maxOccurs="1"> 
+					<xs:annotation>
+						<xs:documentation>Numero del Facicolo in cui e' inserito il documento di protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element>  
+				<xs:element name="UNITA_PROTOCOLLANTE" type="xs:string" minOccurs="0" maxOccurs="1"> 
+					<xs:annotation>
+						<xs:documentation>Codice dell'unita' protocollante</xs:documentation>
+					</xs:annotation>
+				</xs:element>  
+				<xs:element name="UTENTE_PROTOCOLLANTE" type="xs:string" minOccurs="0" maxOccurs="1"> 
+					<xs:annotation>
+						<xs:documentation>Codice dell'utente protocollante</xs:documentation>
+					</xs:annotation>
+				</xs:element>  
+				<xs:element name="MODALITA" minOccurs="0" maxOccurs="1">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="INT" >
+								<xs:annotation>
+									<xs:documentation>Protocollo Interno</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="PAR" >
+								<xs:annotation>
+									<xs:documentation>Protocollo in Partenza</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+							<xs:enumeration value="ARR" >
+								<xs:annotation>
+									<xs:documentation>Protocollo i Arrivo</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MEMO_INVIATI">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MEMO" minOccurs="0" maxOccurs="unbounded" > 
+					<xs:annotation>
+						<xs:documentation>Dati del singolo messaggio inviato dal protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MEMO">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="1" maxOccurs="1"> 
+					<xs:annotation>
+						<xs:documentation>Identificatore del messaggio inviato dal protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element>  
+				<xs:element name="DATA_SPEDIZIONE" type="xs:string" minOccurs="1" maxOccurs="1"> 
+					<xs:annotation>
+						<xs:documentation>Data di spedizione del messaggio inviato dal protocollo</xs:documentation>
+					</xs:annotation>
+				</xs:element>  
+				<xs:element name="DESTINATARI" type="xs:string" minOccurs="1" maxOccurs="1"> 
+					<xs:annotation>
+						<xs:documentation>Destinatari del messaggio</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element ref="FILE_ALLEGATI" minOccurs="0" maxOccurs="1"> 
+					<xs:annotation>
+						<xs:documentation>Collezione di file allegati ai messaggi inviati </xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FILE_ALLEGATI">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FILE" minOccurs="0" maxOccurs="unbounded" > 
+					<xs:annotation>
+						<xs:documentation>Dati del singolo file allegato al messaggio, con questa terna e' possibile invocare il metodo downloadAttach del ws DMServerWSCXF/AttachServicePort </xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FILE">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID_OGGETTO_FILE" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="0" maxOccurs="1"/> 
+				<xs:element name="FILENAME" type="xs:string" minOccurs="0" maxOccurs="1"/> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>	
+</xs:schema>

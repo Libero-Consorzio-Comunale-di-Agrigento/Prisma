@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="utf-8"?>
+<documentRoot>
+    <descrizione>Lettera</descrizione>
+    <connections>
+        <connectionJNDI>jdbc/agspr</connectionJNDI>
+    </connections>
+    <testStaticData>
+        <documentRoot>
+            <protocollo>
+                <ANNO_PROTOCOLLO>2017</ANNO_PROTOCOLLO>
+                <NUMERO_PROTOCOLLO>100</NUMERO_PROTOCOLLO>
+                <DATA_PROTOCOLLO>17/05/2017</DATA_PROTOCOLLO>
+                <DATAORA_PROTOCOLLO>17/05/2017 12:30:08</DATAORA_PROTOCOLLO>
+                <OGGETTO_PROTOCOLLO>OGGETTO LETTERA</OGGETTO_PROTOCOLLO>
+                <OGGETTO_PROTOCOLLO_DEFINITIVO>OGGETTO LETTERA DEFINITIVO</OGGETTO_PROTOCOLLO_DEFINITIVO>
+                <REDATTORE>NOMINATIVO REDATTORE</REDATTORE>
+                <INCARICATO>NOMINATIVO INCARICATO</INCARICATO>
+                <DIRIGENTE>DIRIGENTE COGNOME NOME</DIRIGENTE>
+                <DIRIGENTE_DEFINITIVO>DIRIGENTE COGNOME NOME DEFINITIVO</DIRIGENTE_DEFINITIVO>
+                <FUNZIONARIO>FUNZIONARIO COGNOME NOME</FUNZIONARIO>
+                <FUNZIONARIO_DEFINITIVO>FUNZIONARIO COGNOME NOME DEFINITIVO</FUNZIONARIO_DEFINITIVO>
+                <DATA_FIRMA>19/05/2017</DATA_FIRMA>
+                <COGNOME>REDATTORE COGNOME</COGNOME>
+                <NOME>REDATTORE NOME</NOME>
+                <OGGI>18/05/2017</OGGI>
+                <CLASS_COD>01.01.02</CLASS_COD>
+                <FASCICOLO_ANNO>2010</FASCICOLO_ANNO>
+                <FASCICOLO_NUMERO>30</FASCICOLO_NUMERO>
+                <CLASS_COD_DEFINITIVO>01.01.02 DEFINITIVO</CLASS_COD_DEFINITIVO>
+                <FASCICOLO_ANNO_DEFINITIVO>2010 DEFINITIVO</FASCICOLO_ANNO_DEFINITIVO>
+                <FASCICOLO_NUMERO_DEFINITIVO>30 DEFINITIVO</FASCICOLO_NUMERO_DEFINITIVO>
+                <NOTE>NOTE NOTE NOTE</NOTE>
+                <DESCRIZIONE_UNITA>PROTOCOLLO</DESCRIZIONE_UNITA>
+                <DESCRIZIONE_RADICE_SUDD>AFFARI GENERALI</DESCRIZIONE_RADICE_SUDD>
+                <FIRMATARIO>NOMINATIVO FIRMATARIO</FIRMATARIO>
+                <FIRMATARIO_COGNOME>FIRMATARIO COGNOME</FIRMATARIO_COGNOME>
+                <FIRMATARIO_NOME>FIRMATARIO NOME</FIRMATARIO_NOME>
+                <DESCRIZIONE_FIRMATARIO>Il funzionario delegato</DESCRIZIONE_FIRMATARIO>
+                <DELEGANTE>(IN SOSTITUZIONE DI QUALCUNO)</DELEGANTE>
+                <SERVIZIO_PROTOCOLLANTE>SERVIZIO AFFARI GENERALI</SERVIZIO_PROTOCOLLANTE>
+                <AREA_PROTOCOLLANTE>AREA AFFARI GENERALI</AREA_PROTOCOLLANTE>
+            </protocollo>
+            <smistamenti>
+                <UFFICIO_SMISTAMENTO>UFFICIO SMISTAMENTO 1</UFFICIO_SMISTAMENTO>
+				<CODICE_UFFICIO_SMISTAMENTO>COD_UFF_1</CODICE_UFFICIO_SMISTAMENTO>
+				<COGNOME_ASSEGNATARIO>ASSEGNATARIO 1 COGNOME</COGNOME_ASSEGNATARIO>
+				<NOME_ASSEGNATARIO>ASSEGNATARIO 1 NOME</NOME_ASSEGNATARIO>
+				<INDIRIZZO_UFFICIO_SMISTAMENTO>INDIRIZZO UFFICIO 1</INDIRIZZO_UFFICIO_SMISTAMENTO>
+				<TELEFONO_UFFICIO_SMISTAMENTO>TELEFONO UFFICIO 1</TELEFONO_UFFICIO_SMISTAMENTO>
+				<FAX_UFFICIO_SMISTAMENTO>FAX UFFICIO 1</FAX_UFFICIO_SMISTAMENTO>
+				<COMUNE_UFFICIO_SMISTAMENTO>COMUNE UFFICIO 1</COMUNE_UFFICIO_SMISTAMENTO>
+				<CAP_UFFICIO_SMISTAMENTO>CAP UFFICIO 1</CAP_UFFICIO_SMISTAMENTO>
+				<PROVINCIA_UFFICIO_SMISTAMENTO>PROVINCIA UFFICIO 1</PROVINCIA_UFFICIO_SMISTAMENTO>
+            </smistamenti>
+            <smistamenti>
+                <UFFICIO_SMISTAMENTO>UFFICIO SMISTAMENTO 2</UFFICIO_SMISTAMENTO>
+				<CODICE_UFFICIO_SMISTAMENTO>COD_UFF_2</CODICE_UFFICIO_SMISTAMENTO>
+				<COGNOME_ASSEGNATARIO>ASSEGNATARIO 2 COGNOME</COGNOME_ASSEGNATARIO>
+				<NOME_ASSEGNATARIO>ASSEGNATARIO 2 NOME</NOME_ASSEGNATARIO>
+				<INDIRIZZO_UFFICIO_SMISTAMENTO>INDIRIZZO UFFICIO 2</INDIRIZZO_UFFICIO_SMISTAMENTO>
+				<TELEFONO_UFFICIO_SMISTAMENTO>TELEFONO UFFICIO 2</TELEFONO_UFFICIO_SMISTAMENTO>
+				<FAX_UFFICIO_SMISTAMENTO>FAX UFFICIO 2</FAX_UFFICIO_SMISTAMENTO>
+				<COMUNE_UFFICIO_SMISTAMENTO>COMUNE UFFICIO 2</COMUNE_UFFICIO_SMISTAMENTO>
+				<CAP_UFFICIO_SMISTAMENTO>CAP UFFICIO 2</CAP_UFFICIO_SMISTAMENTO>
+				<PROVINCIA_UFFICIO_SMISTAMENTO>PROVINCIA UFFICIO 2</PROVINCIA_UFFICIO_SMISTAMENTO>
+            </smistamenti>
+            <corrispondenti>
+                <COGNOME_CORRISPONDENTE>COGNOME CORRISPONDENTE 1</COGNOME_CORRISPONDENTE>
+                <NOME_CORRISPONDENTE>NOME CORRISPONDENTE 1</NOME_CORRISPONDENTE>
+                <INDIRIZZO_CORRISPONDENTE>INDIRIZZO CORRISPONDENTE 1</INDIRIZZO_CORRISPONDENTE>
+                <CAP_CORRISPONDENTE>CAP CORRISPONDENTE 1</CAP_CORRISPONDENTE>
+                <COMUNE_CORRISPONDENTE>COMUNE CORRISPONDENTE 1</COMUNE_CORRISPONDENTE>
+                <PROVINCIA_SIGLA_CORRISPONDENTE>PROV CORRISPONDENTE 1</PROVINCIA_SIGLA_CORRISPONDENTE>
+                <EMAIL_CORRISPONDENTE>MAIL CORRISPONDENTE 1</EMAIL_CORRISPONDENTE>
+                <DENOMINAZIONE_CORRISPONDENTE>DENOMINAZIONE CORRISPONDENTE 1</DENOMINAZIONE_CORRISPONDENTE>
+            </corrispondenti>
+            <corrispondenti>
+                <COGNOME_CORRISPONDENTE>COGNOME CORRISPONDENTE 2</COGNOME_CORRISPONDENTE>
+                <NOME_CORRISPONDENTE>NOME CORRISPONDENTE 2</NOME_CORRISPONDENTE>
+                <INDIRIZZO_CORRISPONDENTE>INDIRIZZO CORRISPONDENTE 2</INDIRIZZO_CORRISPONDENTE>
+                <CAP_CORRISPONDENTE>CAP CORRISPONDENTE 2</CAP_CORRISPONDENTE>
+                <COMUNE_CORRISPONDENTE>COMUNE CORRISPONDENTE 2</COMUNE_CORRISPONDENTE>
+                <PROVINCIA_SIGLA_CORRISPONDENTE>PROV CORRISPONDENTE 2</PROVINCIA_SIGLA_CORRISPONDENTE>
+                <EMAIL_CORRISPONDENTE>MAIL CORRISPONDENTE 2</EMAIL_CORRISPONDENTE>
+                <DENOMINAZIONE_CORRISPONDENTE>DENOMINAZIONE CORRISPONDENTE 2</DENOMINAZIONE_CORRISPONDENTE>
+            </corrispondenti>
+            <corrispondenti_diretti>
+                <COGNOME_CORRISPONDENTE_DIR>COGNOME CORRISPONDENTE DIRETTO 1</COGNOME_CORRISPONDENTE_DIR>
+                <NOME_CORRISPONDENTE_DIR>NOME CORRISPONDENTE DIRETTO 1</NOME_CORRISPONDENTE_DIR>
+                <INDIRIZZO_CORRISPONDENTE_DIR>INDIRIZZO CORRISPONDENTE DIRETTO 1</INDIRIZZO_CORRISPONDENTE_DIR>
+                <CAP_CORRISPONDENTE_DIR>CAP CORRISPONDENTE DIRETTO 1</CAP_CORRISPONDENTE_DIR>
+                <COMUNE_CORRISPONDENTE_DIR>COMUNE CORRISPONDENTE DIRETTO 1</COMUNE_CORRISPONDENTE_DIR>
+                <PROV_SIGLA_CORRISPONDENTE_DIR>PROV CORRISPONDENTE DIRETTO 1</PROV_SIGLA_CORRISPONDENTE_DIR>
+                <EMAIL_CORRISPONDENTE_DIR>MAIL CORRISPONDENTE DIRETTO 1</EMAIL_CORRISPONDENTE_DIR>
+                <DENOMINAZIONE_CORR_DIR>DENOMINAZIONE CORRISPONDENTE DIRETTO 1</DENOMINAZIONE_CORR_DIR>
+            </corrispondenti_diretti>
+            <corrispondenti_diretti>
+                <COGNOME_CORRISPONDENTE_DIR>COGNOME CORRISPONDENTE DIRETTO 2</COGNOME_CORRISPONDENTE_DIR>
+                <NOME_CORRISPONDENTE_DIR>NOME CORRISPONDENTE DIRETTO 2</NOME_CORRISPONDENTE_DIR>
+                <INDIRIZZO_CORRISPONDENTE_DIR>INDIRIZZO CORRISPONDENTE DIRETTO 2</INDIRIZZO_CORRISPONDENTE_DIR>
+                <CAP_CORRISPONDENTE_DIR>CAP CORRISPONDENTE DIRETTO 2</CAP_CORRISPONDENTE_DIR>
+                <COMUNE_CORRISPONDENTE_DIR>COMUNE CORRISPONDENTE DIRETTO 2</COMUNE_CORRISPONDENTE_DIR>
+                <PROV_SIGLA_CORRISPONDENTE_DIR>PROV CORRISPONDENTE DIRETTO 2</PROV_SIGLA_CORRISPONDENTE_DIR>
+                <EMAIL_CORRISPONDENTE_DIR>MAIL CORRISPONDENTE DIRETTO 2</EMAIL_CORRISPONDENTE_DIR>
+                <DENOMINAZIONE_CORR_DIR>DENOMINAZIONE CORRISPONDENTE DIRETTO 2</DENOMINAZIONE_CORR_DIR>
+            </corrispondenti_diretti>
+            <corrispondenti_conoscenza>
+                <COGNOME_CORRISPONDENTE_CC>COGNOME CORRISPONDENTE PER CONOSCENZA 1</COGNOME_CORRISPONDENTE_CC>
+                <NOME_CORRISPONDENTE_CC>NOME CORRISPONDENTE PER CONOSCENZA 1</NOME_CORRISPONDENTE_CC>
+                <INDIRIZZO_CORRISPONDENTE_CC>INDIRIZZO CORRISPONDENTE PER CONOSCENZA 1</INDIRIZZO_CORRISPONDENTE_CC>
+                <CAP_CORRISPONDENTE_CC>CAP CORRISPONDENTE PER CONOSCENZA 1</CAP_CORRISPONDENTE_CC>
+                <COMUNE_CORRISPONDENTE_CC>COMUNE CORRISPONDENTE PER CONOSCENZA 1</COMUNE_CORRISPONDENTE_CC>
+                <PROV_SIGLA_CORRISPONDENTE_CC>PROV CORRISPONDENTE PER CONOSCENZA 1</PROV_SIGLA_CORRISPONDENTE_CC>
+                <EMAIL_CORRISPONDENTE_CC>MAIL CORRISPONDENTE PER CONOSCENZA 1</EMAIL_CORRISPONDENTE_CC>
+                <DENOMINAZIONE_CORR_CC>DENOMINAZIONE CORRISPONDENTE PER CONOSCENZA 1</DENOMINAZIONE_CORR_CC>
+            </corrispondenti_conoscenza>
+            <corrispondenti_conoscenza>
+                <COGNOME_CORRISPONDENTE_CC>COGNOME CORRISPONDENTE PER CONOSCENZA 2</COGNOME_CORRISPONDENTE_CC>
+                <NOME_CORRISPONDENTE_CC>NOME CORRISPONDENTE PER CONOSCENZA 2</NOME_CORRISPONDENTE_CC>
+                <INDIRIZZO_CORRISPONDENTE_CC>INDIRIZZO CORRISPONDENTE PER CONOSCENZA 2</INDIRIZZO_CORRISPONDENTE_CC>
+                <CAP_CORRISPONDENTE_CC>CAP CORRISPONDENTE PER CONOSCENZA 2</CAP_CORRISPONDENTE_CC>
+                <COMUNE_CORRISPONDENTE_CC>COMUNE CORRISPONDENTE PER CONOSCENZA 2</COMUNE_CORRISPONDENTE_CC>
+                <PROV_SIGLA_CORRISPONDENTE_CC>PROV CORRISPONDENTE PER CONOSCENZA 2</PROV_SIGLA_CORRISPONDENTE_CC>
+                <EMAIL_CORRISPONDENTE_CC>MAIL CORRISPONDENTE PER CONOSCENZA 2</EMAIL_CORRISPONDENTE_CC>
+                <DENOMINAZIONE_CORR_CC>DENOMINAZIONE CORRISPONDENTE PER CONOSCENZA 2</DENOMINAZIONE_CORR_CC>
+            </corrispondenti_conoscenza>
+            <file_hash>
+                <TITOLO>Documento principale</TITOLO>
+                <NOME_FILE>Lettera_PROT_2017_109.pdf.p7m</NOME_FILE>
+                <FILE_HASH>C4406C950B69B7EF7710B58DE378F2FAA34E10097265FACA513190F2C9A11B30C5223828541E65CF73E757EF6E93143BF8070F657B0179E620E723CA86BCE114</FILE_HASH>
+            </file_hash>
+            <file_hash>
+                <TITOLO>Allegato</TITOLO>
+                <NOME_FILE>Allegato.pdf.p7m</NOME_FILE>
+                <FILE_HASH>3E377BD07ECFC8429B6BAEEC2CBA7A0F404D010AFD2C0DE785043266E89F7C60ED9C766C823607092836A74D1C17AFBDF48D01E08919081F962A10C4070B26F5</FILE_HASH>
+            </file_hash>
+        </documentRoot>
+    </testStaticData>
+    <definitions>
+        <metaDato tipoParametro="input">
+            <nomeSimbolico>id</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>id del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>ANNO_PROTOCOLLO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Anno del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NUMERO_PROTOCOLLO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Numero del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DATA_PROTOCOLLO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DATAORA_PROTOCOLLO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data e ora del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>OGGETTO_PROTOCOLLO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Oggetto del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>OGGETTO_PROTOCOLLO_DEFINITIVO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Oggetto definitivo del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DIRIGENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome e nome del firmatario del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FIRMATARIO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Firmatario del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FIRMATARIO_COGNOME</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome del firmatario del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FIRMATARIO_NOME</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Nome del firmatario del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>REDATTORE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Redattore del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>INCARICATO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Incaricato del documento</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DESCRIZIONE_FIRMATARIO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Indica se il firmatario e' dirigente</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DELEGANTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Indica se il firmatario e' delegato</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DIRIGENTE_DEFINITIVO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome e nome del firmatario definitivo del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FUNZIONARIO_DEFINITIVO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome e nome del funzionario definitivo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FUNZIONARIO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome e nome del funzionario</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DATA_FIRMA</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data di firma del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>COGNOME</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome del redattore del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NOME</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Nome del redattore del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>OGGI</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Data di redazione del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>CLASS_COD</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Classificazione del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FASCICOLO_ANNO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Anno del fascicolo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FASCICOLO_NUMERO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Numero del fascicolo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>CLASS_COD_DEFINITIVO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Classificazione definitiva del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FASCICOLO_ANNO_DEFINITIVO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Anno del fascicolo definitivo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FASCICOLO_NUMERO_DEFINITIVO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Numero del fascicolo definitivo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NOTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Note del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DESCRIZIONE_UNITA</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Descrizione dell'ufficio protocollante</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DESCRIZIONE_RADICE_SUDD</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Descrizione dell'ufficio di primo livello del ramo di appartenenza dell'ufficio protocollante</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>SERVIZIO_PROTOCOLLANTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Descrizione della suddivisione SO4 che individua il servizio (Ufficio di Secondo Livello)</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>AREA_PROTOCOLLANTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Descrizione della suddivisione SO4 che individua l'area (Ufficio di Primo Livello)</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>UFFICIO_SMISTAMENTO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Ufficio di smistamento del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+			<nomeSimbolico>CODICE_UFFICIO_SMISTAMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Codice ufficio di smistamento del protocollo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>COGNOME_ASSEGNATARIO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Cognome utente assegnatario di smistamento del protocollo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>NOME_ASSEGNATARIO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Nome utente assegnatario di smistamento del protocollo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>INDIRIZZO_UFFICIO_SMISTAMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Indirizzo ufficio di smistamento del protocollo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>TELEFONO_UFFICIO_SMISTAMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Telefono ufficio di smistamento del protocollo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>FAX_UFFICIO_SMISTAMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Fax ufficio di smistamento del protocollo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>COMUNE_UFFICIO_SMISTAMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Denominazione comune ufficio di smistamento del protocollo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>CAP_UFFICIO_SMISTAMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>CAP indirizzo ufficio di smistamento del protocollo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+			<nomeSimbolico>PROVINCIA_UFFICIO_SMISTAMENTO</nomeSimbolico>
+			<tipo>string</tipo>
+			<descrizione>Sigla provincia ufficio di smistamento del protocollo</descrizione>
+			<path/>
+		</metaDato>
+		<metaDato>
+            <nomeSimbolico>COGNOME_CORRISPONDENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome del corrispondente del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NOME_CORRISPONDENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Nome del corrispondente del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>INDIRIZZO_CORRISPONDENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Indirizzo del corrispondente del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>CAP_CORRISPONDENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>C.A.P. del corrispondente del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>COMUNE_CORRISPONDENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Comune del corrispondente del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>PROVINCIA_SIGLA_CORRISPONDENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Sigla della provincia del corrispondente del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>EMAIL_CORRISPONDENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Email del corrispondente del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DENOMINAZIONE_CORRISPONDENTE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Denominazione del corrispondente del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>COGNOME_CORRISPONDENTE_DIR</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome del corrispondente diretto del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NOME_CORRISPONDENTE_DIR</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Nome del corrispondente diretto del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>INDIRIZZO_CORRISPONDENTE_DIR</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Indirizzo del corrispondente diretto del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>CAP_CORRISPONDENTE_DIR</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>C.A.P. del corrispondente diretto del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>COMUNE_CORRISPONDENTE_DIR</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Comune del corrispondente diretto del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>PROV_SIGLA_CORRISPONDENTE_DIR</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Sigla della provincia del corrispondente diretto del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>EMAIL_CORRISPONDENTE_DIR</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Email del corrispondente diretto del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DENOMINAZIONE_CORR_DIR</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Denominazione del corrispondente diretto del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>COGNOME_CORRISPONDENTE_CC</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Cognome del corrispondente per conoscenza del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NOME_CORRISPONDENTE_CC</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Nome del corrispondente per conoscenza del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>INDIRIZZO_CORRISPONDENTE_CC</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Indirizzo del corrispondente per conoscenza del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>CAP_CORRISPONDENTE_CC</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>C.A.P. del corrispondente per conoscenza del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>COMUNE_CORRISPONDENTE_CC</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Comune del corrispondente per conoscenza del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>PROV_SIGLA_CORRISPONDENTE_CC</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Sigla della provincia del corrispondente per conoscenza del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>EMAIL_CORRISPONDENTE_CC</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Email del corrispondente per conoscenza del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>DENOMINAZIONE_CORR_CC</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Denominazione del corrispondente per conoscenza del protocollo</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>TITOLO</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Tipologia del singolo file allegato</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>NOME_FILE</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>Il nome del singolo file allegato</descrizione>
+            <path/>
+        </metaDato>
+        <metaDato>
+            <nomeSimbolico>FILE_HASH</nomeSimbolico>
+            <tipo>string</tipo>
+            <descrizione>La HASH del singolo file allegato</descrizione>
+            <path/>
+        </metaDato>
+    </definitions>
+    <queryes>
+        <!-- protocollo: restituisce i dati di un protocollo -->
+        <query id="protocollo"
+               help_descrizione="Ritorna i dati di un protocollo."
+               help_query_alias="p"
+               help_field_aliases="ANNO_PROTOCOLLO, NUMERO_PROTOCOLLO, OGGETTO_PROTOCOLLO, OGGETTO_PROTOCOLLO_DEFINITIVO, OGGI, CLASS_COD, FASCICOLO_ANNO, FASCICOLO_NUMERO, CLASS_COD_DEFINITIVO, FASCICOLO_ANNO_DEFINITIVO, FASCICOLO_NUMERO_DEFINITIVO, NOTE, COGNOME, NOME, DATA_PROTOCOLLO, DATAORA_PROTOCOLLO, DIRIGENTE, DIRIGENTE_DEFINITIVO, FUNZIONARIO, FUNZIONARIO_DEFINITIVO, DATA_FIRMA, DESCRIZIONE_RADICE_SUDD, DESCRIZIONE_UNITA,SERVIZIO_PROTOCOLLANTE,AREA_PROTOCOLLANTE, DESCRIZIONE_FIRMATARIO, DELEGANTE, FIRMATARIO, FIRMATARIO_COGNOME, FIRMATARIO_NOME">
+            select p.oggetto OGGETTO_PROTOCOLLO
+            , decode(agp_utility_pkg.get_oggetto_protocollo(p.id_documento, s.utente), null, '${documentRoot.protocollo.OGGETTO_PROTOCOLLO_DEFINITIVO}', agp_utility_pkg.get_oggetto_protocollo(p.id_documento, s.utente)) OGGETTO_PROTOCOLLO_DEFINITIVO
+            , to_char(data_redazione,'dd/mm/yyyy') OGGI
+            , clas.classificazione CLASS_COD
+            , decode(agp_utility_pkg.get_classificazione_protocollo(p.id_documento, s.utente), null, '${documentRoot.protocollo.CLASS_COD_DEFINITIVO}', agp_utility_pkg.get_classificazione_protocollo(p.id_documento, s.utente)) CLASS_COD_DEFINITIVO
+            , p.note NOTE
+            , ured.cognome_soggetto COGNOME
+            , ured.nome_soggetto NOME
+            , decode(p.anno, null, '${documentRoot.protocollo.ANNO_PROTOCOLLO}', to_char(p.anno)) ANNO_PROTOCOLLO
+            , decode(p.numero, null, '${documentRoot.protocollo.NUMERO_PROTOCOLLO}', to_char(p.numero)) NUMERO_PROTOCOLLO
+            , decode(p.data, null, '${documentRoot.protocollo.DATA_PROTOCOLLO}', to_char(p.data, 'DD/MM/YYYY')) DATA_PROTOCOLLO
+            , decode(p.data, null, '${documentRoot.protocollo.DATAORA_PROTOCOLLO}', to_char(p.data, 'DD/MM/YYYY HH24:MI:SS')) DATAORA_PROTOCOLLO
+            , decode(agp_utility_pkg.get_anno_fasc_protocollo(p.id_documento, s.utente), null, '${documentRoot.protocollo.FASCICOLO_ANNO_DEFINITIVO}', agp_utility_pkg.get_anno_fasc_protocollo(p.id_documento, s.utente)) FASCICOLO_ANNO_DEFINITIVO
+            , decode(agp_utility_pkg.get_numero_fasc_protocollo(p.id_documento, s.utente), null, '${documentRoot.protocollo.FASCICOLO_NUMERO_DEFINITIVO}', agp_utility_pkg.get_numero_fasc_protocollo(p.id_documento, s.utente)) FASCICOLO_NUMERO_DEFINITIVO
+            , TO_CHAR (agp_utility_pkg.get_anno_fasc_protocollo (p.id_documento, s.utente, 1)) FASCICOLO_ANNO
+            , TO_CHAR (agp_utility_pkg.get_numero_fasc_protocollo (p.id_documento, s.utente, 1)) FASCICOLO_NUMERO
+            , decode(agp_utility_pkg.get_firmatario_documento(p.id_documento, s.utente), null, '${documentRoot.protocollo.DIRIGENTE_DEFINITIVO}', agp_utility_pkg.get_firmatario_documento(p.id_documento, s.utente)) DIRIGENTE_DEFINITIVO
+            , agp_utility_pkg.get_firmatario_documento(p.id_documento, s.utente, 'N') DIRIGENTE
+            , decode(agp_utility_pkg.get_funzionario_documento(p.id_documento, s.utente), null, '${documentRoot.protocollo.FUNZIONARIO_DEFINITIVO}', agp_utility_pkg.get_funzionario_documento(p.id_documento, s.utente)) FUNZIONARIO_DEFINITIVO
+            , agp_utility_pkg.get_funzionario_documento(p.id_documento, s.utente, 1) FUNZIONARIO
+            , decode(agp_utility_pkg.get_data_firma_documento(p.id_documento, s.utente), null, '${documentRoot.protocollo.DATA_FIRMA}', agp_utility_pkg.get_data_firma_documento(p.id_documento, s.utente)) DATA_FIRMA
+            , decode(unita.descrizione, null,'${documentRoot.protocollo.DESCRIZIONE_UNITA}',unita.descrizione) DESCRIZIONE_UNITA
+            , DECODE(sunita.unita_progr, null, '${documentRoot.protocollo.DESCRIZIONE_RADICE_SUDD}', substr(so4_ags_pkg.unita_get_radice(sunita.unita_progr, sunita.unita_ottica, sysdate), instr (so4_ags_pkg.unita_get_radice(sunita.unita_progr, sunita.unita_ottica, sysdate),'#', -1)+1)) DESCRIZIONE_RADICE_SUDD
+            , DECODE(sunita.unita_progr, null, '${documentRoot.protocollo.AREA_PROTOCOLLANTE}', agp_utility_pkg.get_suddivisione_protocollo (p.id_documento, 'SO4_SUDDIVISIONE_AREA')) AREA_PROTOCOLLANTE
+            , DECODE(sunita.unita_progr, null, '${documentRoot.protocollo.SERVIZIO_PROTOCOLLANTE}', agp_utility_pkg.get_suddivisione_protocollo (p.id_documento, 'SO4_SUDDIVISIONE_SERVIZIO')) SERVIZIO_PROTOCOLLANTE
+            , decode(agp_utility_pkg.get_descrizione_firmatario(p.id_documento, s.utente, d.id_ente), null,'${documentRoot.protocollo.DESCRIZIONE_FIRMATARIO}', agp_utility_pkg.get_descrizione_firmatario(p.id_documento, s.utente, d.id_ente)) DESCRIZIONE_FIRMATARIO
+            , decode(agp_utility_pkg.get_delegante(p.id_documento, s.utente, d.id_ente), null, '${documentRoot.protocollo.DELEGANTE}', agp_utility_pkg.get_delegante(p.id_documento, s.utente, d.id_ente)) DELEGANTE
+            , decode(agp_utility_pkg.get_firmatario_effettivo(p.id_documento, s.utente), null, '${documentRoot.protocollo.FIRMATARIO}', agp_utility_pkg.get_firmatario_effettivo(p.id_documento, s.utente)) FIRMATARIO
+            , decode(agp_utility_pkg.get_firmatario_eff_cognome(p.id_documento, s.utente), null, '${documentRoot.protocollo.FIRMATARIO_COGNOME}', agp_utility_pkg.get_firmatario_eff_cognome(p.id_documento, s.utente)) FIRMATARIO_COGNOME
+            , decode(agp_utility_pkg.get_firmatario_eff_nome(p.id_documento, s.utente), null, '${documentRoot.protocollo.FIRMATARIO_NOME}', agp_utility_pkg.get_firmatario_eff_nome(p.id_documento, s.utente)) FIRMATARIO_NOME
+            from agp_protocolli p, gdo_documenti_soggetti s, gdo_documenti_soggetti sred, AD4_V_UTENTI ured,
+            gdo_documenti_soggetti sunita, SO4_V_UNITA_ORGANIZZATIVE_PUBB unita, ags_classificazioni clas, gdo_documenti d
+            where p.id_documento = #id
+            and s.id_documento(+) = p.id_documento
+            and p.id_documento = d.id_documento
+            and s.tipo_soggetto(+) = 'FUNZIONARIO'
+            and sred.id_documento(+) = p.id_documento
+            and sred.tipo_soggetto(+) = 'REDATTORE'
+            and ured.utente(+) = sred.utente
+            and sunita.id_documento(+) = p.id_documento
+            and sunita.tipo_soggetto(+) = 'UO_PROTOCOLLANTE'
+            and unita.progr(+) = sunita.unita_progr
+            and unita.dal(+) = sunita.unita_dal
+            and unita.ottica(+) = sunita.unita_ottica
+            and clas.id_classificazione(+) = p.id_classificazione
+        </query>
+		<!-- smistamenti: restituisce i dati degli smistamenti del protocollo -->
+		<query id="smistamenti"
+               help_descrizione="Ritorna gli smistamenti del protocollo."
+               help_query_alias="s"
+               help_field_aliases="UFFICIO_SMISTAMENTO, CODICE_UFFICIO_SMISTAMENTO, COGNOME_ASSEGNATARIO, NOME_ASSEGNATARIO, INDIRIZZO_UFFICIO_SMISTAMENTO, TELEFONO_UFFICIO_SMISTAMENTO, FAX_UFFICIO_SMISTAMENTO, COMUNE_UFFICIO_SMISTAMENTO, CAP_UFFICIO_SMISTAMENTO, PROVINCIA_UFFICIO_SMISTAMENTO">
+            SELECT u.descrizione     UFFICIO_SMISTAMENTO, u.codice CODICE_UFFICIO_SMISTAMENTO,
+            uten.COGNOME_SOGGETTO COGNOME_ASSEGNATARIO, uten.NOME_SOGGETTO NOME_ASSEGNATARIO,
+            anag_unit.indirizzo INDIRIZZO_UFFICIO_SMISTAMENTO,
+            anag_unit.TELEFONO TELEFONO_UFFICIO_SMISTAMENTO,
+            anag_unit.FAX FAX_UFFICIO_SMISTAMENTO,
+            comu.DENOMINAZIONE COMUNE_UFFICIO_SMISTAMENTO,
+            anag_unit.CAP CAP_UFFICIO_SMISTAMENTO,
+            prov.SIGLA PROVINCIA_UFFICIO_SMISTAMENTO
+            FROM agp_protocolli                  p,
+            agp_documenti_smistamenti       s,
+            SO4_V_UNITA_ORGANIZZATIVE_PUBB  u,
+            AD4_V_UTENTI uten,
+            SO4_V_UNITA anag_unit,
+            AD4_V_PROVINCE prov,
+            AD4_V_COMUNI comu
+             WHERE     p.id_documento = #id
+            AND s.id_documento = p.id_documento
+            AND u.ottica = s.UNITA_SMISTAMENTO_OTTICA
+            AND u.PROGR = s.UNITA_SMISTAMENTO_PROGR
+            AND u.dal = s.UNITA_SMISTAMENTO_DAL
+            AND s.valido = 'Y'
+            and s.UTENTE_ASSEGNATARIO = uten.UTENTE (+)
+            and u.ottica = anag_unit.OTTICA
+            and u.progr = anag_unit.PROGR
+            and u.dal = anag_unit.DAL
+            and anag_unit.PROVINCIA = comu.PROVINCIA (+)
+            and anag_unit.COMUNE = comu.COMUNE (+)
+            and comu.PROVINCIA = prov.PROVINCIA (+)
+            ORDER BY s.data_ins asc
+		</query>
+        <query id="corrispondenti" help_descrizione="Ritorna i corrispondenti del protocollo." help_query_alias="c" help_field_aliases="COGNOME_CORRISPONDENTE, NOME_CORRISPONDENTE, INDIRIZZO_CORRISPONDENTE, CAP_CORRISPONDENTE, COMUNE_CORRISPONDENTE, PROVINCIA_SIGLA_CORRISPONDENTE, EMAIL_CORRISPONDENTE, DENOMINAZIONE_CORRISPONDENTE">
+            select c.cognome COGNOME_CORRISPONDENTE, c.nome NOME_CORRISPONDENTE, indirizzo INDIRIZZO_CORRISPONDENTE, cap CAP_CORRISPONDENTE, comune COMUNE_CORRISPONDENTE, provincia_sigla PROVINCIA_SIGLA_CORRISPONDENTE, email EMAIL_CORRISPONDENTE, denominazione DENOMINAZIONE_CORRISPONDENTE
+            from agp_protocolli p, agp_protocolli_corrispondenti c
+            where p.id_documento = #id
+            and c.id_documento = p.id_documento
+            and c.valido = 'Y'
+        </query>
+        <query id="corrispondenti_diretti" help_descrizione="Ritorna i corrispondenti diretti del protocollo." help_query_alias="cd" help_field_aliases="COGNOME_CORRISPONDENTE_DIR, NOME_CORRISPONDENTE_DIR, INDIRIZZO_CORRISPONDENTE_DIR, CAP_CORRISPONDENTE_DIR, COMUNE_CORRISPONDENTE_DIR, PROV_SIGLA_CORRISPONDENTE_DIR, EMAIL_CORRISPONDENTE_DIR, DENOMINAZIONE_CORR_DIR">
+            select c.cognome COGNOME_CORRISPONDENTE_DIR, c.nome NOME_CORRISPONDENTE_DIR, indirizzo INDIRIZZO_CORRISPONDENTE_DIR, cap CAP_CORRISPONDENTE_DIR, comune COMUNE_CORRISPONDENTE_DIR, provincia_sigla PROV_SIGLA_CORRISPONDENTE_DIR, email EMAIL_CORRISPONDENTE_DIR, denominazione DENOMINAZIONE_CORR_DIR
+            from agp_protocolli p, agp_protocolli_corrispondenti c
+            where p.id_documento = #id
+            and c.id_documento = p.id_documento
+            and c.valido = 'Y'
+            and nvl(c.conoscenza, 'N') = 'N'
+        </query>
+        <query id="corrispondenti_conoscenza" help_descrizione="Ritorna i corrispondenti per conoscenza del protocollo." help_query_alias="cc" help_field_aliases="COGNOME_CORRISPONDENTE_CC, NOME_CORRISPONDENTE_CC, INDIRIZZO_CORRISPONDENTE_CC, CAP_CORRISPONDENTE_CC, COMUNE_CORRISPONDENTE_CC, PROV_SIGLA_CORRISPONDENTE_CC, EMAIL_CORRISPONDENTE_CC, DENOMINAZIONE_CORR_CC">
+            select c.cognome COGNOME_CORRISPONDENTE_CC, c.nome NOME_CORRISPONDENTE_CC, indirizzo INDIRIZZO_CORRISPONDENTE_CC, cap CAP_CORRISPONDENTE_CC, comune COMUNE_CORRISPONDENTE_CC, provincia_sigla PROV_SIGLA_CORRISPONDENTE_CC, email EMAIL_CORRISPONDENTE_CC, denominazione DENOMINAZIONE_CORR_CC
+            from agp_protocolli p, agp_protocolli_corrispondenti c
+            where p.id_documento = #id
+            and c.id_documento = p.id_documento
+            and c.valido = 'Y'
+            and nvl(c.conoscenza, 'N') = 'Y'
+        </query>
+        <query id="file_hash" help_query_alias="fh" help_field_aliases="NOME_FILE, FILE_HASH">
+            SELECT titolo,
+            gif.filename NOME_FILE,
+            gif.hashcode FILE_HASH
+            FROM (SELECT 'Documento Principale' titolo,
+            F.ID_FILE_ESTERNO id_file,
+            d.id_documento id_documento,
+            0 ordinamento
+            FROM gdo_documenti d, gdo_file_documento f
+            WHERE d.valido = 'Y'
+            AND d.id_documento = #id
+            AND F.ID_DOCUMENTO = D.ID_DOCUMENTO
+            AND F.CODICE IN ('FILE_PRINCIPALE')
+            UNION
+            SELECT NVL (ta.descrizione, 'Allegato') titolo,
+            F.ID_FILE_ESTERNO id_file,
+            a.id_documento,
+            NVL (a.sequenza, 9999999999) ordinamento
+            FROM gdo_documenti d,
+            gdo_file_documento f,
+            gdo_documenti_collegati c,
+            gdo_allegati a,
+            gdo_tipi_documento ta
+            WHERE d.valido = 'Y'
+            AND f.ID_DOCUMENTO = d.ID_DOCUMENTO
+            AND c.id_documento = #id
+            AND d.id_documento = C.ID_COLLEGATO
+            AND a.id_documento = c.ID_COLLEGATO
+            AND ta.id_tipo_documento(+) = a.id_tipo_allegato) file_doc,
+            gdm_impronte_file gif,
+            gdm_oggetti_file gof
+            WHERE gof.id_oggetto_file = file_doc.id_file
+            AND gif.id_documento = gof.id_documento
+            AND gif.filename = gof.filename
+            ORDER BY file_doc.ordinamento, file_doc.id_documento, file_doc.id_file
+        </query>
+    </queryes>
+    <staticData/>
+</documentRoot>

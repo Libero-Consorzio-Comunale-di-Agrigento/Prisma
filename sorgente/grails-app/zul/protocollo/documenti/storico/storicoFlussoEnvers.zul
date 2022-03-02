@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zkoss.org/2005/zul"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <listbox apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('it.finmatica.protocollo.documenti.storico.StoricoFlussoEnversViewModel')"
+             emptyMessage="Nessun passaggio storicizzato."
+             model="@load(vm.listaStoricoFlusso)" vflex="1" >
+        <listhead>
+            <listheader label="Data" width="15%"/>
+            <listheader label="Stato" width="20%"/>
+            <listheader label="Operatore" width="15%"/>
+            <listheader label="Note"/>
+            <listheader label="Allegato Principale" width="15%"/>
+            <listheader label="" width="25px"/>
+        </listhead>
+        <template name="model" var="storico">
+            <listitem>
+                <listcell label="@load(storico.DATA) @converter('formattedDate', format='dd/MM/yyyy HH:mm:ss')"/>
+                <listcell label="@load(storico.TITOLO_STEP)"/>
+                <listcell label="@load(storico.NOMINATIVO_SOGGETTO)"/>
+                <listcell label="@load(storico.NOTE)"/>
+                <listcell label="@load(storico.NOME_FILE)"/>
+                <listcell>
+                    <image hover="/images/afc/16x16/arrow_light_down.png"
+                           onClick="@command('onDownloadFileStorico', storico=storico)"
+                           src="/images/afc/16x16/arrow_down.png" tooltiptext="Scarica il documento"
+                           visible="@load(not empty storico.ID_FILE_ESTERNO)"/>
+                </listcell>
+            </listitem>
+        </template>
+    </listbox>
+</zk>

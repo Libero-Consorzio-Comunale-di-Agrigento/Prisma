@@ -1,0 +1,172 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://nexus.finmatica.it/repository/maven-public/"
+        }
+    }
+    dependencies {
+        classpath 'it.finmatica.gradle:finmatica-adsinstaller-gradle-plugin:1.5'
+    }
+}
+
+apply plugin: 'it.finmatica.adsinstaller'
+
+configurations {
+    agsprLib {
+        transitive = false
+    }
+    agsprContesti {
+        transitive = false
+    }
+}
+
+dependencies {
+    agsprLib "it.finmatica.ag.protocollo:finmatica-affarigenerali:4.1.0.0"
+    agsprLib "it.finmatica.ag.protocollo:finmatica-jprotocollo:4.0.2.3"
+    agsprLib "it.finmatica.ag.protocollo:finmatica-jprotocollointegrazioni:3.1.1.4"
+
+    agsprContesti "it.finmatica.ag.protocollo:jprotocollo:4.0.1.0"
+}
+
+finmaticaInstallante {
+
+    // di default questa versione del plugin si aspetta di trovare l'installante sotto src/main/installante
+    // con questa impostazione, ripristino il comportamento precedente
+    dir = 'installante'
+
+    includeInto = project.copySpec {
+        into('commons/webapp')
+
+        from(war.outputs.files.first()) {
+            rename '.*', 'Protocollo.war'
+        }
+
+        from(configurations.agsprLib.files) {
+            into 'lib'
+            rename '([a-z-]+)-[0-9\\.]+', '$1.'
+        }
+
+        from(configurations.agsprContesti.files) {
+            rename '([a-z-]+)-[0-9\\.]+', '$1.'
+        }
+    }
+
+    // configurazione per il test dell'installante.
+    test {
+        // configurazione per collegarsi via ssh
+        server {
+            host = ""
+            port = 22
+            username = ""
+            password = ""
+            javaHome = ""
+        }
+
+        // configurazione che verrà messa nel file config.properties nel lancio dell'installante.
+        config = [
+                "global.tomcat.home"       : "",
+
+                // specificare user e password di system in modo da poter creare la tablespace
+                "global.db.system.url"     : "",
+                "global.db.system.username": "",
+                "global.db.system.password": "",
+
+                "global.db.agspr.username" : "",
+                "progetto.istanza.codice"  : "",
+
+                "componenti"               : ""
+        ]
+
+        // questa closure viene invocata prima dei eseguire l'installazione
+        beforeTestInstall = { def config ->
+            println "BEFORE INSTALL SVUOTO IL DB: ${config.configProperties}"
+
+            // LEGGO LE VARIABILI COME IMPOSTATE NELLA SEZIONE "config"
+            String usernameSystem = config.configProperties['global.db.system.username']
+            String passwordSystem = config.configProperties['global.db.system.password']
+            String urlDatabase = config.configProperties['global.db.system.url']
+            String driverDatabase = "oracle.jdbc.OracleDriver"
+
+            String codiceIstanzaAd4 = config.configProperties['progetto.istanza.codice']
+            String usernameTarget = config.configProperties['global.db.agspr.username']
+/*
+            // INVOCO ANT per DROPPARE lo USER "TARGET"
+            ant.sql(classpath: buildscript.configurations.classpath.asPath,
+                    driver: driverDatabase, delimitertype: 'row', delimiter: '/',
+                    url: urlDatabase, userid: usernameSystem, password: passwordSystem,
+                    onerror: "continue",
+                    """
+drop user ${usernameTarget} cascade
+/""")
+*/
+            // INVOCO ANT per ELIMINARE I DATI SU AD4
+            ant.sql(classpath: buildscript.configurations.classpath.asPath,
+                    driver: driverDatabase, delimitertype: 'row', delimiter: '/',
+                    url: urlDatabase, userid: usernameSystem, password: passwordSystem,
+                    onerror: "continue",
+                    """
+delete from ad4.diritti_accesso where istanza = '${codiceIstanzaAd4}'
+/
+
+delete from ad4.moduli where modulo = '${codiceIstanzaAd4}'
+/
+
+delete from ad4.istanze where istanza = '${codiceIstanzaAd4}'
+/
+
+commit
+/
+""")
+
+            println "DB SVUOTATO: ${config.configProperties}"
+        }
+    }
+}
+
+/**
+ * La configurazione che segue serve solo per invocare i task liquibase senza rilanciare tutto l'installante ant.
+ * Ho un paio di attività su redmine per evitare di avere questo doppio giro.
+ */
+ant.properties['global.db.agspr.driver'] = "oracle.jdbc.OracleDriver"
+
+// testLiquibase
+ant.properties['global.db.agspr.url'] = ""
+ant.properties['global.db.gdm.driver'] = ant.properties['global.db.agspr.driver']
+ant.properties['global.db.gdm.url'] = ant.properties['global.db.agspr.url']
+ant.properties['global.db.so4.driver'] = ant.properties['global.db.agspr.driver']
+ant.properties['global.db.so4.url'] = ant.properties['global.db.agspr.url']
+ant.properties['global.db.as4.driver'] = ant.properties['global.db.agspr.driver']
+ant.properties['global.db.as4.url'] = ant.properties['global.db.agspr.url']
+ant.properties['global.db.ad4.driver'] = ant.properties['global.db.agspr.driver']
+ant.properties['global.db.ad4.url'] = ant.properties['global.db.agspr.url']
+ant.properties['global.db.jwf.driver'] = ant.properties['global.db.agspr.driver']
+ant.properties['global.db.jwf.url'] = ant.properties['global.db.agspr.url']
+ant.properties['global.db.dbfw.driver'] = ant.properties['global.db.agspr.driver']
+ant.properties['global.db.dbfw.url'] = ant.properties['global.db.agspr.url']
+ant.properties['global.db.si4cs.url'] = ant.properties['global.db.agspr.url']
+ant.properties['global.db.si4cs.driver'] = ant.properties['global.db.agspr.driver']
+ant.properties['global.db.agspr.username'] = ""
+ant.properties['global.db.agspr.password'] = ""
+ant.properties['global.db.gdm.username'] = ""
+ant.properties['global.db.gdm.password'] = ""
+ant.properties['global.db.so4.username'] = ""
+ant.properties['global.db.so4.password'] = ""
+ant.properties['global.db.as4.username'] = ""
+ant.properties['global.db.as4.password'] = ""
+ant.properties['global.db.ad4.username'] = ""
+ant.properties['global.db.ad4.password'] = ""
+ant.properties['global.db.jwf.username'] = ""
+ant.properties['global.db.jwf.password'] = ""
+ant.properties['global.db.dbfw.username'] = ""
+ant.properties['global.db.dbfw.password'] = ""
+ant.properties['global.db.si4cs.username'] = ""
+ant.properties['global.db.si4cs.password'] = ""
+ant.properties['versione'] = (version.endsWith('-SNAPSHOT') ? version.replaceAll('-SNAPSHOT', '') : version)
+ant.properties['global.db.ags.istanza'] = ''
+
+ant.taskdef(resource: 'liquibase/integration/ant/antlib.xml', uri: "antlib:liquibase.integration.ant", classpath: buildscript.configurations.classpath.asPath)
+ant.importBuild("installante/after_migration/liquibase.ant")
+
+task testLiquibase(dependsOn: ['liquibase'], group: 'installante') {
+}

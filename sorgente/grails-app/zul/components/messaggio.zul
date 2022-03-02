@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <grid sclass="form">
+            <rows>
+                <row>
+                    <cell width="115px">
+                        <label value="Data Spedizione:"/>
+                    </cell>
+                    <cell id="cellDataSpedizione" colspan="3">
+                        <label id="dataSpedizione" value=""/>
+                    </cell>
+                    <cell width="115px">
+                        <label id="dataRicezioneLabel" value="Scaricato il:"/>
+                    </cell>
+                    <cell colspan="3">
+                        <label id="dataRicezione" value=""/>
+                    </cell>
+                </row>
+                <row>
+                    <cell width="115px">
+                        <label value="Mittente:"/>
+                    </cell>
+                    <cell colspan="7">
+                        <label id="mittente"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell width="115px">
+                        <label value="Destinatari:"/>
+                    </cell>
+                    <cell colspan="7">
+                        <label id="destinatari"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell width="115px">
+                        <label value="CC:"/>
+                    </cell>
+                    <cell colspan="7">
+                        <label id="destinatariConoscenza"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell width="115px">
+                        <label value="CCR:"/>
+                    </cell>
+                    <cell colspan="7">
+                        <label id="destinatariNascosti"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell width="115px">
+                        <label value="Oggetto:"/>
+                    </cell>
+                    <cell colspan="7">
+                        <label id="oggetto"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell width="115px">
+                        <label value="Testo:"/>
+                        <toolbarbutton image="/images/ags/16x16/annotate.png" onClick="@command('onApriTestoMessaggio')"></toolbarbutton>
+                    </cell>
+                    <cell colspan="7">
+                        <div id="divTesto" height="50px" style="overflow:auto;" >
+                            <html id="testo"
+                                     width="100%"
+                                     />
+                        </div>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+
+</zk>

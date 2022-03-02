@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="UTF-8"?><?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer"
+            viewModel="@id('vm') @init('it.finmatica.protocollo.titolario.FascicoloDettaglioViewModel')" border="normal"
+            height="@bind(vm.heightZul)" width="@bind(vm.widthZul)" title=" " position="center">
+
+        <style>
+            .labelstyle {
+			    color: #d7e3ec;
+		    }
+        </style>
+
+       <grid sclass="documentoBandaTitolo">
+            <rows>
+                <row vflex="1">
+                    <cell width="50px">
+                        <image src="@load('/images/ags/48x48/folder.png')"/>
+                    </cell>
+                    <cell width="70%">
+                        <grid sclass="documentoBandaTitolo">
+                            <rows>
+                                <!-- in creazione -->
+                                <row
+                                    visible="@bind( (vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')">
+                                    <cell align="left">
+                                        <label value="Fascicolo" sclass="documentoTitolo"/>
+                                    </cell>
+                                </row>
+                                <row
+                                    visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')">
+                                    <cell align="left">
+                                        <label value="Unità: " style="text-align:right; font-weight: bold;"/>
+                                        <BandboxSoggettiUnita width="90%" selectedItem="@bind(vm.soggetti.UO_CREAZIONE)"
+                                                              onSelectItem="@command('onAggiornaSoggettoUoCreazione', unita = vm.soggetti.UO_CREAZIONE.unita)"
+                                                              tipoSoggetto='UO_CREAZIONE'
+                                                              documento="@load(vm.selectedRecord)"
+                                                              soggetti="@load(vm.soggetti)"
+                                                              idTipologiaSoggetto="@load(vm.idTipologia)"/>
+
+                                    </cell>
+                                </row>
+
+                                <!-- in modifica -->
+                                <row
+                                    visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ? 'true':'false')">
+                                    <cell align="left">
+                                        <label sclass="documentoTitolo"
+                                               value="@load(c:cat3(vm.selectedRecord.classificazione.codice,' - ',vm.selectedRecord.classificazione.descrizione))"
+                                               maxlength="60"
+                                               tooltiptext="@load(vm.selectedRecord.classificazione.descrizione)"/>
+
+                                    </cell>
+                                </row>
+                                <row
+                                    visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1)?'true':'false')">
+                                    <cell align="left">
+                                        <label sclass="documentoTitolo"
+                                               value="@load(c:cat3(vm.selectedRecord.anno,' / ',vm.selectedRecord.numero))"
+                                               visible="@bind(not vm.selectedRecord.numeroProssimoAnno)"/>
+                                    </cell>
+                                </row>
+
+                            </rows>
+                        </grid>
+                    </cell>
+                    <cell width="30%">
+                        <grid sclass="documentoBandaTitolo">
+                            <rows>
+                                <row>
+                                    <cell align="right">
+                                        <a onClick="@command('onOpenInformazioniUtente')"
+                                           label="@load(vm.utenteCollegato)"/>
+                                    </cell>
+                                </row>
+                                <row
+                                    visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')">
+                                    <cell align="right">
+                                        <label value="@load( c:formatDate(vm.now, 'dd/MM/yyyy'))"/>
+                                    </cell>
+                                </row>
+                                <row
+                                    visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'true':'false')">
+                                    <cell align="right">
+                                        <label value="@load(vm.soggetti.UO_CREAZIONE.unita.descrizione)" maxlength="60"
+                                               visible="@bind(not vm.visCodiceUo)"
+                                               tooltiptext="@load(vm.soggetti.UO_CREAZIONE.unita.descrizione)"/>
+                                        <label
+                                            value="@load(c:cat3(vm.soggetti.UO_CREAZIONE.unita.codice,' - ',vm.soggetti.UO_CREAZIONE.unita.descrizione))"
+                                            maxlength="60" visible="@bind(vm.visCodiceUo)"
+                                            tooltiptext="@load(c:cat3(vm.soggetti.UO_CREAZIONE.unita.codice,' - ',vm.soggetti.UO_CREAZIONE.unita.descrizione))"/>
+                                    </cell>
+                                </row>
+                                <row
+                                    visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')">
+                                    <cell align="right">
+                                       <label value="|" sclass="labelstyle"/>
+                                    </cell>
+                                </row>
+                                <row
+                                    visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'true':'false')">
+                                    <cell align="right">
+                                       <label
+                                           value="@load(c:cat4('Creato da ',vm.utenteCreazione,' il ',c:formatDate(vm.selectedRecord.dataCreazione, 'dd/MM/yyyy')))"/>
+                                    </cell>
+                                </row>
+
+                            </rows>
+                        </grid>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+        <space height="2px"/>
+
+        <vlayout spacing="10px" vflex="1">
+
+            <tabbox vflex="1">
+                <tabs>
+                    <tab label="Dati"/>
+                    <tab label="Smistamenti" visible="@bind(vm.smistamentiAbilitati)"/>
+                    <tab label="Documenti in fascicolo"
+                         disabled="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1)?'false':'true')"
+                         onClick="@command('onSelectDocumentiInFascicolo')"/>
+                    <tab label="Elenco Sub"
+                         disabled="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1)?'false':'true')"
+                         onClick="@command('onSelectElencoSub')"/>
+                    <tab label="Relazioni"
+                         disabled="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')"/>
+                    <tab label="Storico modifiche"
+                         disabled="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1)?'false':'true')"/>
+                    <tab label="Scarto"
+                         disabled="@bind(vm.selectedRecord.statoFascicolo eq 'CORRENTE'?'true':'false')"/>
+                </tabs>
+                <tabpanels>
+                    <tabpanel vflex="1">
+
+                        <div height="100%" style="border:0px solid black;overflow:auto;">
+
+                        <groupbox closable="false">
+                            <caption label="Dati"/>
+                            <grid sclass="form" >
+                                <rows>
+
+                                    <row
+                                        visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')">
+                                        <cell width="115px">
+                                            <label value="Classificazione"/>
+                                        </cell>
+                                        <cell colspan="5">
+                                            <BandboxClassificazioneInsFascicolo id="classificazione" hflex="1"
+                                                                                selectedItem="@bind(vm.selectedRecord.classificazione)"
+                                                                                tooltiptext="@load(vm.selectedRecord.classificazione.descrizione)"
+                                                                                onSelectItem="@command('onSelectClassifica')"/>
+
+                                        </cell>
+                                    </row>
+                                    <row
+                                        visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')">
+                                        <cell width="115px">
+                                            <label value="Anno"/>
+                                        </cell>
+                                        <cell colspan="5">
+
+                                         <combobox model="@load(vm.listaAnno)" width="75px" mold="rounded"
+                                                   visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')"
+                                                   selectedItem="@bind(vm.selectedRecord.anno)" readonly="true">
+                                                                        <template name="model" var="anno">
+                                                                            <comboitem label="@load(anno)"
+                                                                                       value="@load(anno)"/>
+                                                                        </template>
+                                                                    </combobox>
+
+                                        <label value=" Numero: " visible="false"/>
+                                        <textbox value="@bind(vm.selectedRecord.numero)" disabled="true" width="50px"
+                                                 visible="false" mold="rounded" style="text-transform: uppercase"/>
+
+                                        <label value=" Creato il: " visible="false"/>
+                                        <datebox value="@bind(vm.selectedRecord.dataCreazione)" width="100px"
+                                                 visible="false" mold="rounded" format="@load(vm.datePattern)"/>
+
+                                        <h:span visible="@bind(vm.visNumeraAnnoProssimo)">
+                                            <checkbox checked="@bind(vm.selectedRecord.numeroProssimoAnno)"
+                                                      onClick="@command('onCheckNumeroProssimoAnno')"
+                                                      visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')"
+                                                      disabled="@bind(empty vm.selectedRecord.classificazione)"/>
+                                        <label value="Numero anno prossimo"
+                                               visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')"/>
+                                       </h:span>
+                                        </cell>
+
+
+
+                                    </row>
+                                    <row>
+                                        <cell width="115px">
+                                            <label value="Oggetto:"/>
+                                        </cell>
+                                        <cell colspan="5">
+                                            <textbox rows="2" value="@bind(vm.selectedRecord.oggetto)" hflex="1"
+                                                     mold="rounded" disabled="@bind(vm.onlyVisualizzazione)"
+                                                     style="text-transform: uppercase" class="noresizable"
+                                                     maxlength="4000"/>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell width="115px">
+                                            <label value="Unità Competente:"/>
+                                        </cell>
+                                        <cell colspan="5">
+
+                                            <BandboxSoggettiUnita width="100%"
+                                                                  selectedItem="@bind(vm.soggetti.UO_COMPETENZA)"
+                                                                  onSelectItem="@command('onAggiornaSoggettoUoCompetenza', unita = vm.soggetti.UO_COMPETENZA.unita)"
+                                                                  tipoSoggetto='UO_COMPETENZA'
+                                                                  documento="@load(vm.selectedRecord)"
+                                                                  soggetti="@load(vm.soggetti)"
+                                                                  idTipologiaSoggetto="@load(vm.idTipologia)"
+                                                                  disabled="@bind(vm.onlyVisualizzazione)"
+                                                                  visible="true"/>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell width="115px">
+                                            <label value="Responsabile:"/>
+                                        </cell>
+                                        <cell colspan="3">
+
+                                            <textbox value="@bind(vm.selectedRecord.responsabile)" mold="rounded"
+                                                     disabled="@bind(vm.onlyVisualizzazione)"
+                                                     style="text-transform: uppercase" maxlength="100" width="80%"/>
+                                            <space/>
+                                            <button mold="trendy" disabled="@bind(vm.onlyVisualizzazione)"
+                                                    onClick="@command('onResponsabile')"
+                                                    image="/images/afc/16x16/search.png"/>
+
+                                        </cell>
+
+                                        <cell colspan="2">
+                                            <label value="Riservato:"/>
+                                            <checkbox onClick="@command('onCheckRiservato')"
+                                                      disabled="@bind(vm.onlyVisualizzazione)"
+                                                      checked="@bind(vm.selectedRecord.riservato)"/>
+                                        </cell>
+                                    </row>
+
+
+                                </rows>
+                            </grid>
+                        </groupbox>
+                        <groupbox closable="false">
+                            <caption label="Archiviazione"/>
+                            <grid sclass="form">
+
+                                <rows>
+                                    <row>
+                                        <cell width="115px">
+                                            <label value="Data apertura:"/>
+                                        </cell>
+                                        <cell colspan="1">
+                                            <datebox value="@bind(vm.selectedRecord.dataApertura)" mold="rounded"
+                                                     disabled="@bind(vm.onlyVisualizzazione)"
+                                                     format="@load(vm.datePattern)"/>
+                                        </cell>
+                                        <cell width="115px">
+                                            <label value="Data chiusura:"/>
+                                        </cell>
+                                        <cell colspan="1">
+                                            <datebox value="@bind(vm.selectedRecord.dataChiusura)" mold="rounded"
+                                                     disabled="@bind(vm.onlyVisualizzazione)"
+                                                     format="@load(vm.datePattern)"/>
+                                        </cell>
+                                        <cell width="115px">
+                                            <label value="Digitale:"/>
+                                            <checkbox checked="@bind(vm.selectedRecord.digitale)"
+                                                      disabled="@bind(vm.onlyVisualizzazione)"/>
+                                        </cell>
+
+                                    </row>
+                                     <row>
+                                        <cell width="115px">
+                                            <label value="Stato:"/>
+                                        </cell>
+                                        <cell colspan="1">
+                                            <combobox model="@load(vm.mappaListaStati)"
+                                                      onSelect="@command('onCambioStato')" mold="rounded"
+                                                      disabled="@bind(vm.onlyVisualizzazione)"
+                                                      selectedItem="@bind(vm.selectedRecord.statoFascicolo)"
+                                                      readonly="true">
+                                                                        <template name="model" var="statoFascicolo">
+                                                                            <comboitem label="@load(statoFascicolo)"
+                                                                                       value="@load(statoFascicolo)"/>
+                                                                        </template>
+                                                                    </combobox>
+                                        </cell>
+                                        <cell width="115px">
+                                            <label value="Anno:"/>
+                                        </cell>
+                                        <cell colspan="1">
+                                            <intbox constraint="no negative" mold="rounded"
+                                                    disabled="@bind(vm.onlyVisualizzazione)"
+                                                    value="@bind(vm.selectedRecord.annoArchiviazione)"/>
+                                        </cell>
+                                        <cell colspan="1">
+
+                                        </cell>
+
+                                    </row>
+
+                                    <row>
+                                        <cell width="115px">
+                                            <label value="Topografia:"/>
+                                        </cell>
+                                        <cell colspan="1">
+                                             <textbox rows="2" disabled="@bind(vm.onlyVisualizzazione)"
+                                                      class="noresizable" style="text-transform: uppercase"
+                                                      value="@bind(vm.selectedRecord.topografia)" mold="rounded"
+                                                      hflex="1"/>
+                                        </cell>
+                                        <cell width="115px">
+                                                <label value="Note:"/>
+                                        </cell>
+                                        <cell colspan="1">
+                                            <textbox rows="2" disabled="@bind(vm.onlyVisualizzazione)"
+                                                     class="noresizable" style="text-transform: uppercase"
+                                                     value="@bind(vm.selectedRecord.note)" mold="rounded" hflex="1"/>
+                                        </cell>
+                                        <cell colspan="1">
+
+                                        </cell>
+
+                                    </row>
+
+
+                                </rows>
+                            </grid>
+                        </groupbox>
+                        <groupbox closable="false" visible="@bind(vm.smistamentiAbilitati)" vflex="1">
+                            <caption label="Smistamenti"/>
+
+                           <grid sclass="form" hflex="1" vflex="1">
+                                    <rows>
+                                        <row>
+                                            <cell>
+
+                                <Smistamenti id="smistamenti" sclass="fin_smistamenti"
+                                             smistamenti="@bind(vm.listaSmistamentiDto)"
+                                             documento="@load(vm.selectedRecord)" competenze="@load(vm.competenze)"
+                                             soggetti="@load(vm.soggetti)"
+                                             onChangeSmistamenti="@command(vm.refreshSmistamentiECompetenze(vm.selectedRecord))"
+                                             creaSmistamentiAbilitato="@load(vm.creaSmistamentiAbilitato)"
+                                             visualizzaNote="@load(vm.visualizzaNote)" isSequenza="@load(vm.isSequenza)"
+                                             gridCorta="true"/>
+
+
+                                          </cell>
+                                        </row>
+                                    </rows>
+                                </grid>
+                        </groupbox>
+                        </div>
+
+
+                    </tabpanel>
+                    <tabpanel vflex="1">
+
+                        <grid sclass="form" vflex="1">
+                                    <rows vflex="1">
+                                        <row valign="top">
+                                            <cell>
+                                                <groupbox closable="true">
+                                                    <caption label="Smistamenti Correnti" width="100%"
+                                                             image="/images/ags/16x16/folder_closed.png"/>
+                                                    <space height="10px"/>
+                                                    <Smistamenti id="smistamentiGrid" sclass="fin_smistamenti"
+                                                                 smistamenti="@bind(vm.listaSmistamentiDto)"
+                                                                 documento="@load(vm.selectedRecord)"
+                                                                 competenze="@load(vm.competenze)"
+                                                                 soggetti="@load(vm.soggetti)"
+                                                                 onChangeSmistamenti="@command(vm.refreshSmistamentiECompetenze(vm.selectedRecord))"
+                                                                 creaSmistamentiAbilitato="@load(vm.creaSmistamentiAbilitato)"
+                                                                 visualizzaNote="@load(vm.visualizzaNote)"
+                                                                 isSequenza="@load(vm.isSequenza)" gridCorta="false"/>
+
+                                                </groupbox>
+                                                <space height="3px"/>
+                                                <groupbox id="storici" closable="true"
+                                                          open="@load(vm.listaSmistamentiStoriciDto.size() gt 0)">
+                                                    <caption label="Smistamenti Storici" width="100%"
+                                                             image="/images/ags/16x16/folder_closed.png">
+                                                    </caption>
+                                                    <space height="10px"/>
+                                                    <SmistamentiStorici id="smistamentiStorici"
+                                                                        smistamenti="@bind(vm.listaSmistamentiStoriciDto)"
+                                                                        documento="@load(vm.selectedRecord)"
+                                                                        competenze="@load(vm.competenze)"
+                                                                        creaSmistamentiAbilitato="false"
+                                                                        visualizzaNote="false"
+                                                                        isSequenza="@load(vm.isSequenza)"
+                                                                        gridCorta="false"/>
+
+                                                </groupbox>
+                                            </cell>
+                                        </row>
+                                    </rows>
+                                </grid>
+
+
+                    </tabpanel>
+                    <tabpanel vflex="1">
+                        <vlayout vflex="1" hflex="1">
+
+
+
+            <hlayout sclass="navigazione" valign="middle" style="padding: 5px;">
+
+		<hlayout sclass="afc-control-bar" valign="middle">
+				<paging sclass="afc-paging" onPaging="@command('onPagina')" activePage="@bind(vm.activePage)"
+                        pageSize="@bind(vm.pageSize)" totalSize="@load(vm.totalSize)"/>
+				<toolbarbutton image="/images/afc/22x22/refresh.png" tooltiptext="Refresh"
+                               onClick="@command('onRefresh')"/>
+                <toolbarbutton image="/images/afc/22x22/edit.png" tooltiptext="Apri documento"
+                               disabled="@load(vm.documentiSelezionati.size() ne 1)"
+                               onClick="@command('apriDocumentoFascicoloDaPulsante')"/>
+                <toolbarbutton image="/images/afc/16x16/folder_edit.png" tooltiptext="Sposta"
+                               onClick="@command('onSpostaFascicolo')" disabled="@load(empty vm.documentiSelezionati)"/>
+                <toolbarbutton image="/images/afc/16x16/folderimport.png" tooltiptext="Aggiungi"
+                               onClick="@command('onAggiungiInFascicolo')"
+                               disabled="@load(empty vm.documentiSelezionati)"/>
+                Ordinamento: <combobox hflex="1" mold="rounded" width="280px"
+                                       selectedItem="@bind(vm.tipologiaOrdinamento)"
+                                       onChange="@command('changeOrdinamento')"
+                                       model="@load(vm.listTipologiaOrdinamento)">
+                                <template name="model" var="a">
+                                    <comboitem label="@load(vm.getLabel(a))" value="@load(a)"/>
+                                </template>
+                            </combobox>
+		</hlayout>
+
+		</hlayout>
+
+			<listbox model="@load(vm.listaDocumentiInFascicoloZul)" selectedItems="@bind(vm.documentiSelezionati)"
+                     multiple="true" checkmark="true" nonselectableTags="*" emptyMessage="Nessun documento presente."
+                     vflex="1">
+	        <listhead>
+				<listheader label="" width="35px"/>
+                <listheader label="" width="35px"/>
+                <listheader label="Documento"/>
+                <listheader label="File" width="35px"/>
+	        </listhead>
+        	<template name="model" var="elemento">
+	       		<listitem value="@load(elemento)"
+                          onDoubleClick="@command('apriDocumentoFascicoloDoubleClick', documento=elemento.id, tipologia=elemento.img)">
+                    <listcell/>
+					<listcell>
+                        <image src="@load(c:cat3('/images/ags/22x22/',elemento.img,'.png'))"
+                               tooltiptext="@bind(elemento.tooltip)"/>
+                    </listcell>
+                    <listcell><html><![CDATA[
+                                        ${elemento.documento}
+                                    ]]></html></listcell>
+                    <listcell>
+                        <toolbarbutton image="/images/afc/16x16/attach.png" tooltiptext="Allegati"
+                                       popup="sceltaAllegato"
+                                       visible="@load(vm.visGraffettaDownloadAllegato(elemento.id))"
+                                       onClick="@command('onMostraAllegati', documento = elemento.id)"/>
+                    </listcell>
+				</listitem>
+        	</template>
+        </listbox>
+        <menupopup children="@bind(vm.listaAllegati) @template('modelAllegato')" id="mpAllegati">
+            <template name="modelAllegato" var="allegato">
+                <menuitem label="@load(allegato.nomeAllegato)"
+                          onClick="@command('onDownloadFileAllegato', fileAllegato = allegato)"/>
+            </template>
+        </menupopup>
+                        </vlayout>
+                    </tabpanel>
+                    <tabpanel vflex="1">
+                        <vlayout vflex="1" hflex="1">
+
+                                 <hlayout sclass="navigazione" valign="middle" style="padding: 5px;">
+
+		<hlayout sclass="afc-control-bar" valign="middle">
+				<paging sclass="afc-paging" onPaging="@command('onPaginaSub')" activePage="@bind(vm.activePageSub)"
+                        pageSize="@bind(vm.pageSizeSub)" totalSize="@load(vm.totalSizeSub)"/>
+				             <toolbarbutton image="/images/afc/22x22/edit.png" tooltiptext="Apri documento"
+                                            disabled="@load(vm.subSelezionati.size() eq 0)"
+                                            onClick="@command('apriFascicoloSub')"/>
+		</hlayout>
+
+		</hlayout>
+
+                            <listbox model="@load(vm.listaDocumentiSubZul)" emptyMessage="Nessun Sub presente."
+                                     selectedItems="@bind(vm.subSelezionati)" vflex="1">
+                            <listhead>
+                                <listheader label="" width="35px"/>
+                                <listheader label="Fascicolo"/>
+                            </listhead>
+                            <template name="model" var="elemento">
+
+                                <listitem value="@load(elemento)"
+                                          onDoubleClick="@command('apriFascicoloSubDoubleClick', documento=elemento.id)">
+
+                                    <listcell>
+                                        <image src="@load('/images/ags/22x22/doc.png')"/>
+                                    </listcell>
+
+                                    <listcell>
+                                            <html><![CDATA[
+                                            ${elemento.codiceClassificazione} - ${elemento.annoNumero} <b>Stato:</b> ${elemento.statoFascicolo} <b>Anno Archiviazione:</b> ${elemento.annoArchiviazione}
+                                            <br>
+                                            <b>Oggetto:</b> ${elemento.oggetto}
+                                        ]]></html>
+                                    </listcell>
+
+                                    <!-- <listcell><image src="/images/ags/16x16/info.png" style="cursor: pointer;"
+                                                      onClick="@command('apriFascicoloSub', id=elemento.id)"
+                                                      tooltiptext="Apri fascicolo"/>
+                                     </listcell> -->
+
+                                </listitem>
+                            </template>
+                        </listbox>
+
+                        </vlayout>
+                    </tabpanel>
+                    <tabpanel vflex="1">
+                        <vlayout vflex="1" hflex="1">
+
+                        <grid sclass="form">
+                                    <rows visible="@bind(not vm.onlyVisualizzazione)">
+                                            <row>
+                                                <cell hflex="1">
+                                                    <label value="Classifica:"/>
+                                                </cell>
+                                                <cell hflex="3">
+                                                    <BandboxClassificazioneFascicolo id="classificazione2" hflex="1"
+                                                                                     selectedItem="@bind(vm.classificazioneCollegamento)"
+                                                                                     tooltiptext="@load(vm.classificazioneCollegamento.descrizione)"/>
+                                                </cell>
+                                                 <cell hflex="1">
+                                                    <label value="Fascicolo:"/>
+                                                </cell>
+                                                <cell hflex="3">
+                                                   <BandboxFascicolo id="fascicolo" hflex="1" disabled="false"
+                                                                     visible="true"
+                                                                     classificazione="@load(vm.classificazioneCollegamento)"
+
+                                                                     selectedItem="@bind(vm.fascicoloCollegamento)"
+                                                                     tooltiptext="@load(vm.fascicoloCollegamento.oggetto)"
+                                                                     fascicoliChiusi="false"/>
+                                                </cell>
+                                                <cell width="50px">
+
+                                                </cell>
+                                            </row>
+                                         <row>
+                                                <cell hflex="1">
+                                                    <label value="Relazione:"/>
+                                                </cell>
+                                                <cell hflex="3">
+                                                    <combobox hflex="1" mold="rounded"
+                                                              selectedItem="@bind(vm.tipologiaRelazione)"
+                                                              model="@load(vm.listTipologiaRelazione)">
+                                                        <template name="model" var="a">
+                                                            <comboitem label="@load(a)" description="@load(a)"
+                                                                       value="@load(a)"/>
+                                                        </template>
+                                                    </combobox>
+                                                </cell>
+                                                 <cell hflex="1">
+                                                    <label value="Tipo relazione:"/>
+                                                </cell>
+                                                <cell hflex="3">
+                                                     <combobox hflex="1" mold="rounded"
+                                                               selectedItem="@bind(vm.tipoCollegamento) @converter('it.finmatica.zk.utils.PropertyConverter', property='codice')"
+                                                               model="@load(vm.listaTipiCollegamento)">
+                                                        <template name="model" var="a">
+                                                            <comboitem label="@load(a.descrizione)"
+                                                                       description="@load(a.codice)" value="@load(a)"/>
+                                                        </template>
+                                                    </combobox>
+                                                </cell>
+                                              <cell width="50px">
+                                                    <button tooltiptext="Inserisci nuovo collegamento" mold="trendy"
+                                                            style="margin-right: 20px" width="15px"
+                                                            disabled="@bind(vm.onlyVisualizzazione)"
+                                                            image="/images/afc/16x16/add.png"
+                                                            onClick="@command('onInserisciCollegato', classifica=classifica, fascicolo = fascicolo)">
+                                                    </button>
+                                                </cell>
+                                            </row>
+                                        </rows>
+                              </grid>
+                            <space height="3px"/>
+                                    <groupbox closable="false" vflex="1">
+                                        <listbox vflex="1" model="@load(vm.listaCollegamenti)"
+                                                 emptyMessage="Nessun documento collegato.">
+                                            <listhead>
+                                                <listheader width="3%" align="center"/>
+                                                <listheader width="35%" label="Oggetto"/>
+                                                <listheader width="15%" label="Classifica"/>
+                                                <listheader width="10%" label="Anno"/>
+                                                <listheader width="15%" label="Numero"/>
+                                                <listheader width="18%" label="Tipo Relazione"/>
+                                                <listheader width="2%" align="center"/>
+                                                <listheader width="2%" align="center"/>
+                                            </listhead>
+
+                                            <template name="model" var="doc">
+                                                <listitem
+                                                    onDoubleClick="@command('apriDocumentoCollegato', documentoCollegato=(vm.selectedRecord.id eq doc.documento.id ? doc.collegato : doc.documento), tipoCollegamento = doc.tipoCollegamento.codice)">
+                                                    <listcell>
+                                                        <image src="/images/ags/16x16/subfolder_green.png"
+                                                               visible="@load(vm.selectedRecord.id eq doc.documento.id)"
+                                                               tooltiptext="Relazione Attiva"/>
+                                                        <image src="/images/ags/16x16/subfolder_red.png"
+                                                               visible="@load(vm.selectedRecord.id eq doc.collegato.id)"
+                                                               tooltiptext="Relazione Passiva"/>
+                                                    </listcell>
+                                                    <listcell>
+                                                        <label value="@load(doc.collegato.oggetto)"
+                                                               visible="@load(vm.selectedRecord.id eq doc.documento.id)"/>
+                                                        <label value="@load(doc.documento.oggetto)"
+                                                               visible="@load(vm.selectedRecord.id eq doc.collegato.id)"/>
+                                                    </listcell>
+                                                    <listcell>
+                                                        <label value="@load(doc.collegato.classificazione.codice)"
+                                                               visible="@load(vm.selectedRecord.id eq doc.documento.id)"/>
+                                                        <label value="@load(doc.documento.classificazione.codice)"
+                                                               visible="@load(vm.selectedRecord.id eq doc.collegato.id)"/>
+                                                    </listcell>
+                                                    <listcell>
+                                                        <label value="@load(doc.collegato.anno)"
+                                                               visible="@load(vm.selectedRecord.id eq doc.documento.id)"/>
+                                                        <label value="@load(doc.documento.anno)"
+                                                               visible="@load(vm.selectedRecord.id eq doc.collegato.id)"/>
+                                                    </listcell>
+                                                    <listcell>
+                                                        <label value="@load(doc.collegato.numero)"
+                                                               visible="@load(vm.selectedRecord.id eq doc.documento.id)"/>
+                                                        <label value="@load(doc.documento.numero)"
+                                                               visible="@load(vm.selectedRecord.id eq doc.collegato.id)"/>
+                                                    </listcell>
+                                                    <listcell>
+                                                        <label
+                                                            visible="@load(doc.tipoCollegamento.codice eq 'F_COLLEGA')"
+                                                            value="Collegamento"/>
+                                                        <label
+                                                            visible="@load(doc.tipoCollegamento.codice eq 'F_PREC_SEG')"
+                                                            value="Precedente/Seguente"/>
+                                                    </listcell>
+                                                    <listcell>
+                                                        <image src="/images/ags/16x16/trash.png"
+                                                               visible="@bind(not vm.onlyVisualizzazione)"
+                                                               onClick="@command('onEliminaDocumentoCollegato', documentoCollegato=doc)"
+                                                               style="cursor: pointer;"
+                                                               tooltiptext="Elimina collegamento"/>
+                                                    </listcell>
+                                                    <listcell>
+                                                        <image src="/images/ags/16x16/info.png"
+                                                               visible="@load(doc.tipoCollegamento.codice ne 'PROT_DAFAS')"
+                                                               onClick="@command('apriDocumentoCollegato', documentoCollegato=(vm.selectedRecord.id eq doc.documento.id ? doc.collegato : doc.documento), tipoCollegamento = doc.tipoCollegamento.codice)"
+                                                               style="cursor: pointer;" tooltiptext="Apri documento"/>
+                                                    </listcell>
+                                                </listitem>
+                                            </template>
+                                        </listbox>
+                                    </groupbox>
+
+                        </vlayout>
+                    </tabpanel>
+                    <tabpanel vflex="1">
+                        <vlayout vflex="1" hflex="1">
+
+                            <grid sclass="form">
+                                <rows visible="@bind(not vm.onlyVisualizzazione)">
+                                    <row>
+                                        <cell width="115px">
+                                            <label value="Ricerca storico dal:"/>
+                                        </cell>
+                                        <cell>
+                                            <datebox value="@bind(vm.ricercaDal)" format="dd/MM/yyyy"
+                                                     onChange="@command('onRicercaStorico')" mold="rounded"/>
+                                        </cell>
+                                        <cell width="115px">
+                                            <label value="Ricerca storico al:"/>
+                                        </cell>
+                                        <cell>
+                                            <datebox value="@bind(vm.ricercaAl)" format="dd/MM/yyyy"
+                                                     onChange="@command('onRicercaStorico')" mold="rounded"/>
+                                        </cell>
+                                        <cell colspan="2" style="text-align: left;">
+                                            <button label="Cerca" onClick="@command('onRicercaStorico')" mold="trendy"
+                                                    image="/images/icon/action/16x16/search.png"/>
+                                        </cell>
+                                    </row>
+                                </rows>
+                            </grid>
+                            <listbox emptyMessage="Nessun dato storicizzato." model="@load(vm.datiStorici)" vflex="1">
+                                <listhead>
+                                    <listheader label="Data" width="150px"/>
+                                    <listheader label="Utente" width="150px"/>
+                                    <listheader label="" width="25px"/>
+                                    <listheader label="Campo" width="150px"/>
+                                    <listheader label="Valore"/>
+                                </listhead>
+                                <template name="model" var="nodo">
+                                    <listitem>
+                                        <listcell
+                                            label="@load(not empty nodo.dataModifica ? c:formatDate(nodo.dataModifica, 'dd/MM/yyyy HH:mm:ss') : '')"/>
+                                        <listcell label="@load(nodo.nominativoUtente)"/>
+                                        <listcell
+                                            image="@load((nodo.tipoStorico eq 'MODIFICATO' ? '/images/ags/16x16/pencil.png' : (nodo.tipoStorico eq 'CANCELLATO' ? '/images/ags/16x16/removed.png' : '/images/ags/16x16/added.png')))"
+                                            tooltiptext="@load((nodo.tipoStorico eq 'MODIFICATO' ? 'Modificato' : (nodo.tipoStorico eq 'CANCELLATO' ? 'Cancellato' : 'Aggiunto')))"/>
+                                        <listcell label="@load(nodo.descrizioneCampo)"/>
+                                        <listcell label="@load(nodo.valore)" visible="@load(empty nodo.idFileEsterno)"/>
+                                        <listcell hoverImage="/images/afc/16x16/arrow_light_down.png"
+                                                  image="/images/afc/16x16/arrow_down.png" label="@load(nodo.valore)"
+                                                  onClick="@command('onDownloadFileStorico', storico=nodo)"
+                                                  visible="@load(not empty nodo.idFileEsterno)"/>
+                                    </listitem>
+                                </template>
+                            </listbox>
+
+                        </vlayout>
+                    </tabpanel>
+                    <tabpanel vflex="1">
+                        <vlayout vflex="1" hflex="1">
+                                <groupbox closable="false">
+                            <caption label="Dati"/>
+                            <grid sclass="form" hflex="1">
+                                <rows>
+
+                                    <row>
+                                        <cell width="115px">
+                                            <label value="Stato:"/>
+                                        </cell>
+                                        <cell colspan="5">
+                                            <combobox model="@load(vm.listaStatiScarto)" mold="rounded" width="230px"
+                                                      disabled="@bind(vm.onlyVisualizzazione)"
+                                                      selectedItem="@load(vm.selectedRecord.datiScarto.stato) @converter('it.finmatica.zk.utils.PropertyConverter', property='codice')"
+                                                      onSelect="@command('cambiaStatoScarto', statoScarto = event.target)">
+                                                    <template name="model" var="stato">
+                                                        <comboitem label="@load(stato.descrizione)"/>
+                                                    </template>
+                                                </combobox>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell width="115px">
+                                            <label value="Data stato:"/>
+                                        </cell>
+                                        <cell colspan="5">
+                                            <label
+                                                value="@load(vm.selectedRecord.datiScarto.dataStato) @converter('formattedDate', format='dd/MM/yyyy HH:mm:ss')"/>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell width="115px">
+                                            <label value="Numero nulla osta:"/>
+                                        </cell>
+                                        <cell colspan="5">
+                                            <textbox visible="@load(vm.selectedRecord.datiScarto ne null)"
+                                                     disabled="@bind(vm.onlyVisualizzazione)"
+                                                     value="@bind(vm.selectedRecord.datiScarto.nullaOsta)"
+                                                     mold="rounded" maxlength="100" width="60%"/>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell width="115px">
+                                            <label value="Data nulla osta:"/>
+                                        </cell>
+                                        <cell colspan="5">
+                                                <datebox visible="@load(vm.selectedRecord.datiScarto ne null)"
+                                                         value="@bind(vm.selectedRecord.datiScarto.dataNullaOsta)"
+                                                         mold="rounded" disabled="@bind(vm.onlyVisualizzazione)"
+                                                         format="@load(vm.datePattern)"/>
+                                        </cell>
+                                    </row>
+
+
+
+                                </rows>
+                            </grid>
+                        </groupbox>
+                        </vlayout>
+                    </tabpanel>
+                </tabpanels>
+            </tabbox>
+       </vlayout>
+
+        <h:div sclass="barraPulsanti">
+             <MenuFunzionalitaFascicolo id="menuFunzionalita" style="float: left;"
+                                        visible="@bind(((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'true':'false'))"
+                                        fascicoloDTO="@load(vm.selectedRecord)" onClose="@command('onChiudi')"
+                                        onHide="@command('onNascondi')" onClickVoceMenu="@command('menu')"
+                                        onAggiornaMaschera="@command('onAggiornaMaschera')"/>
+            <h:div>
+                <button mold="trendy" label="Crea" onClick="@command('onCrea', creazione=true)"
+                        visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')"
+                        disabled="@bind(vm.onlyVisualizzazione)" image="/images/icon/action/16x16/save.png"/>
+                <button mold="trendy" label="Crea e Stampa" onClick="@command('onCreaStampa')"
+                        visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'false':'true')"
+                        disabled="@bind(vm.onlyVisualizzazione)" image="/images/icon/action/16x16/save.png"/>
+
+                <button mold="trendy" label="Salva" onClick="@command('onCrea', creazione=false)"
+                        visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'true':'false')"
+                        disabled="@bind(vm.onlyVisualizzazione)" image="/images/icon/action/16x16/save.png"/>
+                <button mold="trendy" label="Nuovo" onClick="@command('onNuovo')"
+                        disabled="@bind(vm.onlyVisualizzazione)"
+                        visible="@bind((vm.selectedRecord.id gt -1 or vm.selectedRecord.id lt -1) ?'true':'false')"
+                        image="/images/icon/action/16x16/save.png"/>
+
+                <button mold="trendy" label="Chiudi" onClick="@command('onChiudi')"
+                        image="/images/icon/action/16x16/close.png"/>
+            </h:div>
+        </h:div>
+    </window>
+</zk>

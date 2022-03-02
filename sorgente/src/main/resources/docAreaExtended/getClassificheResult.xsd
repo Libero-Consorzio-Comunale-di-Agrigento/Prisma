@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:annotation>
+		<xs:appinfo>Output del metodo getClassifiche</xs:appinfo>
+		<xs:documentation xml:lang="it">Elenco dei campi di ritorno del metodo</xs:documentation>
+	</xs:annotation>
+	<xs:element name="CLASSIFICHE">
+		<xs:complexType> 
+			<xs:sequence>
+				<xs:element ref="CLASSIFICA" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType> 
+	</xs:element>
+	<xs:element name="CLASSIFICA">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ID_DOCUMENTO" type="xs:string" minOccurs="0"/> 
+				<xs:element name="CLASS_COD" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice della Classifica</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+				<xs:element name="CLASS_DAL" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Data di validita' dal della classifica</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CLASS_AL" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Data di validita al della Classifica</xs:documentation>
+					</xs:annotation>
+				</xs:element>    
+				<xs:element name="DESCRIZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Descrizione della Classifica</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DATA_CREAZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Data di creazione della Classifica</xs:documentation>
+					</xs:annotation>
+				</xs:element>   
+				<xs:element name="CONTENITORE_DOCUMENTI" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Se Y la classifica puo' contenere documenti altrimenti no</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>    
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+  <bandpopup height="330px" width="700px">
+    <listbox multiple="false" vflex="1" width="100%">
+      <listhead sizable="true">
+        <listheader label="Anno" width="20%"/>
+        <listheader label="Numero" width="20%"/>
+        <listheader label="Oggetto"/>
+        <listheader label="Stato" width="10%" if="${fascicoliChiusi}"/>
+      </listhead>
+      <template name="model">
+        <listitem style="${empty each.numero ? 'font-style:italic;opacity:0.7':''}">
+          <listcell label="${each.anno}"/>
+          <listcell label="${each.numero}"/>
+          <listcell label="${each.oggetto}"/>
+          <listcell label="${each.aperta ? '' : 'Chiuso'}" if="${fascicoliChiusi}"/>
+        </listitem>
+      </template>
+    </listbox>
+    <paging pageSize="20"/>
+  </bandpopup>
+</zk>

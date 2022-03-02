@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>Metodo getDocumento</xs:appinfo>
+		<xs:documentation xml:lang="it">
+			Questo metodo recupera tutti i metadati di un documento 
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ROOT">
+		<xs:complexType> 
+			<xs:sequence> 
+				<xs:choice>  
+					<xs:element name="ID_DOCUMENTO" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>ID_DOCUMENTO del documento di protocollo del quale recuperare i dati</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+					<xs:group ref="PROTOCOLLO_GRUPPO"/>
+				</xs:choice>
+				
+				<xs:element name="UTENTE" type="xs:string" >
+					<xs:annotation>
+						<xs:documentation>
+							Nominativo dell'utente che deve eseguire il metodo.
+							L'utente deve avere le competenze sui documenti da ricercare.
+							Se non passato viene preso l'utente di accesso al WebService ( esempio AGSPRWS)
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element> 
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element> 
+	<xs:group name="PROTOCOLLO_GRUPPO">
+		<xs:sequence>
+			<xs:element name="ANNO" type="xs:string"  /> 
+			<xs:element name="NUMERO" type="xs:string" /> 
+			<xs:element name="TIPO_REGISTRO" type="xs:string" /> 
+		</xs:sequence>
+	</xs:group>
+</xs:schema> 

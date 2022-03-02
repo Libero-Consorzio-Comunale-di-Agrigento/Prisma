@@ -1,0 +1,15 @@
+--liquibase formatted sql
+--changeset esasdelli:AGSPR_VIEW_AS4_V_TIPI_CONTATTO runOnChange:true stripComments:false
+
+  CREATE OR REPLACE FORCE VIEW "AS4_V_TIPI_CONTATTO" ("ID_TIPO_CONTATTO", "DESCRIZIONE", "UNICO", "IMPORTANZA", "TIPO_SPEDIZIONE", "VERSION", "UTENTE_AGGIORNAMENTO", "DATA_AGGIORNAMENTO") AS 
+  SELECT "ID_TIPO_CONTATTO",
+          "DESCRIZIONE",
+          "UNICO",
+          "IMPORTANZA",
+          "TIPO_SPEDIZIONE",
+          "VERSION",
+          "UTENTE_AGGIORNAMENTO",
+          "DATA_AGGIORNAMENTO"
+     FROM ${global.db.as4.username}.AS4_V_TIPI_CONTATTO
+
+/

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+
+    <!-- script necessari prima di eseguire l'aggiornamento -->
+    <include file="commons/sql/agspr/functions/GET_NUMBER_FROM_STRING.sql"/>
+    <include file="commons/sql/agspr/packages/AGP_COMPETENZE_DOCUMENTO.sql"/>
+    <include file="commons/sql/agspr/packages/AFC.sql"/>
+    <include file="commons/sql/agspr/packages/AFC_LOB.sql"/>
+    <include file="commons/sql/agspr/packages/DBC.sql"/>
+    <include file="commons/sql/agspr/packages/INTEGRITYPACKAGE.sql"/>
+    <include file="commons/sql/agspr/packages/UTILITYPACKAGE.sql"/>
+    <include file="commons/sql/agspr/packages/GDO_IMPOSTAZIONI_PKG.sql"/>
+    <includeAll path="commons/sql/agspr/synonyms"/>
+
+    <!-- script dell'aggiornamento vero e proprio -->
+    <includeAll path="update/4.0.0.0/agspr"/>
+
+    <!-- aggiungo le grant per gdm -->
+    <includeAll path="commons/sql/agspr/grants"/>
+</databaseChangeLog>

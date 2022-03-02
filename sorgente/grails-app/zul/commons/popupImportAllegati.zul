@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/protocollo.css"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:w="http://www.zkoss.org/2005/zk/client"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('commons.PopupImportAllegatiViewModel')"
+		border="normal"	sizable="true" width="850px" height="650px" title =" ">
+
+		<style>
+			.z-listitem-img-checkbox, .z-listgroup-img-checkbox {
+			vertical-align: bottom;
+			}
+		</style>
+
+			<h:div class="barraTitoloPagina">
+ 				<label sclass="titoloPagina" value="Importa Allegati"/>
+			</h:div>
+
+		<vlayout vflex="1" height="100%" spacing="0">
+			<grid sclass="form">
+				<rows>
+					<row>
+						<cell>
+							<label value="Tipo Documento:"/>
+						</cell>
+						<cell>
+							<combobox mold="rounded" model="@load(vm.tipiRicerca)" width="100%" readonly="true"
+									  selectedIndex="@bind(vm.tipoRicercaIndex)" onSelect="@command('onSelect')">
+								<template name="model" var="tipoRicerca">
+									<comboitem label="@load(tipoRicerca.titolo)"/>
+								</template>
+							</combobox>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+
+			<include src="@load(vm.selectedRicerca.zulCampiRicerca)"/>
+
+			<grid sclass="form">
+				<rows>
+					<row>
+						<cell style="text-align:right;">
+							<button onClick="@command('onRicerca')" label="Ricerca" mold="trendy" disabled="@load(vm.tipoRicercaIndex eq 0)"/>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+
+			<radiogroup id="gruppoPrincipale" />
+			<listbox model="@load(vm.listaAllegatiDocumenti)" selectedItems="@bind(vm.listaAllegatiDocumentiSelezionati)" emptyMessage="Nessun documento trovato"
+					 vflex="1" checkmark="true" multiple="true"  style="vertical-align: bottom;">
+				<listhead>
+					<listheader label="File" width="60%"/>
+					<listheader label="Estremi" width="40%"/>
+					<listheader label="Principale" visible="@load(vm.sceltaDelFilePrincipale)" width="10%">
+
+					</listheader>
+				</listhead>
+				<template name="model" var="a">
+					<listitem>
+						<listcell onDoubleClick="@command('onDownloadFileAllegato', allegatoEsterno=a)"
+								  tooltip="Scarica File" hflex="1" >
+							<RinominaFileImport onCambiaNome="@command('onCambiaNome')" fileDocumento="@bind(a)" allegato="@load(vm.allegato)" hflex="1"/>
+						</listcell>
+						<listcell label="@load(a.estremi)"/>
+						<listcell style="text-align: center"  visible="@load(vm.sceltaDelFilePrincipale)" >
+							<radio onClick="@command('onImpostaPrincipaleFileAllegato', allegatoEsterno=a)" radiogroup="gruppoPrincipale"></radio>
+						</listcell>
+					</listitem>
+				</template>
+			</listbox>
+
+			<hlayout sclass="z-paging paginazione" onCreate="@command('onSelect')">
+				<paging hflex="1" activePage="@load((vm.campiRicerca.startFrom / (vm.campiRicerca.maxResults eq 0 ? 1 : vm.campiRicerca.maxResults)))"
+						pageSize="@load(vm.campiRicerca.maxResults le 0 ? 0 : vm.campiRicerca.maxResults)"
+						totalSize="@load(vm.listaAllegatiDocumenti.getTotalCount())" onPaging="@command('onPagina')"/>
+				<label hflex="1"
+					   value="@load(c:cat('Numero documenti trovati: ', (empty vm.listaAllegatiDocumenti ? 0 : vm.listaAllegatiDocumenti.getTotalCount())))"/>
+			</hlayout>
+		</vlayout>
+
+		<h:div class="barraPulsanti">
+			<h:div>
+				<button label="Importa" mold="trendy" onClick="@command('onImportaDocumenti')" visible="@load(vm.tipoRicercaIndex gt 0)" />
+				<button label="Chiudi" mold="trendy" onClick="@command('onChiudi')"/>
+			</h:div>
+		</h:div>
+    </window>
+</zk>

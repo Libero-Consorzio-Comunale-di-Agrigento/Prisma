@@ -1,0 +1,14 @@
+--liquibase formatted sql
+--changeset mmalferrari:GDO_TIPOLOGIE_SOGG_REGOLE_TIU runOnChange:true stripComments:false
+
+CREATE OR REPLACE TRIGGER GDO_TIPOLOGIE_SOGG_REGOLE_TIU
+   BEFORE DELETE OR INSERT OR UPDATE
+   ON GDO_TIPOLOGIE_SOGGETTO_REGOLE
+   FOR EACH ROW
+BEGIN
+   IF :new.TIPO_SOGGETTO_PARTENZA = '-- nessuno --'
+   THEN
+      :new.TIPO_SOGGETTO_PARTENZA := '';
+   END IF;
+END;
+/

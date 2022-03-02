@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:appinfo>Metodo getClassifiche</xs:appinfo>
+		<xs:documentation xml:lang="it">
+			Questo metodo ricerca Fascicoli all'interno del Titolario.
+			I campi necessari sono 
+			CLASS_COD o DESCRIZIONE
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ROOT">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:sequence>
+						<xs:element name="CLASS_COD" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Codice della Classifica da Ricercare</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="DESCRIZIONE" type="xs:string" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Descrizione della Classifica da Ricercare</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:element name="DESCRIZIONE" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Descrizione della Classifica da Ricercare</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+				<xs:element name="CODICE_AMMINISTRAZIONE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice amministrazione dell'ente se non passato prende quello di default</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CODICE_AOO" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Codice aoo dell'ente se non passato prende quello di default</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CONTENITORE_DOCUMENTI" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Se Y cerca classifiche che possono contenere Documenti</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="VALIDA" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Se Y cerca classifiche aperte ( con CLAS_AL nullo)</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="Y|N"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="UTENTE" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>
+							Nominativo dell'utente che deve eseguire la ricerca.
+							L'utente deve avere le competenze sui documenti da ricercare.
+							Se non passato viene preso l'utente di accesso al WebService ( esempio AGSPRWS)
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema> 

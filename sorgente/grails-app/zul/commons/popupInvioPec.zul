@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><?link rel="stylesheet" type="text/css" href="/css/protocollo.css"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:w="http://www.zkoss.org/2005/zk/client"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+	<window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('commons.PopupInvioPecViewModel')"
+            border="normal" width="800px" title=" " vflex="1" sizable="true">
+
+		<style>
+			.monospaced {
+			font-family: monospace;
+			white-space: pre;
+			}
+		</style>
+
+		<vlayout width="100%" >
+			<h:div class="barraTitoloPagina">
+				<label sclass="titoloPagina" value="Invio Mail"/>
+			</h:div>
+			<vlayout width="100%">
+				<grid sclass="form">
+					<rows>
+						<row>
+							<cell width="30%" align="right">
+								<label value="Mittente"/>
+							</cell>
+							<cell>
+								<combobox model="@load(vm.mittenti)" hflex="1"
+                                          selectedItem="@bind(vm.mittente) @converter('it.finmatica.zk.utils.PropertyConverter', property='nome')">
+									<template name="model" var="mail">
+										<comboitem label="@load(mail.nome)" value="@load(mail)"/>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+						<row>
+							<cell align="right">
+								<label value="eMail"/>
+							</cell>
+							<cell>
+								<label value="@load(vm.mittente.email)"/>
+							</cell>
+						</row>
+						<row>
+							<cell align="right">
+								<label value="Tag invio"/>
+							</cell>
+							<cell>
+								<label value="@load(vm.mittente.tagMail)"/>
+							</cell>
+						</row>
+						<row>
+							<cell align="right">
+								<label value="Tipo consegna"/>
+							</cell>
+							<cell>
+								<combobox id="cmbTipiConsegna" model="@load(vm.tipiConsegnaList)"
+                                          selectedItem="@bind(vm.tipoConsegna)">
+									<template name="model">
+										<comboitem label="@load(each)"/>
+									</template>
+								</combobox>
+							</cell>
+						</row>
+					</rows>
+				</grid>
+				<label
+                    value="Si ricorda che la P.E.C. non consente l'invio per sola conoscenza, è necessario indicare almeno un destinatario effettivo"
+                    style="color: red; font-weight:bold"/>
+				<tabbox>
+					<tabs>
+						<tab label="Destinatari"></tab>
+						<tab label="Allegati"></tab>
+					</tabs>
+					<tabpanels>
+						<!-- Destinatari -->
+                        <tabpanel>
+							<listbox id="destinatari" model="@load(vm.destinatari)"
+                                     selectedItems="@bind(vm.destinatariSelezionati)" vflex="1"
+                                     emptyMessage="Nessun destinatario" height="116px" multiple="true" checkmark="true">
+									<listhead>
+										<listheader width="25px" label=""/>
+										<listheader width="25px" label="" tooltip="Spedito"/>
+										<listheader width="60%" label="Destinatario"/>
+										<listheader width="40%" label="E-mail"/>
+										<listheader width="25px" label=""/>
+									</listhead>
+								<template name="model" var="destinatario">
+									<listitem>
+										<listcell/>
+										<listcell><image src="/images/afc/16x16/sent.png" style="text-align: center"
+                                                         tooltip="Spedito"
+                                                         visible="@load(destinatario.messaggi.size() gt 0)"/>
+										</listcell>
+										<listcell><label value="@load(destinatario.denominazione)"
+                                                         style="@load(destinatario.conoscenza ? 'opacity:0.7; font-style:italic;': '' )"/></listcell>
+										<listcell><textbox value="@bind(destinatario.email)" width="98%" type="email"/></listcell>
+										<listcell><label value="@load(destinatario.conoscenza ? 'CC': '' )"
+                                                         style="@load(destinatario.conoscenza ? 'opacity:0.7; font-style:italic;': '' )"/></listcell>
+									</listitem>
+								</template>
+							</listbox>
+						</tabpanel>
+                        <!-- Allegati -->
+                        <tabpanel>
+							<listbox model="@load(vm.allegati)" height="140px" emptyMessage="Nessun Allegato" vflex="1">
+									<template name="model" var="a">
+										<listitem>
+											<listcell>
+												<listbox model="@load(a.fileDocumenti)"
+                                                         selectedItems="@bind(vm.allegatiSelezionati)" multiple="true"
+                                                         vflex="1" checkmark="@load(vm.isAbilitataSceltaAllegati)">
+													<listhead>
+														<listheader label=""
+                                                                    width="@load(vm.isAbilitataSceltaAllegati ? '30px': '0px')"/>
+														<listheader label="" width="30px"/>
+														<listheader label="@load(a.descrizione)" width="100%"/>
+													</listhead>
+													<template name="model" var="f">
+														<listitem>
+															<listcell>
+															</listcell>
+															<listcell>
+																<image src="/images/afc/16x16/arrow_down.png"
+                                                                       onClick="@command('onDownloadFileAllegato', fileAllegato=f)"/>
+															</listcell>
+															<listcell label="@load(f.nome)"/>
+														</listitem>
+													</template>
+												</listbox>
+											</listcell>
+										</listitem>
+									</template>
+							</listbox>
+						</tabpanel>
+					</tabpanels>
+				</tabbox>
+
+			</vlayout>
+
+			<grid hflex="2">
+				<rows>
+					<row>
+						<cell align="left">
+							<label>Oggetto:</label>
+							<textbox rows="1" value="@bind(vm.oggetto)" vflex="1"
+									 width="100%;" tabindex="11" style="resize: none;" disabled="@load(vm.isImpresaInUnGiorno)"/>
+						</cell>
+					</row>
+					<row>
+						<cell align="left">
+							<label>Testo</label>
+							<textbox rows="4" value="@bind(vm.testo)" vflex="1" disabled="@load(vm.isInterpro || vm.isImpresaInUnGiorno)"
+                                     width="100%;" tabindex="11" style="resize: none;"/>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<checkbox label="Invio singolo" checked="@bind(vm.invioSingolo)" disabled="@load(vm.isImpresaInUnGiorno)"></checkbox>
+							<checkbox label="Invia la segnatura" checked="@bind(vm.segnatura)" disabled="@load(vm.isImpresaInUnGiorno)"></checkbox>
+							<checkbox label="Segnatura con tutti i destinatari" checked="@bind(vm.segnaturaCompleta)"
+                                      disabled="@load(vm.isInterpro || vm.isImpresaInUnGiorno)"></checkbox>
+						</cell>
+					</row>
+					<row>
+						<cell>
+							<h:div class="barraPulsanti">
+								<h:div>
+									<button label="Invia" mold="trendy" onClick="@command('onInvia')"/>
+									<button label="Invia e Chiudi" mold="trendy" onClick="@command('onInviaEChiudi')"/>
+									<button label="Chiudi" mold="trendy" onClick="@command('onChiudi')"/>
+								</h:div>
+							</h:div>
+						</cell>
+					</row>
+				</rows>
+			</grid>
+		</vlayout>
+	</window>
+</zk>

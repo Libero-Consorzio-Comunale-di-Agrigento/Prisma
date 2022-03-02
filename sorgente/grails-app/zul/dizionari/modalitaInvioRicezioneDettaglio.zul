@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer"
+    	viewModel="@id('vm') @init('it.finmatica.protocollo.dizionari.ModalitaInvioRicezioneDettaglioViewModel')"
+    	border="normal"
+        width="500px" sizable="false" title=" ">
+
+
+
+		<h:div class="barraTitoloPagina">
+  			<label sclass="titoloPagina" value="@load(vm.selectedRecord.id ne -1 ? 'Gestione della Modalità Trasmissione' : 'Nuova Modalità Trasmissione')"/>
+		<image
+			src="@load(vm.selectedRecord.valido? '/images/ags/22x22/viewok.png' : '/images/ags/22x22/cancel.png')"
+			tooltiptext="@load(vm.selectedRecord.valido? 'Tipo attivo' : 'Tipo disattivato')" />
+   		</h:div>
+
+	      <vlayout width="100%" vflex="max">
+      		<grid  sclass="form">
+				<rows>
+	        		<row>
+		        		<cell colspan="1" align="right">
+							<h:span class="mandatoryLabel">*</h:span>
+							<label value="Codice"/>
+	        			</cell>
+						<cell colspan="3">
+							<textbox value="@bind(vm.selectedRecord.codice)" hflex="1"
+									 class="noresizable"
+									 style="text-transform: uppercase"/>
+	        			</cell>
+	        		</row>
+					<row>
+						<cell colspan="1" align="right">
+							<h:span class="mandatoryLabel">*</h:span>
+							<label value="Descrizione"/>
+						</cell>
+						<cell colspan="3">
+							<textbox value="@bind(vm.selectedRecord.descrizione)" hflex="1"
+									 class="noresizable" multiline="true" rows="3"/>
+						</cell>
+					</row>
+					<row>
+						<cell colspan="1" align="right">
+							<label value="Costo"/>
+						</cell>
+						<cell colspan="3">
+							<decimalbox value="@bind(vm.selectedRecord.costo)" width="100px" format="###,##0.00"
+									 class="noresizable"/>
+						</cell>
+					</row>
+					<row>
+						<cell colspan="1" align="right">
+							<label value="Tipo Spedizione"/>
+						</cell>
+						<cell colspan="3">
+							<combobox model="@load(vm.listaTipologie)" hflex="1" readonly="true" selectedItem="@bind(vm.selectedRecord.tipoSpedizione) @converter('it.finmatica.zk.utils.PropertyConverter', property='id', defaultValue=-1)">
+								<template name="model" var="tipologia">
+									<comboitem label="@load(tipologia.descrizione)" value="@load(tipologia)"/>
+								</template>
+							</combobox>
+						</cell>
+					</row>
+					<row>
+						<cell colspan="1" align="right">
+							<h:span class="mandatoryLabel">*</h:span>
+							<label value="Valida Dal"/>
+						</cell>
+						<cell colspan="3">
+							<datebox value="@bind(vm.selectedRecord.validoDal)" width="100px" format="dd/MM/yyyy"
+										class="noresizable"/>
+						</cell>
+					</row>
+					<row>
+						<cell colspan="1" align="right">
+							<label value="Al"/>
+						</cell>
+						<cell colspan="3">
+							<datebox value="@bind(vm.selectedRecord.validoAl)" width="100px" format="dd/MM/yyyy"
+										class="noresizable"/>
+						</cell>
+					</row>
+	        	</rows>
+	        </grid>
+	       </vlayout>
+
+	      	<vlayout sclass="datiCreazioneModifica" height="30px">
+				<label value="@load(vm.datiCreazione)" visible="@load(vm.selectedRecord.id gt 0)"/>
+				<label value="@load(vm.datiModifica)" visible="@load(vm.selectedRecord.id gt 0)"/>
+			</vlayout>
+
+			<controlBarRecord duplicaAttivo="false"/>
+
+
+    </window>
+</zk>

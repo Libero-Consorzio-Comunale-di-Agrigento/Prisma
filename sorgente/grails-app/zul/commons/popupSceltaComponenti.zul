@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/protocollo.css"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+	xmlns:h="http://www.w3.org/1999/xhtml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:w="http://www.zkoss.org/2005/zk/client"
+	xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('commons.PopupSceltaComponentiViewModel')"
+		border="normal"	sizable="true" width="90%" height="90%" title =" ">
+
+			<h:div class="barraTitoloPagina">
+ 				<label sclass="titoloPagina" value="Ricerca Componenti"/>
+			</h:div>
+			<div>
+			  <groupbox>
+				<grid sclass="form" >
+					<rows>
+						<row spans="5">Digitare l'intero codice fiscale / partita iva o parte della denominazione del soggetto (almeno 3 caratteri - carattere jolly %).</row>
+						<row>
+							<cell colspan="5" >
+								<bandbox id="bd"
+										 width="100%"
+										 value="@bind(vm.search)"
+										 mold="rounded"
+										 onOK="@command('onCerca', search = event.target.value)"
+										 onOpen="@command('onCerca', search = event.value)"/>
+							</cell>
+						</row>
+			            <row spans="5">
+			            	<radiogroup id="ts" model="@load(vm.listaTipoSoggetto)" selectedItem="@bind(vm.selectedTipoSoggetto)" >
+								<template name="model" var="tipoSoggetto">
+						              <radio id="@load(tipoSoggetto.id)" label="@load(tipoSoggetto.descrizione)" radiogroup="ts" onCheck="@command('onCerca', search = bd.value, selectedItem = ts.selectedItem.value)"/>
+								</template>
+							</radiogroup>
+			            </row>
+					</rows>
+				</grid>
+			</groupbox>
+	
+	 	</div>
+
+		<listbox vflex="1"  
+				model="@load(vm.listaComponentiDto)"
+				selectedItem="@bind(vm.selectedComponente)"
+				emptyMessage="Nessuna risultato trovato"
+				mold="paging" 
+				pageSize="15"
+				autopaging="true"
+				>
+				
+				<listhead sizable="true">
+					<listheader label="Denominazione" width="32%"/>
+					<listheader label="Indirizzo" width="20%"/>
+					<listheader label="Email" width="15%"/>
+					<listheader label="Codice Fiscale" width="10%"/>
+					<listheader label="Partita Iva" width="10%"/>
+					<listheader label="Recapito" width="10%"/>
+					<listheader label="" width="3%"/>
+				</listhead>
+				<template name="model" var="componente">
+					<listitem onDoubleClick="@command('onSalva')">
+		                <listcell label="@load(componente.denominazione)" />
+		                <listcell label="@load(componente.indirizzoCompleto)" />
+						<listcell label="@load(componente.email)" />
+		                <listcell label="@load(componente.codiceFiscale)" />
+		                <listcell label="@load(componente.partitaIva)" />
+						<listcell label="@load(componente.tipoIndirizzo)" />
+                        <listcell style="text-align: center">
+							<image visible="@load(componente.anagrafica eq 'SOGGETTO')" src="@load(c:cat4('/images/ags/22x22/', componente.anagrafica, componente.tipoIndirizzo eq 'RESIDENZA' ? 'RESIDENZA': '', '.png'))"/>
+                            <image visible="@load(componente.anagrafica ne 'SOGGETTO')" src="@load(c:cat4('/images/ags/22x22/', componente.anagrafica, componente.tipoIndirizzo, '.png'))"/>
+                        </listcell>
+					</listitem>
+				</template>
+		</listbox>
+
+		<h:div class="barraPulsanti">
+			<h:div>
+				<button label="Seleziona" onClick="@command('onSalva')" disabled="@load(vm.selectedComponente eq null)"  mold="trendy"></button>
+				<button mold="trendy" image="/images/afc/16x16/close.png"  label="Chiudi" onClick="@command('onChiudi')" />
+			</h:div>
+		</h:div>
+    </window>
+</zk>

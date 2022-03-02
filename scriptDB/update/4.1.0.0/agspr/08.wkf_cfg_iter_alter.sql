@@ -1,0 +1,7 @@
+--liquibase formatted sql
+--changeset mmalferrari:4.1.0.0_20200327.8.wkf_cfg_iter_alter
+ALTER TABLE WKF_CFG_ITER
+ ADD CONSTRAINT WKF_CFIT_DTOG_FK
+  FOREIGN KEY (TIPO_OGGETTO)
+  REFERENCES WKF_DIZ_TIPI_OGGETTO (CODICE)
+/

@@ -1,0 +1,4 @@
+--liquibase formatted sql
+--changeset esasdelli:GDM_TRIGGER_AG_SPR_PROTOCOLLI_DOCESTER_TIU runOnChange:true stripComments:false
+CREATE OR REPLACE  TRIGGER ag_SPR_PROTOCOLLI_DOCESTER_tiu  BEFORE INSERT or UPDATE ON SPR_PROTOCOLLI_DOCESTERNI FOR EACH ROW  BEGIN  if :new.numero is not null and (:new.anno is null or :new.tipo_registro is null or :new.stato_pr = 'DP') then :new.numero := null; end if; IF :NEW.anno IS NOT NULL AND :NEW.numero IS NOT NULL AND :NEW.numero <>  nvl(:OLD.numero, 0) THEN ag_utilities_protocollo.check_unicita('SPR_PROTOCOLLI_DOCESTERNI', :NEW.anno, :NEW.tipo_registro, :NEW.numero, :NEW.id_documento); ag_utilities_protocollo.ins_proto_key(:NEW.anno, :NEW.tipo_registro, :NEW.numero); END IF;if :new.modalita is null and :old.modalita is not null then    :new.modalita := :old.modalita;end if; EXCEPTION  WHEN OTHERS  THEN  RAISE;  END;
+/

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns:liquibase="antlib:liquibase.integration.ant">
+    <taskdef resource="liquibase/integration/ant/antlib.xml" uri="antlib:liquibase.integration.ant"/>
+
+    <!-- Alla fine di tutto, rivalido i package e creo le viste/etc -->
+    <target name="-update-4.0.0.x">
+        <!-- GRANTS da GDM -->
+        <liquibase:updateDatabase databaseref="gdm-database" changelogfile="commons/sql/gdm/procedures/ag_sposta_file_doc_in_rep.sql" classpathref="classpath-liquibase">
+            <liquibase:changeLogParameters>
+                <liquibase:changeLogParameter name="global.db.agspr.username" value="${global.db.agspr.username}"/>
+            </liquibase:changeLogParameters>
+        </liquibase:updateDatabase>
+        <liquibase:updateDatabase databaseref="gdm-database" changelogfile="update/4.0.0.0/02.gdm.grant_per_trasco.sql" classpathref="classpath-liquibase">
+            <liquibase:changeLogParameters>
+                <liquibase:changeLogParameter name="global.db.agspr.username" value="${global.db.agspr.username}"/>
+            </liquibase:changeLogParameters>
+        </liquibase:updateDatabase>
+        <!-- SINONIMI SU SO4 -->
+        <liquibase:updateDatabase databaseref="so4-database" changelogfile="commons/sql/so4/synonyms/synonyms.sql" classpathref="classpath-liquibase">
+            <liquibase:changeLogParameters>
+                <liquibase:changeLogParameter name="global.db.gdm.username" value="${global.db.gdm.username}"/>
+                <liquibase:changeLogParameter name="global.db.si4cs.username" value="${global.db.si4cs.username}"/>
+            </liquibase:changeLogParameters>
+        </liquibase:updateDatabase>
+
+        <!-- INSERT SU DBFW -->
+        <liquibase:updateDatabase databaseref="dbfw-database" changelogfile="update/4.0.0.0/dbfw/92.ins_istruzioni.sql" classpathref="classpath-liquibase"/>
+
+        <!-- INSERT SU AD4 -->
+        <liquibase:updateDatabase databaseref="ad4-database" changelogfile="update/4.0.0.0/ad4/001.ins_assistente_virtuale.sql" classpathref="classpath-liquibase"/>
+
+        <!-- INSERT SU SO4 -->
+        <liquibase:updateDatabase databaseref="so4-database" changelogfile="update/4.0.0.0/so4/1.ins_unita_trasco.sql" classpathref="classpath-liquibase"/>
+
+
+        <!-- ESEGUO L'AGGIORNAMENTO 4.0.0.0 SU AGSPR -->
+        <liquibase:updateDatabase databaseref="agspr-database" changelogfile="update/4.0.0.0/update-agspr.xml" classpathref="classpath-liquibase">
+            <liquibase:changeLogParameters>
+                <liquibase:changeLogParameter name="global.db.gdm.username" value="${global.db.gdm.username}"/>
+                <liquibase:changeLogParameter name="global.db.jwf.username" value="${global.db.jwf.username}"/>
+                <liquibase:changeLogParameter name="global.db.ad4.username" value="${global.db.ad4.username}"/>
+                <liquibase:changeLogParameter name="global.db.as4.username" value="${global.db.as4.username}"/>
+                <liquibase:changeLogParameter name="global.db.so4.username" value="${global.db.so4.username}"/>
+                <liquibase:changeLogParameter name="global.db.agspr.username" value="${global.db.agspr.username}"/>
+                <liquibase:changeLogParameter name="global.db.si4cs.username" value="${global.db.si4cs.username}"/>
+            </liquibase:changeLogParameters>
+        </liquibase:updateDatabase>
+
+        <!-- ESEGUO L'AGGIORNAMENTO 4.0.0.0 SU GDM -->
+        <liquibase:updateDatabase databaseref="gdm-database" changelogfile="update/4.0.0.0/update-gdm.xml" classpathref="classpath-liquibase">
+            <liquibase:changeLogParameters>
+                <liquibase:changeLogParameter name="global.db.gdm.username" value="${global.db.gdm.username}"/>
+                <liquibase:changeLogParameter name="global.db.jwf.username" value="${global.db.jwf.username}"/>
+                <liquibase:changeLogParameter name="global.db.ad4.username" value="${global.db.ad4.username}"/>
+                <liquibase:changeLogParameter name="global.db.as4.username" value="${global.db.as4.username}"/>
+                <liquibase:changeLogParameter name="global.db.so4.username" value="${global.db.so4.username}"/>
+                <liquibase:changeLogParameter name="global.db.agspr.username" value="${global.db.agspr.username}"/>
+            </liquibase:changeLogParameters>
+        </liquibase:updateDatabase>
+    </target>
+</project>
